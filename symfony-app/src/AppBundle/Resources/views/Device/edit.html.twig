@@ -1,0 +1,10 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}{{ "devices.edit.label" | trans }}{% endblock %}
+
+{% block body -%}
+    <h1 class="sub-header">{{ "devices.edit.label" | trans }}</h1>
+
+    {% include 'AppBundle::Device/partial-form.html.twig' %}
+
+{% endblock %}

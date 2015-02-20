@@ -1,0 +1,28 @@
+# Vagrant metadata
+/.vagrant
+
+# Cache and logs (Symfony2)
+/symfony-app/app/cache/*
+/symfony-app/app/logs/*
+!symfony-app/app/cache/.gitkeep
+!symfony-app/app/logs/.gitkeep
+
+# Parameters
+/symfony-app/app/config/parameters.yml
+/symfony-app/app/config/parameters.ini
+
+# Managed by Composer
+/symfony-app/app/bootstrap.php.cache
+/symfony-app/var/bootstrap.php.cache
+/symfony-app/bin/*
+!symfony-app/bin/console
+!symfony-app/bin/symfony_requirements
+/symfony-app/vendor/
+
+# Assets and user uploads
+/symfony-app/web/bundles/
+/symfony-app/web/uploads/
+
+# PHPUnit
+/symfony-app/app/phpunit.xml
+/symfony-app/phpunit.xml

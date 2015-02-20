@@ -1,0 +1,60 @@
+[submodule "chef/cookbooks/apt"]
+	path = chef/cookbooks/apt
+	url = https://github.com/opscode-cookbooks/apt.git
+[submodule "chef/cookbooks/apache2"]
+	path = chef/cookbooks/apache2
+	url = https://github.com/opscode-cookbooks/apache2.git
+[submodule "chef/cookbooks/mysql"]
+	path = chef/cookbooks/mysql
+	url = https://github.com/opscode-cookbooks/mysql.git
+[submodule "chef/cookbooks/iptables"]
+	path = chef/cookbooks/iptables
+	url = https://github.com/opscode-cookbooks/iptables.git
+[submodule "chef/cookbooks/logrotate"]
+	path = chef/cookbooks/logrotate
+	url = https://github.com/opscode-cookbooks/logrotate.git
+[submodule "chef/cookbooks/yum-mysql-community"]
+	path = chef/cookbooks/yum-mysql-community
+	url = https://github.com/opscode-cookbooks/yum-mysql-community.git
+[submodule "chef/cookbooks/yum"]
+	path = chef/cookbooks/yum
+	url = https://github.com/opscode-cookbooks/yum.git
+[submodule "chef/cookbooks/build-essential"]
+	path = chef/cookbooks/build-essential
+	url = https://github.com/opscode-cookbooks/build-essential.git
+[submodule "chef/cookbooks/iis"]
+	path = chef/cookbooks/iis
+	url = https://github.com/opscode-cookbooks/iis.git
+[submodule "chef/cookbooks/windows"]
+	path = chef/cookbooks/windows
+	url = https://github.com/opscode-cookbooks/windows.git
+[submodule "chef/cookbooks/openssl"]
+	path = chef/cookbooks/openssl
+	url = https://github.com/opscode-cookbooks/openssl.git
+[submodule "chef/cookbooks/chef_handler"]
+	path = chef/cookbooks/chef_handler
+	url = https://github.com/opscode-cookbooks/chef_handler.git
+[submodule "chef/cookbooks/chef-sugar"]
+	path = chef/cookbooks/chef-sugar
+	url = https://github.com/sethvargo/chef-sugar.git
+[submodule "chef/cookbooks/xml"]
+	path = chef/cookbooks/xml
+	url = https://github.com/opscode-cookbooks/xml.git
+[submodule "chef/cookbooks/yum-epel"]
+	path = chef/cookbooks/yum-epel
+	url = https://github.com/opscode-cookbooks/yum-epel.git
+[submodule "chef/cookbooks/memcached"]
+	path = chef/cookbooks/memcached
+	url = https://github.com/opscode-cookbooks/memcached.git
+[submodule "chef/cookbooks/runit"]
+	path = chef/cookbooks/runit
+	url = https://github.com/opscode-cookbooks/runit.git
+[submodule "chef/cookbooks/phpmyadmin"]
+	path = chef/cookbooks/phpmyadmin
+	url = https://github.com/priestjim/chef-phpmyadmin.git
+[submodule "php"]
+	path = chef/cookbooks/php
+	url = https://github.com/priestjim/chef-php.git
+[submodule "chef/cookbooks/php"]
+	path = chef/cookbooks/php
+	url = https://github.com/priestjim/chef-php.git

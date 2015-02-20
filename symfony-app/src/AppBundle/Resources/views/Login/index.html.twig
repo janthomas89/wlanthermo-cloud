@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+
+    <title>Anmelden | {{ "brand" | trans }}</title>
+
+    {# CSS #}
+    {% block stylesheets %}
+        {% stylesheets '@AppBundle/Resources/public/css/*' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/png" href="{{ asset('apple-touch-icon.png') }}" />
+</head>
+<body class="login">
+
+<div class="container">
+
+    <form action="{{ path("login_check") }}" method="post" class="form-signin{% if error %} has-error{% endif %}">
+        {% image '@AppBundle/Resources/public/img/logo-inverted.png'  %}
+            <img src="{{ asset_url }}" width="170" class="pull-right" alt="Wlanthermo | Cloud"/>
+        {% endimage %}
+
+        <h1 class="form-signin-heading text-center">{{ "brand" | trans }}</h1>
+
+        {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error.message|trans }}</div>
+        {% endif %}
+
+        <label for="inputEmail" class="sr-only">Benutzername</label>
+        <input type="text" name="_username" id="inputUsername" class="form-control" placeholder="Benutzername" value="{{ lastUsername }}" required autofocus>
+
+        <label for="inputPassword" class="sr-only">Passwort</label>
+        <input type="password" name="_password" id="inputPassword" class="form-control" placeholder="Passwort" required>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button class="btn btn-lg btn-primary pull-right" type="submit">Anmelden</button>
+    </form>
+</div>
+
+{# Javascripts #}
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery-1.11.2.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
+</html>

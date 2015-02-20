@@ -1,0 +1,47 @@
+brand: wlanthermoCloud
+
+abort:
+  label: Abbrechen
+  confirm: Möchten Sie wirklich Abbrechen? Alle Änderungen gehen verloren.
+
+delete:
+  label: Löschen
+  confirm: Möchten Sie den Datensatz wirklich löschen?
+
+devices:
+  navigation:
+    label: Geräte
+  fields:
+    id:
+      label: Id
+    name:
+      label: Name
+    url:
+      label: Name
+  list:
+      label: Geräte verwalten
+  edit:
+    label: Geräteeinstellungen ändern
+  delete:
+      label: Gerät löschen
+  new:
+    label: Gerät hinzufügen
+
+probes:
+  navigation:
+    label: Temperaturfühler
+  fields:
+      id:
+        label: Id
+      channel:
+        label: Kanal
+      type:
+        label: Typ
+      defaultName:
+        label: Name
+      defaultColor:
+        label: Plot-Farbe
+  delete:
+      label: Temperaturfühler löschen
+  new:
+    label: Temperaturfühler hinzufügen

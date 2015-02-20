@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+
+    {% set title %}
+        {% block title %}{% endblock %}
+    {% endset %}
+    <title>{{ title }} | {{ "brand" | trans }}</title>
+
+    {# CSS #}
+    {% block stylesheets %}
+        {% stylesheets '@AppBundle/Resources/public/css/*' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/png" href="{{ asset('apple-touch-icon.png') }}" />
+</head>
+<body>
+
+    {# Navigation #}
+    {{ render(controller('AppBundle:Headbar:index', {
+        title: title
+    })) }}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                {# Navigation #}
+                {{ render(controller('AppBundle:Navigation:index', {
+                    route: app.request.attributes.get('_route')
+                })) }}
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                {# Body of the page #}
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    {# Javascripts #}
+    {% block javascripts %}
+        {% javascripts
+        '@AppBundle/Resources/public/js/jquery-1.11.2.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js'
+        '@AppBundle/Resources/public/js/bootbox.min.js'
+        '@AppBundle/Resources/public/js/app.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+</body>
+</html>

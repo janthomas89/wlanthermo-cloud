@@ -1,0 +1,19 @@
+devices:
+  name:
+    notBlank: Bitte geben Sie einen Gerätenamen an
+    uniqueEntity: Bitte geben Sie einen eindeutigen Gerätenamen an
+  url:
+    notBlank: Bitte geben Sie eine URL an
+    uniqueEntity: Bitte geben Sie eine eindeutige URL an
+    url: Bitte geben Sie eine gültige URL an
+
+probes:
+  channel:
+    notBlank: Bitte wählen Sie einen Kanal aus.
+    uniqueEntity: Bitte wählen Sie jeden Kanal nur einmal aus.
+  type:
+    notBlank: Bitte wählen Sie einen Typ aus.
+  deaultName:
+    notBlank: Bitte geben Sie einen Namen an.
+  deaultColor:
+      notBlank: Bitte geben Sie eine farbe an.

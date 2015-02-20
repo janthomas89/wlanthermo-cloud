@@ -1,0 +1,19 @@
+<ul class="nav nav-sidebar">
+    <li{% if route == "index" %} class="active"{% endif %}>
+        <a href="{{ path('index') }}"><span class="glyphicon glyphicon-tasks" aria-hidden="true"> Dashboard</a>
+    </li>
+    <li>
+        <a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
+    </li>
+    <li>
+        <a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"> Historie <span class="badge">4</span></a>
+    </li>
+    {%  if is_granted('ROLE_ADMIN') %}
+        <li{% if "devices" in route %} class="active"{% endif %}>
+            <a href="{{ path('devices') }}"><span class="glyphicon glyphicon-hdd" aria-hidden="true"> {{ "devices.navigation.label" | trans }} <span class="badge">{{ num_devices }}</span></a>
+        </li>
+        <li>
+            <a href=""><span class="glyphicon glyphicon-cog" aria-hidden="true"> Einstellungen</a>
+        </li>
+    {%  endif %}
+</ul>

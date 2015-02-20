@@ -1,0 +1,91 @@
+<VirtualHost *:<%= @params[:server_port] || node['apache']['listen_ports'].first %>>
+  ServerName <%= @params[:server_name] %>
+  <% if @params[:server_aliases] -%>
+  ServerAlias <%= @params[:server_aliases].join " " %>
+  <% end -%>
+  DocumentRoot <%= @params[:docroot] %>/web
+
+  <Directory <%= @params[:docroot] %>>
+    Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
+    AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
+  <% if node['apache']['version'] == '2.4' -%>
+    Require all granted
+  <% else -%>
+    Order allow,deny
+    Allow from all
+  <% end -%>
+  </Directory>
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+    Order deny,allow
+    deny from all
+  </Directory>
+
+  <Location /server-status>
+    SetHandler server-status
+
+  <% if node['apache']['version'] == '2.4' -%>
+    Require local
+  <% else -%>
+    Order allow,deny
+    Allow from all
+  <% end -%>
+
+  </Location>
+
+  RewriteEngine On
+  <%- if node['apache']['version'] == '2.4' -%>
+  LogLevel info rewrite:trace1
+  <%- else -%>
+  LogLevel info
+  RewriteLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-rewrite.log
+  RewriteLogLevel 0
+  <%- end -%>
+
+  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-error.log
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-access.log combined
+
+  <% if @params[:directory_index] -%>
+  DirectoryIndex <%= [@params[:directory_index]].flatten.join " " %>
+  <% end -%>
+
+
+  <% if @params[:server_port] == '443' or @params[:server_port] == 443 -%>
+  # SSL
+  SSLEngine on
+  SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+  SSLProtocol all -SSLv2 -SSLv3
+  SSLCompression off
+  SSLHonorCipherOrder On
+  SSLCipherSuite EECDH+AESGCM:EECDH+AES:EDH+AES
+
+  <FilesMatch "\.(cgi|shtml|phtml|php)$">
+          SSLOptions +StdEnvVars
+  </FilesMatch>
+  <Directory /usr/lib/cgi-bin>
+          SSLOptions +StdEnvVars
+  </Directory>
+
+  BrowserMatch "MSIE [2-6]" \
+          nokeepalive ssl-unclean-shutdown \
+          downgrade-1.0 force-response-1.0
+  BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+  <% end -%>
+
+  # PHP settings
+  php_flag log_errors on 
+  php_flag display_errors on
+  php_flag display_startup_errors on
+  php_value error_reporting 32767
+  php_value error_log <%= node['php']['log_dir'] %>/<%= @params[:server_name] %>-error.log
+  php_value zend_extension /usr/lib/php5/20100525+lfs/xdebug.so
+  php_value xdebug.remote_enable 1
+  php_value xdebug.remote_port 9000
+  php_value xdebug.remote_connect_back 1
+  php_value xdebug.profiler_enable_trigger 1
+  php_value xdebug.profiler_output_dir <%= @params[:docroot] %>/tmp
+
+</VirtualHost>
