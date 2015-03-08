@@ -15,6 +15,13 @@ $(function() {
 });
 
 $(function() {
+    $('.js-tabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show');
+    });
+});
+
+$(function() {
     $('table.js-collection').each(function() {
         var $table = $(this);
         var $tbody = $table.find('tbody');

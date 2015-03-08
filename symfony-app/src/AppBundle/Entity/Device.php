@@ -43,12 +43,16 @@ class Device
      */
     private $url;
 
-    // ToDo Min max probes
-
     /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Probe", mappedBy="device", cascade={"persist"})
+     * @Assert\Count(
+     *      min = "1",
+     *      max = "8",
+     *      minMessage = "devices.probes.min",
+     *      maxMessage = "devices.probes.max"
+     * )
      */
     private $probes;
 
@@ -156,14 +160,14 @@ class Device
         $tmpProbe1->setChannel(0);
         $tmpProbe1->setType(1);
         $tmpProbe1->setDefaultName('Garraum');
-        $tmpProbe1->setDefaultColor('#FF0000FF');
+        $tmpProbe1->setDefaultColor('#FF0000');
         $this->addProbe($tmpProbe1);
 
         $tmpProbe2 = new Probe();
         $tmpProbe2->setChannel(1);
         $tmpProbe2->setType(1);
         $tmpProbe2->setDefaultName('Gargut');
-        $tmpProbe2->setDefaultColor('#00FF00FF');
+        $tmpProbe2->setDefaultColor('#00FF00');
         $this->addProbe($tmpProbe2);
     }
 }

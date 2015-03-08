@@ -175,3 +175,10 @@ body.login {
 ul.grid-actions li .btn {
     margin-left: 10px;
 }
+
+/*
+ * Charts
+ */
+.chart .c3-line {
+    stroke-width: 2px;
+}

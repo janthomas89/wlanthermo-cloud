@@ -18,6 +18,8 @@ devices:
       label: Name
     url:
       label: Name
+    probes:
+      label: Temperaturfühler
   list:
       label: Geräte verwalten
   edit:

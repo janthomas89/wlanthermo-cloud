@@ -33,7 +33,8 @@ class DeviceType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Device'
+            'data_class' => 'AppBundle\Entity\Device',
+            'cascade_validation' => true,
         ));
     }
 

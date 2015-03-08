@@ -12,6 +12,7 @@
                 <th>{{ "devices.fields.id.label" | trans }}</th>
                 <th>{{ "devices.fields.name.label" | trans }}</th>
                 <th>{{ "devices.fields.url.label" | trans }}</th>
+                <th>{{ "devices.fields.probes.label" | trans }}</th>
                 <th></th>
             </tr>
         </thead>
@@ -21,6 +22,8 @@
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.url }}</td>
+                <td>{{ entity.probes | length }}</td>
+                <td></td>
                 <td>
                     <ul class="list-unstyled grid-actions">
                         <li>

@@ -6,13 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-// ToDo @UniqueEntity({"channel", "device"}, message="probes.channel.uniqueEntity")
-
 /**
  * Probe
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ProbeRepository")
+ * @UniqueEntity({"channel", "device"}, message="probes.channel.uniqueEntity")
  */
 class Probe
 {
@@ -24,8 +23,6 @@ class Probe
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    // ToDo: , unique=true
 
     /**
      * @var integer
@@ -47,7 +44,7 @@ class Probe
      * @var string
      *
      * @ORM\Column(name="defaultName", type="string", length=255)
-     * @Assert\NotBlank(message="probes.defaultname.notBlank")
+     * @Assert\NotBlank(message="probes.deaultName.notBlank")
      */
     private $defaultName;
 
@@ -56,6 +53,7 @@ class Probe
      *
      * @ORM\Column(name="defaultColor", type="string", length=9)
      * @Assert\NotBlank(message="probes.defaultColor.notBlank")
+     * @Assert\Regex(pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", message="probes.defaultColor.notBlank")
      */
     private $defaultColor;
 

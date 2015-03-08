@@ -6,11 +6,14 @@ devices:
     notBlank: Bitte geben Sie eine URL an
     uniqueEntity: Bitte geben Sie eine eindeutige URL an
     url: Bitte geben Sie eine gültige URL an
+  probes:
+    min: Bitte konfigurieren Sie mindestens einen Temperaturfühler
+    max: Bitte konfigurieren Sie maximal acht Temperaturfühler
 
 probes:
   channel:
     notBlank: Bitte wählen Sie einen Kanal aus.
-    uniqueEntity: Bitte wählen Sie jeden Kanal nur einmal aus.
+    uniqueEntity: Diesen Kanal haben Sie bereits belegt.
   type:
     notBlank: Bitte wählen Sie einen Typ aus.
   deaultName:

@@ -1,4 +1,15 @@
+{% form_theme form _self %}
+
+{% block color_widget %}
+    {% spaceless %}
+        {% set type = 'color' %}
+        {{ block('form_widget_simple') }}
+    {% endspaceless %}
+{% endblock %}
+
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+{{ form_errors(form) }}
 
 {{ form_row(form.name) }}
 {{ form_row(form.url) }}
@@ -50,8 +61,9 @@
     {% spaceless %}
         <tr>
             {% for field in item %}
-                <td>
+                <td{% if field.vars.errors|length %} class="has-error"{% endif %}>
                     {{ form_widget(field) }}
+                    {{ form_errors(field) }}
                 </td>
             {% endfor %}
             <td>

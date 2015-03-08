@@ -60,9 +60,6 @@ class DeviceController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            /**
-             * @todo Flashmessage: created successfully!
-             */
             return $this->redirect($this->generateUrl('devices'));
         }
 
@@ -214,6 +211,11 @@ class DeviceController extends Controller
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Device entity.');
+            }
+
+            /* Delete related probes as well */
+            foreach ($entity->getProbes() as $probe) {
+                $em->remove($probe);
             }
 
             $em->remove($entity);

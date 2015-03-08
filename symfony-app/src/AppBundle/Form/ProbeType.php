@@ -32,7 +32,7 @@ class ProbeType extends AbstractType
                 'required'  => true,
             ))
             ->add('defaultName')
-            ->add('defaultColor')
+            ->add('defaultColor', new ColorType())
         ;
     }
     
