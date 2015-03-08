@@ -47,3 +47,26 @@ probes:
       label: Temperaturfühler löschen
   new:
     label: Temperaturfühler hinzufügen
+
+measurements:
+  fields:
+    id:
+      label: Id
+    name:
+      label: Name
+    device:
+      label: Gerät
+    start:
+      label: Start
+    end:
+      label: Ende
+      empty: aktiv
+    pid:
+      label: Prozess Id
+  list:
+    label: Historie
+  detail:
+    label: Messreihe Details
+    labelShort: Details
+  new:
+    label: Neue Messreihe

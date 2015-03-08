@@ -1,16 +1,21 @@
 <ul class="nav nav-sidebar">
-    <li{% if route == "index" %} class="active"{% endif %}>
-        <a href="{{ path('index') }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"> Pulled Pork 2015</a>
-    </li>
-    <li>
-        <hr>
-    </li>
+    {% if active_measurements | length > 0  %}
+        {% for item in active_measurements %}
+            <li{% if route == "measurement" and item.id == id %} class="active"{% endif %}>
+                <a href="{{ path('measurement', {id: item.id}) }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"> {{ item.name }}</a>
+            </li>
+        {%  endfor %}
+
+        <li>
+            <hr>
+        </li>
+    {% endif %}
 
     <li>
         <a href="#" id="new-measurement"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
     </li>
     <li>
-        <a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"> Historie <span class="badge">4</span></a>
+        <a href="{{ path('history') }}"><span class="glyphicon glyphicon-stats" aria-hidden="true"> Historie <span class="badge">{{ num_measurements }}</span></a>
     </li>
     {%  if is_granted('ROLE_ADMIN') %}
         <li{% if "devices" in route %} class="active"{% endif %}>

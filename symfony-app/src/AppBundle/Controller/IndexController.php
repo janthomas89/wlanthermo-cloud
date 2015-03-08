@@ -19,6 +19,17 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:Index:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $activeMeasurements = $em->getRepository('AppBundle:Measurement')->getActive();
+
+        if (count($activeMeasurements) > 0) {
+            $latest = reset($activeMeasurements);
+
+            return $this->redirect($this->generateUrl('measurement', array(
+                'id' => $latest->getId()
+            )));
+        }
+
+        return $this->redirect($this->generateUrl('history'));
     }
 }
