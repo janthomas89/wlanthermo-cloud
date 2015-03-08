@@ -12,6 +12,18 @@ $(function() {
             }
         });
     });
+
+    $('#new-measurement').on('click', function(e) {
+        e.preventDefault();
+
+        bootbox.prompt({
+            title: "Bitte gebe einen Messreihennamen an",
+            value: "Neue Messreihe",
+            callback: function(result) {
+                console.log(result);
+            }
+        });
+    });
 });
 
 $(function() {
