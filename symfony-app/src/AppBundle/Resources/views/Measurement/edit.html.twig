@@ -1,0 +1,10 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}{{ "measurements.edit.label" | trans }}{% endblock %}
+
+{% block body -%}
+    <h1 class="sub-header">{{ "measurements.edit.label" | trans }}</h1>
+
+    {% include 'AppBundle::Measurement/partial-form.html.twig' %}
+
+{% endblock %}

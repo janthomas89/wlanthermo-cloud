@@ -194,6 +194,7 @@ class DeviceController extends Controller
             'form' => $editForm->createView(),
         );
     }
+
     /**
      * Deletes a Device entity.
      *

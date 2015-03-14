@@ -12,18 +12,6 @@ $(function() {
             }
         });
     });
-
-    $('#new-measurement').on('click', function(e) {
-        e.preventDefault();
-
-        bootbox.prompt({
-            title: "Bitte gebe einen Messreihennamen an",
-            value: "Neue Messreihe",
-            callback: function(result) {
-                console.log(result);
-            }
-        });
-    });
 });
 
 $(function() {
@@ -86,5 +74,13 @@ $(function() {
                 update();
             }
         });
+    });
+});
+
+$(function(){
+    $('#appbundle_measurement_device').change(function() {
+        var $form = $(this).parents('form').first();
+        $form.attr('action', $form.attr('action') + '/1');
+        $form.submit();
     });
 });

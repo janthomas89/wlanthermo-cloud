@@ -1,0 +1,84 @@
+{% form_theme form _self %}
+
+{% block color_widget %}
+    {% spaceless %}
+        {% set type = 'color' %}
+        {{ block('form_widget_simple') }}
+    {% endspaceless %}
+{% endblock %}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+{{ form_errors(form) }}
+
+{{ form_row(form.name) }}
+{{ form_row(form.device) }}
+
+{#
+<table class="table js-collection" data-prototype="{{ _self.collectionItemWidget(form.probes.vars.prototype)|e }}" data-min="1" data-max="8">
+    <caption>{{ 'probes.navigation.label' | trans }}</caption>
+    <thead>
+        <tr>
+            <th>
+                {{ 'probes.fields.channel.label' | trans }}
+            </th>
+            <th>
+                {{ 'probes.fields.type.label' | trans }}
+            </th>
+            <th>
+                {{ 'probes.fields.defaultName.label' | trans }}
+            </th>
+            <th>
+                {{ 'probes.fields.defaultColor.label' | trans }}
+            </th>
+            <th>
+                <button class="btn btn-primary pull-right js-button-new" title="{{ "probes.new.label" | trans }}">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for probe in form.probes %}
+            {{ _self.collectionItemWidget(probe) }}
+        {% endfor %}
+    </tbody>
+</table>
+
+<ul class="list-unstyled">
+    <li>
+        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary pull-right'}}) }}
+    </li>
+    <li>
+        <a href="{{ path('devices') }}" class="btn btn-link pull-right" data-confirm="{{ "abort.confirm" | trans }}">
+            {{ "abort.label" | trans }}
+        </a>
+    </li>
+</ul>
+#}
+
+{{ form_end(form) }}
+
+{#
+{% macro collectionItemWidget(item) %}
+    {% spaceless %}
+        <tr>
+            {% for field in item %}
+                <td{% if field.vars.errors|length %} class="has-error"{% endif %}>
+                    {{ form_widget(field) }}
+                    {{ form_errors(field) }}
+                </td>
+            {% endfor %}
+            <td>
+                <ul class="list-unstyled grid-actions">
+                    <li>
+                        <button class="btn btn-default btn-s pull-right js-button-delete" title="{{ "probe.delete.label" | trans }}">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endspaceless %}
+{% endmacro %}
+#}

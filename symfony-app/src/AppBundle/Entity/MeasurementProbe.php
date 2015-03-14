@@ -25,7 +25,7 @@ class MeasurementProbe
     /**
      * @var Measurement
      *
-     * @ORM\ManyToOne(targetEntity="Measurement")
+     * @ORM\ManyToOne(targetEntity="Measurement", inversedBy="probes")
      * @ORM\JoinColumn(name="measurementId", referencedColumnName="id")
      */
     private $measurement;

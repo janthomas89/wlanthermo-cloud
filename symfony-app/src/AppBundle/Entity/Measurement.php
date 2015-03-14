@@ -53,10 +53,24 @@ class Measurement
     /**
      * @var integer
      *
-     * @ORM\Column(name="pid", type="smallint")
+     * @ORM\Column(name="pid", type="smallint", nullable=true)
      */
     private $pid;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="MeasurementProbe", mappedBy="measurement", cascade={"persist"})
+     */
+    private $probes;
+
+    /**
+     * Instantiates the Measurement.
+     */
+    public function __construct()
+    {
+        $this->probes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -181,5 +195,36 @@ class Measurement
     public function getPid()
     {
         return $this->pid;
+    }
+
+    /**
+     * Returns the associated probes.
+     *
+     * @return ArrayCollection
+     */
+    public function getProbes()
+    {
+        return $this->probes;
+    }
+
+    /**
+     * Adds a probe.
+     *
+     * @param MeasurementProbe $probe
+     */
+    public function addProbe(MeasurementProbe $probe)
+    {
+        $probe->setMeasurement($this);
+        $this->probes->add($probe);
+    }
+
+    /**
+     * Removes a probe.
+     *
+     * @param MeasurementProbe $probe
+     */
+    public function removeProbe(MeasurementProbe $probe)
+    {
+        $this->probes->removeElement($probe);
     }
 }

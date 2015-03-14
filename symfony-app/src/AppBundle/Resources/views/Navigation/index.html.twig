@@ -14,7 +14,7 @@
     {% endif %}
 
     <li>
-        <a href="#" id="new-measurement"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
+        <a href="{{ path('measurement_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
     </li>
     <li{% if "history" in route %} class="active"{% endif %}>
         <a href="{{ path('history') }}"><span class="glyphicon glyphicon-stats" aria-hidden="true"> Historie <span class="badge">{{ num_measurements }}</span></a>
