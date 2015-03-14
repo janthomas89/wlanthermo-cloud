@@ -70,3 +70,5 @@ measurements:
     labelShort: Details
   new:
     label: Neue Messreihe
+  active:
+    label: aktive Messreihen

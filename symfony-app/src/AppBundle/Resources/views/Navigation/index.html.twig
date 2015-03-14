@@ -1,11 +1,13 @@
 <ul class="nav nav-sidebar">
     {% if active_measurements | length > 0  %}
+        <li style="padding: 10px 15px;">
+            <span class="text-muted">{{ 'measurements.active.label' | trans }}</span>
+        </li>
         {% for item in active_measurements %}
             <li{% if route == "measurement" and item.id == id %} class="active"{% endif %}>
                 <a href="{{ path('measurement', {id: item.id}) }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"> {{ item.name }}</a>
             </li>
         {%  endfor %}
-
         <li>
             <hr>
         </li>
@@ -14,7 +16,7 @@
     <li>
         <a href="#" id="new-measurement"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
     </li>
-    <li>
+    <li{% if "history" in route %} class="active"{% endif %}>
         <a href="{{ path('history') }}"><span class="glyphicon glyphicon-stats" aria-hidden="true"> Historie <span class="badge">{{ num_measurements }}</span></a>
     </li>
     {%  if is_granted('ROLE_ADMIN') %}
