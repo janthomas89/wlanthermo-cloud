@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Measurement
@@ -25,6 +27,7 @@ class Measurement
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank(message="measurements.name.notBlank")
      */
     private $name;
 
@@ -33,6 +36,7 @@ class Measurement
      *
      * @ORM\ManyToOne(targetEntity="Device")
      * @ORM\JoinColumn(name="deviceId", referencedColumnName="id")
+     * @Assert\NotBlank(message="measurements.device.notBlank")
      */
     private $device;
 
@@ -61,6 +65,12 @@ class Measurement
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="MeasurementProbe", mappedBy="measurement", cascade={"persist"})
+     * @Assert\Count(
+     *      min = "1",
+     *      max = "8",
+     *      minMessage = "measurements.probes.min",
+     *      maxMessage = "measurements.probes.max"
+     * )
      */
     private $probes;
 

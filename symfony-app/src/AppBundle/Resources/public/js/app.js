@@ -83,4 +83,13 @@ $(function(){
         $form.attr('action', $form.attr('action') + '/1');
         $form.submit();
     });
+
+    $('.js-collection-measurement-probes select').each(function() {
+        var $select = $(this);
+        var $hidden = $('<input type="hidden" />')
+            .attr('name', $select.attr('name'))
+            .val($select.val());
+        $select.after($hidden);
+        $select.replaceWith('<span class="badge">' + $select.find('option:selected').text() + '</span>');
+    })
 });

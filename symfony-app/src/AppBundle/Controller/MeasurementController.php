@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Measurement;
+use AppBundle\Entity\MeasurementProbe;
 use AppBundle\Form\MeasurementType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,10 @@ class MeasurementController extends Controller
         $entity = new Measurement();
 
         $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+
+        if (!$request->get('silent') && $request->isMethod('POST')) {
+            $form->handleRequest($request);
+        }
 
         if (!$request->get('silent') && $request->isMethod('POST') && $form->isValid()) {
             $entity->setStart(new \DateTime());
@@ -82,6 +86,10 @@ class MeasurementController extends Controller
      */
     private function createCreateForm(Measurement $entity)
     {
+        if ($this->get('request')->get('silent')) {
+            $this->initMeasurement($entity);
+        }
+
         $form = $this->createForm(new MeasurementType(), $entity, array(
             'action' => $this->generateUrl('measurement_new'),
             'method' => 'POST',
@@ -90,6 +98,38 @@ class MeasurementController extends Controller
         $form->add('submit', 'submit', array('label' => 'Speichern'));
 
         return $form;
+    }
+
+    private function initMeasurement(Measurement $measurement)
+    {
+        /** @var Request $request */
+        $request = $this->get('request');
+
+        $formData = $request->request->get('appbundle_measurement');
+        $deviceId = isset($formData['device']) ? (int)$formData['device'] : 0;
+
+        if (!$deviceId) {
+            return;
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $device = $em->getRepository('AppBundle:Device')->find($deviceId);
+
+        if (!$device) {
+            return;
+        }
+
+        $measurement->setDevice($device);
+
+        foreach ($device->getProbes() as $probe) {
+            $tmpProbe = new MeasurementProbe();
+            $tmpProbe->setProbe($probe);
+            $tmpProbe->setColor($probe->getDefaultColor());
+            $tmpProbe->setName($probe->getDefaultName());
+            $tmpProbe->setMin(MeasurementProbe::DEFAULT_MIN);
+            $tmpProbe->setMax(MeasurementProbe::DEFAULT_MAX);
+            $measurement->addProbe($tmpProbe);
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * MeasurementProbe
@@ -13,6 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class MeasurementProbe
 {
+    const DEFAULT_MIN = 50;
+    const DEFAULT_MAX = 200;
+
     /**
      * @var integer
      *
@@ -35,6 +39,7 @@ class MeasurementProbe
      *
      * @ORM\ManyToOne(targetEntity="Probe")
      * @ORM\JoinColumn(name="probeId", referencedColumnName="id")
+     * @Assert\NotBlank(message="measurementProbes.probe.notBlank")
      */
     private $probe;
 
@@ -42,7 +47,7 @@ class MeasurementProbe
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank(message="measurementProbes.deaultName.notBlank")
+     * @Assert\NotBlank(message="measurementProbes.name.notBlank")
      */
     private $name;
 
@@ -50,8 +55,8 @@ class MeasurementProbe
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=9)
-     * @Assert\NotBlank(message="measurementProbes.Color.notBlank")
-     * @Assert\Regex(pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", message="probes.Color.notBlank")
+     * @Assert\NotBlank(message="measurementProbes.color.notBlank")
+     * @Assert\Regex(pattern="/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", message="measurementProbes.color.notBlank")
      */
     private $color;
 
@@ -59,6 +64,7 @@ class MeasurementProbe
      * @var integer
      *
      * @ORM\Column(name="min", type="smallint")
+     * @Assert\NotBlank(message="measurementProbes.min.notBlank")
      */
     private $min;
 
@@ -66,6 +72,7 @@ class MeasurementProbe
      * @var integer
      *
      * @ORM\Column(name="max", type="smallint")
+     * @Assert\NotBlank(message="measurementProbes.max.notBlank")
      */
     private $max;
 
@@ -201,5 +208,17 @@ class MeasurementProbe
     public function setMin($min)
     {
         $this->min = $min;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->getMin() >= $this->getMax())  {
+            $context->buildViolation('measurementProbes.max.invalidRange')
+                ->atPath('max')
+                ->addViolation();
+        }
     }
 }

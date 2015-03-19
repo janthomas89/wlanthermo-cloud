@@ -182,3 +182,12 @@ ul.grid-actions li .btn {
 .chart .c3-line {
     stroke-width: 2px;
 }
+
+/*
+ * Measurements details
+ */
+.measurements-detail-label {
+    display: block;
+    width: 40px;
+    font-weight: bold;
+}

@@ -68,7 +68,22 @@ measurements:
   detail:
     label: Messreihe Details
     labelShort: Details
+    overview: Übersicht
   new:
     label: Neue Messreihe
   active:
     label: aktive Messreihen
+
+measurementProbes:
+  fields:
+    channel:
+      label: Kanal
+    name:
+      label: Name
+    color:
+      label: Farbe
+    min:
+      label: Min. °C
+    max:
+      label: Max. °C
+  none: Bitte wählen Sie ein Gerät mit mindestens einem Temperaturfühler aus.

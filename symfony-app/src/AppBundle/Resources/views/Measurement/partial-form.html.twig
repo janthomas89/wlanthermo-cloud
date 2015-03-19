@@ -11,37 +11,46 @@
 
 {{ form_errors(form) }}
 
-{{ form_row(form.name) }}
-{{ form_row(form.device) }}
+{{ form_row(form.name, {'label': 'measurements.fields.name.label'}) }}
+{{ form_row(form.device, {'label': 'measurements.fields.device.label'}) }}
 
-{#
-<table class="table js-collection" data-prototype="{{ _self.collectionItemWidget(form.probes.vars.prototype)|e }}" data-min="1" data-max="8">
+<table class="table js-collection js-collection-measurement-probes" data-min="1" data-max="8">
     <caption>{{ 'probes.navigation.label' | trans }}</caption>
     <thead>
         <tr>
             <th>
-                {{ 'probes.fields.channel.label' | trans }}
+                {{ 'measurementProbes.fields.channel.label' | trans }}
             </th>
             <th>
-                {{ 'probes.fields.type.label' | trans }}
+                {{ 'measurementProbes.fields.name.label' | trans }}
             </th>
             <th>
-                {{ 'probes.fields.defaultName.label' | trans }}
+                {{ 'measurementProbes.fields.min.label' | trans }}
             </th>
             <th>
-                {{ 'probes.fields.defaultColor.label' | trans }}
+                {{ 'measurementProbes.fields.max.label' | trans }}
             </th>
             <th>
-                <button class="btn btn-primary pull-right js-button-new" title="{{ "probes.new.label" | trans }}">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
+                {{ 'measurementProbes.fields.color.label' | trans }}
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for probe in form.probes %}
             {{ _self.collectionItemWidget(probe) }}
         {% endfor %}
+
+        {% if  form.probes | length == 0 %}
+            {% do form.probes.setRendered %}
+            <tr>
+                <td colspan="6">
+                    <div class="alert alert-info">
+                        {{ 'measurementProbes.none' | trans }}
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
     </tbody>
 </table>
 
@@ -55,11 +64,9 @@
         </a>
     </li>
 </ul>
-#}
 
 {{ form_end(form) }}
 
-{#
 {% macro collectionItemWidget(item) %}
     {% spaceless %}
         <tr>
@@ -81,4 +88,3 @@
         </tr>
     {% endspaceless %}
 {% endmacro %}
-#}

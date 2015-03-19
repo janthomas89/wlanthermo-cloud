@@ -25,13 +25,7 @@
                         max: settings.max,
                         units: settings.units
                     },
-                    color: {
-                        pattern: ['#FF0000', '#F97600', '#F6C600', '#60B044'],
-                        threshold: {
-                            unit: 'value',
-                            values: [30, 100, 200, 280]
-                        }
-                    },
+                    color: settings.color,
                     size: {
                         height: 110
                     }
@@ -72,7 +66,8 @@
         value: 0,
         min: 0,
         max: 300,
-        units: ' °C'
+        units: ' °C',
+        color: '#FF0000'
     };
 
 }(jQuery));

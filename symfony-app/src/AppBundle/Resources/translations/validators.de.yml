@@ -1,14 +1,14 @@
 devices:
   name:
-    notBlank: Bitte geben Sie einen Gerätenamen an
-    uniqueEntity: Bitte geben Sie einen eindeutigen Gerätenamen an
+    notBlank: Bitte geben Sie einen Gerätenamen an.
+    uniqueEntity: Bitte geben Sie einen eindeutigen Gerätenamen an.
   url:
-    notBlank: Bitte geben Sie eine URL an
-    uniqueEntity: Bitte geben Sie eine eindeutige URL an
-    url: Bitte geben Sie eine gültige URL an
+    notBlank: Bitte geben Sie eine URL an.
+    uniqueEntity: Bitte geben Sie eine eindeutige URL an.
+    url: Bitte geben Sie eine gültige URL an.
   probes:
-    min: Bitte konfigurieren Sie mindestens einen Temperaturfühler
-    max: Bitte konfigurieren Sie maximal acht Temperaturfühler
+    min: Bitte konfigurieren Sie mindestens einen Temperaturfühler.
+    max: Bitte konfigurieren Sie maximal acht Temperaturfühler.
 
 probes:
   channel:
@@ -19,4 +19,27 @@ probes:
   deaultName:
     notBlank: Bitte geben Sie einen Namen an.
   deaultColor:
-      notBlank: Bitte geben Sie eine farbe an.
+      notBlank: Bitte geben Sie eine Farbe an.
+
+measurements:
+  name:
+    notBlank: Bitte geben Sie einen Namen an.
+  device:
+    notBlank: Bitte geben Sie ein Gerät an.
+  probes:
+      min: Bitte geben Sie mindestens einen Temperaturfühler an.
+      max: Bitte geben Sie maximal acht Temperaturfühler an.
+
+measurementProbes:
+  probe:
+    notBlank: Bitte geben Sie einen Kanal an.
+  name:
+    notBlank: Bitte geben Sie einen Namen an.
+  color:
+    notBlank: Bitte geben Sie eine Farbe an.
+  min:
+    notBlank: Bitte geben Sie eine minimale Temparatur an.
+  max:
+    notBlank: Bitte geben Sie eine maximale Temperatur an.
+    invalidRange: Bitte gebe eine Temperatur an, die größer als die minimale Temperatur ist.
+

@@ -32,10 +32,10 @@
                         {{ entity.device.name }}
                     </a>
                 </td>
-                <td>{{ entity.start | date("d.m.Y H:i:s") }}</td>
+                <td>{{ entity.start | date("d.m.Y H:i") }}</td>
                 <td>
                     {% if entity.end is defined and entity.end %}
-                        {{ entity.end | date("d.m.Y H:i:s") }}
+                        {{ entity.end | date("d.m.Y H:i") }}
                     {%  else %}
                         <span class="label label-info">{{ "measurements.fields.end.empty" | trans }}</span>
                     {%  endif %}

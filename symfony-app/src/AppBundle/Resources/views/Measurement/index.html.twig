@@ -3,138 +3,87 @@
 {% block title %}{{ entity.name }}{% endblock %}
 
 {% block body %}
-
-    <div role="tabpanel" class="js-tabs">
-        {#
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#overview" role="tab" data-toggle="tab">Übersicht</a></li>
-            <li role="presentation"><a href="#history" role="tab" data-toggle="tab">Historie</a></li>
-            <li role="presentation"><a href="#alerts" role="tab" data-toggle="tab">Alarme</a></li>
-            <li class="pull-right">
-                <button class="btn btn-default" data-confirm="Wollen Sie die Messreihe wirklich stoppen?">
-                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                    Messreihe beenden
-                </button>
-            </li>
-        </ul>
-        #}
-
-        {#
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="overview">
-        #}
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Übersicht</h3>
-                            </div>
-                            <div class="panel-body">
-                                <p><strong>Start:</strong> 2015-02-25 10:30</p>
-                                <p><strong>Ende:</strong> ---</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Alarme</h3>
-                            </div>
-                            <div class="panel-body">
-                                Alarme verwalten!
-                            </div>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ 'measurements.detail.overview' | trans }}: {{ entity.name }}</h3>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Garraum</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="chart" id="chart-0"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Gargut 1</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="chart" id="chart-1"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Gargut 2</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="chart" id="chart-2"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="panel-body">
+                    <p>
+                        <label class="measurements-detail-label pull-left">Start:</label> {{ entity.start | date("d.m.Y H:i") }}
+                    </p>
+                    <p>
+                        <label class="measurements-detail-label pull-left">Ende:</label>
+                        {% if entity.end is defined and entity.end %}
+                            {{ entity.end | date("d.m.Y H:i") }}
+                        {%  else %}
+                            <span class="label label-info">{{ "measurements.fields.end.empty" | trans }}</span>
+                        {%  endif %}
+                    </p>
                 </div>
-            {#
             </div>
-            <div role="tabpanel" class="tab-pane" id="history">
-            #}
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Historie</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="chart" id="chart-historie"></div>
-                                <p class="text-center">Übersicht</p>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="chart" id="chart-recent"></div>
-                                <p class="text-center">Letzte Stunde</p>
-                            </div>
-                        </div>
-                    </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Alarme</h3>
                 </div>
-
-            {#
+                <div class="panel-body">
+                    Alarme verwalten!
+                </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="alerts">
-            #}
-
-            {#
-            </div>
-            #}
         </div>
     </div>
 
+    <div class="row">
+        {% for probe in entity.probes %}
+            <div class="col-md-4" data-measurement-probe-id="{{ probe.id }}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            {{ probe.name }}
+                            <span class="badge pull-right">{{ probe.min }} °C / {{ probe.max }}°C</span>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart" id="chart-{{ probe.id }}"></div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Historie</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="chart" id="chart-historie"></div>
+                    <p class="text-center">Übersicht</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart" id="chart-recent"></div>
+                    <p class="text-center">Letzte Stunde</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
 {% block pageJavascripts %}
     <script type="application/javascript">
         $(function() {
-            $('#chart-0').wlanthermoGauge({
-                label: 'Garraum',
-                value: 148
-            });
-
-            $('#chart-1').wlanthermoGauge({
-                label: 'Gargut 1',
-                value: 97
-            });
-
-            $('#chart-2').wlanthermoGauge({
-                label: 'Gargut 2',
-                value: 100
-            });
-
+            {% for probe in entity.probes %}
+                $('#chart-{{ probe.id }}').wlanthermoGauge({
+                    label: '{{ probe.name }}',
+                    color: '{{ probe.color }}',
+                    value: 148
+                });
+            {% endfor %}
 
             var chart = c3.generate({
                 bindto: '#chart-historie',

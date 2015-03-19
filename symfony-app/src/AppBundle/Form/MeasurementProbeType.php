@@ -15,27 +15,15 @@ class MeasurementProbeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('channel', 'choice', array(
-                'choices'   => range(0, 7),
-                'required'  => true,
-            ))
-            ->add('type', 'choice', array(
-                'choices'   => array(
-                    1 => 'FANTAST',
-                    2 => 'MAVERICK',
-                    3 => 'ROSENSTEIN',
-                    4 => 'ACURITE',
-                    5 => 'ET-73',
-                    6 => 'USER-1',
-                    7 => 'USER-2',
-                ),
-                'required'  => true,
+            ->add('probe', 'entity', array(
+                'class' => 'AppBundle:Probe',
+                'property' => 'channel',
+                'read_only' => true,
             ))
             ->add('name')
+            ->add('min', 'integer')
+            ->add('max', 'integer')
             ->add('color', new ColorType())
-            //Probe
-            //Min
-            //Max
         ;
     }
     
