@@ -12,6 +12,9 @@ var fs = require('fs');
 /* Hashmap for running sub processes */
 var processes = {};
 
+/* Port */
+var port = 1025;
+
 /* Create server */
 var server = http.createServer(function (req, resp) {
     var parsedUrl = url.parse(req.url);
@@ -37,8 +40,8 @@ var server = http.createServer(function (req, resp) {
         });
     }
 });
-server.listen(1025);
-console.log('wlanthermo deamon server now listens on port 1025');
+server.listen(port, 'localhost');
+console.log('wlanthermo deamon server now listens on port ' + port);
 
 /* Span process */
 function spawn(measurementId) {
