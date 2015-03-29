@@ -2,12 +2,16 @@
 
 namespace AppBundle\Command;
 
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class MeasurementCommand
+ * Command for monitoring a device and populate the measurement data.
+ * @package AppBundle\Command
+ */
 class MeasurementCommand extends ContainerAwareCommand
 {
     protected function configure()
