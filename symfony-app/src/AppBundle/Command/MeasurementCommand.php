@@ -29,10 +29,17 @@ class MeasurementCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $id = (int)$input->getArgument('measurementId');
+        $em = $this->getDoctrine()->getManager();
+        $measurement = $em->getRepository('AppBundle:Measurement')->find($id);
 
+        var_dump($measurement);
+        exit;
+
+        /*
         for ($i = 0; true; $i++) {
             $output->writeln($id . ', iteration: ' . $i . ', memory usage:' . (memory_get_usage()/1024/1024));
             sleep(1);
         }
+        */
     }
 } 
