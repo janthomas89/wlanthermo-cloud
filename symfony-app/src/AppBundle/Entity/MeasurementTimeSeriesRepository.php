@@ -12,4 +12,58 @@ use Doctrine\ORM\EntityRepository;
  */
 class MeasurementTimeSeriesRepository extends EntityRepository
 {
+    /**
+     * Returns a matching time series for the given probe and time, if it exists.
+     *
+     * @param MeasurementProbe $measurementProbe
+     * @param \DateTime $date
+     * @return null|object
+     */
+    public function getTimeSeries(MeasurementProbe $measurementProbe, \DateTime $date)
+    {
+        $date = $this->truncateSeconds($date);
+
+        return $this->findOneBy([
+            'measurementProbe' => $measurementProbe,
+            'time' => $date,
+        ]);
+    }
+
+    /**
+     * Creates a time series for the given probe and time.
+     *
+     * @param MeasurementProbe $measurementProbe
+     * @param \DateTime $date
+     * @return MeasurementTimeSeries
+     */
+    public function createTimeSeries(MeasurementProbe $measurementProbe, \DateTime $date)
+    {
+        $date = $this->truncateSeconds($date);
+
+        $series = new MeasurementTimeSeries();
+        $series->setMeasurementProbe($measurementProbe);
+        $series->setTime($date);
+
+        $em = $this->getEntityManager();
+        $em->persist($series);
+        $em->flush();
+
+        return $series;
+    }
+
+    /**
+     * Truncates the seconds of the given date.
+     *
+     * @param \DateTime $date
+     * @return \DateTime
+     */
+    protected function truncateSeconds(\DateTime $date)
+    {
+        $ts = $date->getTimestamp() - ($date->getTimestamp() % 60);
+
+        $newDate = new \DateTime();
+        $newDate->setTimestamp($ts);
+
+        return $newDate;
+    }
 }

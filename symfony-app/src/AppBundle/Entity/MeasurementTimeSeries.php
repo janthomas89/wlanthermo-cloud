@@ -39,483 +39,483 @@ class MeasurementTimeSeries
     /**
      * @var integer
      *
-     * @ORM\Column(name="s0", type="smallint")
+     * @ORM\Column(name="s0", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s1", type="smallint")
+     * @ORM\Column(name="s1", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s1;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s2", type="smallint")
+     * @ORM\Column(name="s2", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s2;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s3", type="smallint")
+     * @ORM\Column(name="s3", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s3;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s4", type="smallint")
+     * @ORM\Column(name="s4", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s4;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s5", type="smallint")
+     * @ORM\Column(name="s5", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s5;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s6", type="smallint")
+     * @ORM\Column(name="s6", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s6;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s7", type="smallint")
+     * @ORM\Column(name="s7", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s7;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s8", type="smallint")
+     * @ORM\Column(name="s8", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s8;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s9", type="smallint")
+     * @ORM\Column(name="s9", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s9;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s10", type="smallint")
+     * @ORM\Column(name="s10", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s10;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s11", type="smallint")
+     * @ORM\Column(name="s11", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s11;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s12", type="smallint")
+     * @ORM\Column(name="s12", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s12;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s13", type="smallint")
+     * @ORM\Column(name="s13", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s13;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s14", type="smallint")
+     * @ORM\Column(name="s14", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s14;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s15", type="smallint")
+     * @ORM\Column(name="s15", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s15;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s16", type="smallint")
+     * @ORM\Column(name="s16", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s16;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s17", type="smallint")
+     * @ORM\Column(name="s17", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s17;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s18", type="smallint")
+     * @ORM\Column(name="s18", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s18;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s19", type="smallint")
+     * @ORM\Column(name="s19", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s19;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s20", type="smallint")
+     * @ORM\Column(name="s20", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s20;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s21", type="smallint")
+     * @ORM\Column(name="s21", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s21;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s22", type="smallint")
+     * @ORM\Column(name="s22", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s22;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s23", type="smallint")
+     * @ORM\Column(name="s23", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s23;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s24", type="smallint")
+     * @ORM\Column(name="s24", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s24;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s25", type="smallint")
+     * @ORM\Column(name="s25", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s25;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s26", type="smallint")
+     * @ORM\Column(name="s26", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s26;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s27", type="smallint")
+     * @ORM\Column(name="s27", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s27;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s28", type="smallint")
+     * @ORM\Column(name="s28", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s28;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s29", type="smallint")
+     * @ORM\Column(name="s29", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s29;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s30", type="smallint")
+     * @ORM\Column(name="s30", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s30;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s31", type="smallint")
+     * @ORM\Column(name="s31", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s31;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s32", type="smallint")
+     * @ORM\Column(name="s32", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s32;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s33", type="smallint")
+     * @ORM\Column(name="s33", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s33;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s34", type="smallint")
+     * @ORM\Column(name="s34", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s34;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s35", type="smallint")
+     * @ORM\Column(name="s35", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s35;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s36", type="smallint")
+     * @ORM\Column(name="s36", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s36;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s37", type="smallint")
+     * @ORM\Column(name="s37", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s37;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s38", type="smallint")
+     * @ORM\Column(name="s38", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s38;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s39", type="smallint")
+     * @ORM\Column(name="s39", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s39;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s40", type="smallint")
+     * @ORM\Column(name="s40", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s40;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s41", type="smallint")
+     * @ORM\Column(name="s41", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s41;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s42", type="smallint")
+     * @ORM\Column(name="s42", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s42;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s43", type="smallint")
+     * @ORM\Column(name="s43", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s43;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s44", type="smallint")
+     * @ORM\Column(name="s44", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s44;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s45", type="smallint")
+     * @ORM\Column(name="s45", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s45;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s46", type="smallint")
+     * @ORM\Column(name="s46", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s46;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s47", type="smallint")
+     * @ORM\Column(name="s47", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s47;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s48", type="smallint")
+     * @ORM\Column(name="s48", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s48;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s49", type="smallint")
+     * @ORM\Column(name="s49", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s49;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s50", type="smallint")
+     * @ORM\Column(name="s50", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s50;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s51", type="smallint")
+     * @ORM\Column(name="s51", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s51;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s52", type="smallint")
+     * @ORM\Column(name="s52", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s52;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s53", type="smallint")
+     * @ORM\Column(name="s53", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s53;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s54", type="smallint")
+     * @ORM\Column(name="s54", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s54;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s55", type="smallint")
+     * @ORM\Column(name="s55", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s55;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s56", type="smallint")
+     * @ORM\Column(name="s56", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s56;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s57", type="smallint")
+     * @ORM\Column(name="s57", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s57;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s58", type="smallint")
+     * @ORM\Column(name="s58", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s58;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="s59", type="smallint")
+     * @ORM\Column(name="s59", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $s59;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="min", type="smallint")
+     * @ORM\Column(name="min", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $min;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="max", type="smallint")
+     * @ORM\Column(name="max", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $max;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg", type="smallint")
+     * @ORM\Column(name="avg", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $avg;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg0", type="smallint")
+     * @ORM\Column(name="avg0", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $avg0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg1", type="smallint")
+     * @ORM\Column(name="avg1", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $avg1;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg2", type="smallint")
+     * @ORM\Column(name="avg2", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $avg2;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg3", type="smallint")
+     * @ORM\Column(name="avg3", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $avg3;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg4", type="smallint")
+     * @ORM\Column(name="avg4", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $avg4;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg5", type="smallint")
+     * @ORM\Column(name="avg5", type="decimal", scale=4, scale=1, nullable=true)
      */
     private $avg5;
 
@@ -574,6 +574,146 @@ class MeasurementTimeSeries
     public function getTime()
     {
         return $this->time;
+    }
+
+    /**
+     * @param \DateTime $time
+     * @param float $value
+     */
+    public function setMeasurementValue(\DateTime $time, $value)
+    {
+        /* Set value */
+        $i = $time->getTimestamp() % 60;
+        $fct = 'setS' . $i;
+        $this->$fct($value);
+
+        /* Calculate min, max, avg, ... */
+        $this->calcStats();
+    }
+
+    /**
+     * Calculates the statistics of the timeseries (min, max, avg, ...).
+     */
+    public function calcStats()
+    {
+        $this->calcMin();
+        $this->calcMax();
+        $this->calcAvg();
+        for ($i = 0; $i < 6; $i++) {
+            $this->calcAvg($i);
+        }
+    }
+
+    /**
+     * Calculates the minimum over all values.
+     */
+    public function calcMin()
+    {
+        $min = PHP_INT_MAX;
+        for ($i = 0; $i < 60; $i++) {
+            $tmp = $this->get($i);
+            if (null !== $tmp) {
+                $min = min($min, $tmp);
+            }
+        }
+
+        if (PHP_INT_MAX !== $min) {
+            $this->min = $min;
+        }
+    }
+
+    /**
+     * Calculates the maximum over all values.
+     */
+    public function calcMax()
+    {
+        $MIN =  (-1 * PHP_INT_MAX ) - 1;
+        $max = $MIN;
+        for ($i = 0; $i < 60; $i++) {
+            $tmp = $this->get($i);
+            if (null !== $tmp) {
+                $max = max($max, $tmp);
+            }
+        }
+
+        if ($MIN !== $max) {
+            $this->max = $max;
+        }
+    }
+
+    /**
+     * Calculates the average over all values.
+     */
+    public function calcAvg($sixth = '')
+    {
+        if ($sixth < 0 || $sixth > 5) {
+            $msg = 'Invalid sixth given. Valid sixths range from 0 to 5.';
+            throw new \InvalidArgumentException($msg);
+        }
+
+        if ('' === $sixth) {
+            $this->avg = $this->calcAvgGeneric(range(0, 59));
+        } else {
+            $var = 'avg' . $sixth;
+            $range = range($sixth*10, $sixth*10 + 9);
+            $this->$var = $this->calcAvgGeneric($range);
+        }
+    }
+
+    /**
+     * Generic function for calculating an average over the given range of indexes.
+     *
+     * @param array $range
+     * @return float|null
+     */
+    protected function calcAvgGeneric(array $range)
+    {
+        $t = 0;
+        $c = 0;
+
+        foreach ($range as $i) {
+            $tmp = $this->get($i);
+            if (null !== $tmp) {
+                $t += $tmp;
+                $c++;
+            }
+        }
+
+        return $c > 0 ? $t / $c : null;
+    }
+
+    /**
+     * Shortcut method for setting a value for a given index.
+     *
+     * @param int $index
+     * @param float $value
+     */
+    public function set($index, $value)
+    {
+        if ($index < 0 || $index > 59) {
+            $msg = 'Invalid index ' . $index . ' given. Valid indexes are between 0 and 59';
+            throw new \InvalidArgumentException($msg);
+        }
+
+        $fct = 'setS' . $index;
+        $this->$fct($value);
+    }
+
+    /**
+     * Shortcut method for getting a value for a given index.
+     *
+     * @param $index
+     * @return mixed
+     */
+    public function get($index)
+    {
+        if ($index < 0 || $index > 59) {
+            $msg = 'Invalid index ' . $index . ' given. Valid indexes are between 0 and 59';
+            throw new \InvalidArgumentException($msg);
+        }
+
+        $fct = 'getS' . $index;
+        return $this->$fct();
     }
 
     /**

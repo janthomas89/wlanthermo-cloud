@@ -237,4 +237,26 @@ class Measurement
     {
         $this->probes->removeElement($probe);
     }
+
+    /**
+     * Checks wether the measurement is active or not.
+     *
+     * @retutn boolean
+     */
+    public function isActive()
+    {
+        $now = new \DateTime();
+
+        $start = $this->getStart();
+        if (!$start || $start > $now) {
+            return false;
+        }
+
+        $end = $this->getEnd();
+        if ($end && $end < $now) {
+            return false;
+        }
+
+        return true;
+    }
 }
