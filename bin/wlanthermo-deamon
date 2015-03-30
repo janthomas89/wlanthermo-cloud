@@ -1,0 +1,22 @@
+#!/bin/sh
+#/etc/init.d/wlanthermo-deamon
+
+deamonPath=/var/www/sites/www.wlanthermo-cloud.de/bin/deamon.js
+logPath=/var/www/sites/www.wlanthermo-cloud.de/app/logs/deamon.log
+
+case "$1" in
+  start)
+  forever --killSignal=SIGINT -o $logPath -e $logPath start $deamonPath
+  echo "wlanthermo-deamon started"
+  ;;
+stop)
+  forever stop $deamonPath
+  echo "wlanthermo-deamon stopped"
+  ;;
+*)
+  echo "Usage: /etc/init.d/wlanthermo-deamon {start|stop}"
+  exit 1
+  ;;
+esac
+
+exit 0
