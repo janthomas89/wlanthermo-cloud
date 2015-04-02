@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractInfiniteCommand extends ContainerAwareCommand
 {
     /** @var int Tick interval in milliseconds */
-    protected $interval = 1000;
+    protected $interval = 2500;
 
     /** @var int Tick counter */
     protected $ticks = 0;
@@ -36,14 +36,15 @@ abstract class AbstractInfiniteCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $lastTick = microtime(false);
         while (!$this->shouldTerminate) {
+            $lastTick = microtime(true);
+
             $this->logMemoryUsage($output);
 
             $this->tick($input, $output);
 
             /* Sleep, so the tick function gets invoked every $this->interval ms */
-            $msToSleep = (int)($this->interval - (microtime(false) - $lastTick));
+            $msToSleep = (int)($this->interval - (microtime(true) - $lastTick) * 100);
 
             /* Count all ticks */
             $this->ticks++;

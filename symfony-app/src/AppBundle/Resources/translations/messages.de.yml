@@ -17,7 +17,11 @@ devices:
     name:
       label: Name
     url:
-      label: Name
+      label: URL
+    username:
+      label: Username
+    password:
+      label: Passwort
     probes:
       label: Temperaturfühler
   list:

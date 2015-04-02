@@ -4,8 +4,19 @@ parameters:
 services:
     measurement_service:
         class: AppBundle\Service\MeasurementService
-        arguments: ["@doctrine.orm.entity_manager", "@device_service_mock"]
+        arguments: ["@doctrine.orm.entity_manager", "@device_api_service"]
 
-    device_service_mock:
-        class: AppBundle\Service\DeviceServiceMock
+    # Just for debugging purpose
+    device_api_service_mock:
+        class: AppBundle\Service\DeviceAPIServiceMock
+
+    device_api_service:
+        class: AppBundle\Service\DeviceAPIService
+        arguments: ["@device_api_browser"]
+
+    device_api_browser:
+        class: Buzz\Browser
+        arguments: ["@buzz.client", "@buzz.message_factory"]
+
+
 

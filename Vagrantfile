@@ -22,8 +22,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "https://vagrantcloud.com/chef/boxes/debian-7.4-i386/versions/1.0.0/providers/virtualbox.box"
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
-
 
   # Configure Network
   config.vm.network :forwarded_port, guest: 80, host: 8080

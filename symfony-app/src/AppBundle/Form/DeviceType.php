@@ -17,6 +17,8 @@ class DeviceType extends AbstractType
         $builder
             ->add('name')
             ->add('url')
+            ->add('username')
+            ->add('password', 'password')
         ;
 
         $builder->add('probes', 'collection', array(

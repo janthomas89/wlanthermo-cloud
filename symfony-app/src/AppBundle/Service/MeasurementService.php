@@ -25,7 +25,7 @@ class MeasurementService
     /** @var MeasurementTimeSeriesRepository */
     protected $timeSeriesRepo;
 
-    /** @var DeviceServiceInterface */
+    /** @var DeviceAPIServiceInterface */
     protected $deviceService;
 
     /**
@@ -33,7 +33,7 @@ class MeasurementService
      *
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em, DeviceServiceInterface $deviceService)
+    public function __construct(EntityManager $em, DeviceAPIServiceInterface $deviceService)
     {
         $this->em = $em;
         $this->timeSeriesRepo = $em->getRepository('AppBundle:MeasurementTimeSeries');

@@ -13,6 +13,8 @@
 
 {{ form_row(form.name) }}
 {{ form_row(form.url) }}
+{{ form_row(form.username) }}
+{{ form_row(form.password) }}
 
 <table class="table js-collection" data-prototype="{{ _self.collectionItemWidget(form.probes.vars.prototype)|e }}" data-min="1" data-max="8">
     <caption>{{ 'probes.navigation.label' | trans }}</caption>
