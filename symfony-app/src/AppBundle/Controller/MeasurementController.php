@@ -86,7 +86,8 @@ class MeasurementController extends Controller
      */
     private function createCreateForm(Measurement $entity)
     {
-        if ($this->get('request')->get('silent')) {
+        $request = $this->get('request');
+        if ($this->get('request')->get('silent') || $request->isMethod('GET')) {
             $this->initMeasurement($entity);
         }
 
@@ -102,18 +103,22 @@ class MeasurementController extends Controller
 
     private function initMeasurement(Measurement $measurement)
     {
+        $measurement->setName('Grillen ' . date('d.m.Y'));
+
         /** @var Request $request */
         $request = $this->get('request');
 
         $formData = $request->request->get('appbundle_measurement');
         $deviceId = isset($formData['device']) ? (int)$formData['device'] : 0;
+        $em = $this->getDoctrine()->getManager();
 
         if (!$deviceId) {
-            return;
+            $device = $em->getRepository('AppBundle:Device')->getOne();
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $device = $em->getRepository('AppBundle:Device')->find($deviceId);
+        if (!$device) {
+            $device = $em->getRepository('AppBundle:Device')->find($deviceId);
+        }
 
         if (!$device) {
             return;

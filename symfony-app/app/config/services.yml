@@ -12,11 +12,21 @@ services:
 
     device_api_service:
         class: AppBundle\Service\DeviceAPIService
-        arguments: ["@device_api_browser"]
+        arguments: ["@device_api_browser", "@logger"]
 
     device_api_browser:
         class: Buzz\Browser
         arguments: ["@buzz.client", "@buzz.message_factory"]
 
+    validator.device_connectivity_validator:
+        class: AppBundle\Constraint\DeviceConnectivityConstraintValidator
+        arguments: ["@device_api_service"]
+        tags:
+            - { name: validator.constraint_validator, alias: device_connectivity_validator }
 
+    validator.device_authentication_validator:
+            class: AppBundle\Constraint\DeviceAuthenticationConstraintValidator
+            arguments: ["@device_api_service"]
+            tags:
+                - { name: validator.constraint_validator, alias: device_authentication_validator }
 

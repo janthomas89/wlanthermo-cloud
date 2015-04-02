@@ -26,4 +26,15 @@ class DeviceRepository extends EntityRepository
 
         return (int)$qb->getQuery()->getSingleScalarResult();
     }
+
+    /**
+     * Just returns one "random" device.
+     *
+     * @return array
+     */
+    public function getOne()
+    {
+        $entities = $this->findBy([], [], 1);
+        return isset($entities[0]) ? $entities[0] : null;
+    }
 }

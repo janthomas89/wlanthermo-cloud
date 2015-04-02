@@ -241,7 +241,7 @@ class Measurement
     /**
      * Checks wether the measurement is active or not.
      *
-     * @retutn boolean
+     * @return boolean
      */
     public function isActive()
     {
