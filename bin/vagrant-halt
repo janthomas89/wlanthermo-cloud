@@ -1,0 +1,18 @@
+#!/bin/sh
+
+PID_FILE="/var/run/vagrant-rsync-auto.pid"
+
+# Terminating vagrant rsync-auto
+if [ ! -f $PID_FILE ];
+then
+    echo "vagrant rsync-auto pid not found"
+else
+    read pid < $PID_FILE
+    gpid=$(ps --pid $pid -o "%r" | sed 1d)
+    echo "vagrant rsync-auto terminating $pid"
+    sudo kill -TERM -$gpid
+    sudo rm $PID_FILE
+fi
+
+# Halt vagrant machine
+vagrant halt

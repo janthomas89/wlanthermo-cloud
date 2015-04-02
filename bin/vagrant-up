@@ -1,0 +1,12 @@
+#!/bin/sh
+
+PID_FILE=/var/run/vagrant-rsync-auto.pid
+
+# Booting vagrant machine
+vagrant up
+
+# Booting vagrant rsync-auto
+vagrant rsync-auto > /dev/null 2>&1 &
+echo "vagrant rsync-auto starting with pid ..."
+echo $! | sudo tee $PID_FILE
+echo "vagrant rsync-auto started"
