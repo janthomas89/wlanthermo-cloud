@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Constraint\DeviceConnectivityConstraint;
+use AppBundle\Constraint\DeviceAuthenticationConstraint;
 
 /**
  * Device
@@ -14,6 +16,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="AppBundle\Entity\DeviceRepository")
  * @UniqueEntity("name", message="devices.name.uniqueEntity")
  * @UniqueEntity("url", message="devices.url.uniqueEntity")
+ * @DeviceConnectivityConstraint(message="devices.url.noConnectivity")
+ * @DeviceAuthenticationConstraint(message="devices.username.notAuthenticated")
  */
 class Device
 {

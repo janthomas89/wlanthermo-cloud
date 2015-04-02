@@ -16,6 +16,24 @@ class DeviceAPIServiceMock implements DeviceAPIServiceInterface
     protected $lastValues = array();
 
     /**
+     * @param Device $device
+     * @return boolean
+     */
+    public function checkConnectivity(Device $device)
+    {
+        return true;
+    }
+
+    /**
+     * @param Device $device
+     * @return boolean
+     */
+    public function checkAuthentication(Device $device)
+    {
+        return true;
+    }
+
+    /**
      * Returns "random" probe values for the given device.
      *
      * @param Device $device
@@ -41,5 +59,38 @@ class DeviceAPIServiceMock implements DeviceAPIServiceInterface
         }
 
         return [$values];
+    }
+
+    /**
+     * Saves the probe configuration of the given device.
+     *
+     * @param Device $device
+     * @return mixed
+     */
+    public function saveProbeConfig(Device $device)
+    {
+
+    }
+
+    /**
+     * Restarts the given device.
+     *
+     * @param Device $device
+     * @return mixed
+     */
+    public function restart(Device $device)
+    {
+
+    }
+
+    /**
+     * Shuts down the given device.
+     *
+     * @param Device $device
+     * @return mixed
+     */
+    public function shutdown(Device $device)
+    {
+
     }
 }

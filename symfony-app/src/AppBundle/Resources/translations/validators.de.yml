@@ -6,9 +6,12 @@ devices:
     notBlank: Bitte geben Sie eine URL an.
     uniqueEntity: Bitte geben Sie eine eindeutige URL an.
     url: Bitte geben Sie eine gültige URL an.
+    noConnectivity: Hinter der angegebenen URL konnte keine Geräte-API gefunden werden. Bitte überprüfen Sie die URL und die Verbindung.
   probes:
     min: Bitte konfigurieren Sie mindestens einen Temperaturfühler.
     max: Bitte konfigurieren Sie maximal acht Temperaturfühler.
+  username:
+    notAuthenticated: Mit den angegebenen Zugangsdaten konnte keine Verbindung zur Geräte-API hergestellt werden. Bitte überprüfen Sie Ihr Usernamen und Passwort.
 
 probes:
   channel:

@@ -8,11 +8,16 @@ use AppBundle\Entity\Probe;
 use AppBundle\Entity\TimeBoundArray;
 use Buzz\Browser;
 use Buzz\Message\Request;
+use Buzz\Exception\ExceptionInterface as BuzzException;
+use Psr\Log\LoggerInterface;
 
 class DeviceAPIService implements DeviceAPIServiceInterface
 {
     /** @var Browser */
     protected $api;
+
+    /** @var LoggerInterface */
+    protected $logger;
 
     /** @var \DateTime */
     protected $lastValue;
@@ -21,10 +26,40 @@ class DeviceAPIService implements DeviceAPIServiceInterface
      * Instantiates the device api.
      *
      * @param Browser $api
+     * @param LoggerInterface $logger
      */
-    public function __construct(Browser $api)
+    public function __construct(Browser $api, LoggerInterface $logger)
     {
         $this->api = $api;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param Device $device
+     * @return boolean
+     */
+    public function checkConnectivity(Device $device)
+    {
+        try {
+            $result = $this->apiCall($device);
+            return isset($result['status']);
+        } catch (BuzzException $e) { }
+
+        return false;
+    }
+
+    /**
+     * @param Device $device
+     * @return boolean
+     */
+    public function checkAuthentication(Device $device)
+    {
+        try {
+            $result = $this->apiCall($device);
+            return isset($result['status']) && 404 === $result['status'];
+        } catch (BuzzException $e) { }
+
+        return false;
     }
 
     /**
@@ -76,6 +111,46 @@ class DeviceAPIService implements DeviceAPIServiceInterface
     }
 
     /**
+     * Saves the probe configuration of the given device.
+     *
+     * @param Device $device
+     * @return mixed
+     */
+    public function saveProbeConfig(Device $device)
+    {
+        /** @var Probe $probe */
+        foreach ($device->getProbes() as $probe) {
+            $this->apiCall($device, ['action' => 'config'], [
+                'index' => $probe->getChannel(),
+                'enabled' => true,
+                'probeType' => $probe->getType(),
+            ]);
+        }
+    }
+
+    /**
+     * Restarts the given device.
+     *
+     * @param Device $device
+     * @return mixed
+     */
+    public function restart(Device $device)
+    {
+        $this->apiCall($device, ['action' => 'restart']);
+    }
+
+    /**
+     * Shuts down the given device.
+     *
+     * @param Device $device
+     * @return mixed
+     */
+    public function shutdown(Device $device)
+    {
+        $this->apiCall($device, ['action' => 'shutdown']);
+    }
+
+    /**
      * Makes an API call for the given device.
      *
      * @param Device $device
@@ -95,7 +170,7 @@ class DeviceAPIService implements DeviceAPIServiceInterface
         $request = new Request($method, $action, $device->getUrl());
 
         if (count($post) > 0) {
-            $request->setContent(http_build_query($params));
+            $request->setContent(http_build_query($post));
         }
 
         if ($device->getUsername() && $device->getPassword()) {
@@ -103,7 +178,13 @@ class DeviceAPIService implements DeviceAPIServiceInterface
             $request->addHeader($hdr);
         }
 
+        $this->logger->debug(var_export($request, true));
+
         $response = $this->api->send($request);
+
+        //@ToDo Error handling status 500? ...
+
+        $this->logger->debug(var_export($response, true));
 
         return json_decode(
             $response->getContent(),

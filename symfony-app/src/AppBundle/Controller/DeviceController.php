@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Probe;
+use AppBundle\Service\DeviceAPIServiceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -59,6 +60,10 @@ class DeviceController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+
+            /** @var DeviceAPIServiceInterface $service */
+            $service = $this->get('device_api_service');
+            $service->saveProbeConfig($entity);
 
             return $this->redirect($this->generateUrl('devices'));
         }
@@ -185,6 +190,10 @@ class DeviceController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            /** @var DeviceAPIServiceInterface $service */
+            $service = $this->get('device_api_service');
+            $service->saveProbeConfig($entity);
 
             return $this->redirect($this->generateUrl('devices'));
         }
