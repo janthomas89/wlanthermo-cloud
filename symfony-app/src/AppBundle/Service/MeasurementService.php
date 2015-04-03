@@ -123,4 +123,154 @@ class MeasurementService
 
         return $series;
     }
+
+    /**
+     * Returns the current snapshot of the given measurement. This
+     * includes the current temperatues, alerts and history data.
+     *
+     * @param Measurement $measurement
+     * @return array
+     */
+    public function getSnapshot(Measurement $measurement)
+    {
+        $result = [];
+
+        $result['deviceStatus'] = $this->getDeviceStatus($measurement);
+
+        $lastMeasurement = $this->timeSeriesRepo->getLastMeasurement($measurement);
+        $result['lastMeasurement'] = $lastMeasurement->getTimestamp();
+        $result['lastMeasurementFormatted'] = $lastMeasurement->format('d.m.Y H:i:s');
+
+        $current = $this->getCurrentValues($measurement);
+        $result['current'] = $current;
+
+        $alerts = $this->getAlerts($measurement, $current);
+        $result['alerts'] = $alerts;
+
+        $fullHistory = $this->timeSeriesRepo->getFullHistory($measurement);
+        $result['last20min'] = $this->aggregateLast20Min($measurement, $fullHistory);
+
+        $result['fullHistory'] = $this->aggregateFullHistory($measurement, $fullHistory);
+
+        return $result;
+    }
+
+    /**
+     * Retrieves the device status.
+     *
+     * @param Measurement $measurement
+     * @return bool
+     */
+    private function getDeviceStatus(Measurement $measurement)
+    {
+        $device = $measurement->getDevice();
+        return $this->deviceService->checkConnectivity($device)
+            && $this->deviceService->checkAuthentication($device);
+    }
+
+    /**
+     * Returns the current temperature values.
+     *
+     * @param Measurement $measurement
+     * @return array
+     */
+    private function getCurrentValues(Measurement $measurement)
+    {
+        return $this->timeSeriesRepo->getCurrentValues($measurement);
+    }
+
+    /**
+     * Calculates the alters based on the current temperature values.
+     *
+     * @param Measurement $measurement
+     * @param array $current
+     * @return array
+     */
+    private function getAlerts(Measurement $measurement, array $current)
+    {
+        $alerts = [];
+
+        /** @var MeasurementProbe $probe */
+        foreach ($measurement->getProbes() as $probe) {
+            $c = $current[$probe->getId()];
+            $a = $c < $probe->getMin() || $c > $probe->getMax();
+            $alerts[$probe->getId()] = $a;
+        }
+
+        return $alerts;
+    }
+
+    /**
+     * Aggregates the last 20 minutes.
+     *
+     * @param Measurement $measurement
+     * @param array $history
+     * @return array
+     */
+    private function aggregateLast20Min(Measurement $measurement, array $history)
+    {
+        $axis = ['x'];
+        $last20min = [$axis];
+        $nowPT20M = new \DateTime();
+        $nowPT20M->modify('-20 minutes');
+
+        /** @var MeasurementProbe $probe */
+        foreach ($measurement->getProbes() as $probe) {
+            $probeHistory = $history[$probe->getId()];
+            $tmpLast20min = [$probe->getName()];
+
+            /** @var MeasurementTimeSeries $timeSeries */
+            foreach($probeHistory as $timeSeries) {
+                $axis[] = $timeSeries->getTime()->getTimestamp() * 1000;
+                $tmpLast20min[] = $timeSeries->getAvg();
+
+                if ($timeSeries->getTime() < $nowPT20M) {
+                    break;
+                }
+            }
+
+            $last20min[] = $tmpLast20min;
+        }
+
+        $last20min[0] = array_unique($axis);
+
+        return $last20min;
+    }
+
+    /**
+     * Aggregates the full measurements history.
+     *
+     * @param Measurement $measurement
+     * @param array $history
+     * @return array
+     */
+    private function aggregateFullHistory(Measurement $measurement, array $history)
+    {
+        $axis = ['x'];
+        $result = [$axis];
+
+        /** @var MeasurementProbe $probe */
+        foreach ($measurement->getProbes() as $probe) {
+            $probeHistory = $history[$probe->getId()];
+            $tmpResult = [$probe->getName()];
+
+            /** @var MeasurementTimeSeries $timeSeries */
+            foreach($probeHistory as $timeSeries) {
+                $time = $timeSeries->getTime();
+
+                // ToDo calculate left out values dynamically (based on overall duration)
+
+                if (0 === ($time->format('i') % 10)) {
+                    $axis[] = $time->getTimestamp() * 1000;
+                    $tmpResult[] = $timeSeries->getAvg();
+                }
+            }
+
+            $result[] = $tmpResult;
+        }
+
+        $result[0] = array_unique($axis);
+
+        return $result;
+    }
 } 

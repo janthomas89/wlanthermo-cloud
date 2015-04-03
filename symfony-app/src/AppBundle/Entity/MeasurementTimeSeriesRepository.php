@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class MeasurementTimeSeriesRepository extends EntityRepository
 {
+    const NOT_A_TEMPERATURE = 999.9;
+
     /**
      * Returns a matching time series for the given probe and time, if it exists.
      *
@@ -65,5 +67,78 @@ class MeasurementTimeSeriesRepository extends EntityRepository
         $newDate->setTimestamp($ts);
 
         return $newDate;
+    }
+
+    /**
+     * Returns the last recorded measurement.
+     *
+     * @param Measurement $measurement
+     * @return \DateTime|null
+     */
+    public function getLastMeasurement(Measurement $measurement)
+    {
+        $last = null;
+
+        /** @var MeasurementProbe $probe */
+        foreach ($measurement->getProbes() as $probe) {
+            $timeSeries = $this->findOneBy(
+                ['measurementProbe' => $probe],
+                ['time' => 'DESC']
+            );
+
+            if ($timeSeries) {
+                $tmp = $timeSeries->getCurrentValuesTime();
+                $last = (!$last || $last < $tmp) ? $tmp : $last;
+            }
+        }
+
+        return $last;
+    }
+
+    /**
+     * Returns the current values for the measurements probes.
+     *
+     * @param Measurement $measurement
+     * @return array
+     */
+    public function getCurrentValues(Measurement $measurement)
+    {
+        $current = [];
+
+        /** @var MeasurementProbe $probe */
+        foreach ($measurement->getProbes() as $probe) {
+            $timeSeries = $this->findOneBy(
+                ['measurementProbe' => $probe],
+                ['time' => 'DESC']
+            );
+
+            $current[$probe->getId()] = $timeSeries ?
+                $timeSeries->getCurrentValue() : self::NOT_A_TEMPERATURE;
+        }
+
+        return $current;
+    }
+
+    /**
+     * Returns the full time series history for the given measurement.
+     *
+     * @param Measurement $measurement
+     * @return array
+     */
+    public function getFullHistory(Measurement $measurement)
+    {
+        $history = [];
+
+        /** @var MeasurementProbe $probe */
+        foreach ($measurement->getProbes() as $probe) {
+            $entities = $this->findBy(
+                ['measurementProbe' => $probe],
+                ['time' => 'DESC']
+            );
+
+            $history[$probe->getId()] = $entities;
+        }
+
+        return $history;
     }
 }

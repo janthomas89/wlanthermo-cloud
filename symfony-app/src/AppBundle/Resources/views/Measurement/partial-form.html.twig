@@ -12,7 +12,10 @@
 {{ form_errors(form) }}
 
 {{ form_row(form.name, {'label': 'measurements.fields.name.label'}) }}
-{{ form_row(form.device, {'label': 'measurements.fields.device.label'}) }}
+
+{% if form.device is defined %}
+    {{ form_row(form.device, {'label': 'measurements.fields.device.label'}) }}
+{% endif %}
 
 <table class="table js-collection js-collection-measurement-probes" data-min="1" data-max="8">
     <caption>{{ 'probes.navigation.label' | trans }}</caption>
@@ -33,12 +36,14 @@
             <th>
                 {{ 'measurementProbes.fields.color.label' | trans }}
             </th>
-            <th></th>
+            {% if entity.id == 0 %}
+                <th></th>
+            {%  endif %}
         </tr>
     </thead>
     <tbody>
         {% for probe in form.probes %}
-            {{ _self.collectionItemWidget(probe) }}
+            {{ _self.collectionItemWidget(probe, entity) }}
         {% endfor %}
 
         {% if  form.probes | length == 0 %}
@@ -67,7 +72,8 @@
 
 {{ form_end(form) }}
 
-{% macro collectionItemWidget(item) %}
+
+{% macro collectionItemWidget(item, entity) %}
     {% spaceless %}
         <tr>
             {% for field in item %}
@@ -76,15 +82,17 @@
                     {{ form_errors(field) }}
                 </td>
             {% endfor %}
-            <td>
-                <ul class="list-unstyled grid-actions">
-                    <li>
-                        <button class="btn btn-default btn-s pull-right js-button-delete" title="{{ "probe.delete.label" | trans }}">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </button>
-                    </li>
-                </ul>
-            </td>
+            {% if entity.id == 0 %}
+                <td>
+                    <ul class="list-unstyled grid-actions">
+                        <li>
+                            <button class="btn btn-default btn-s pull-right js-button-delete" title="{{ "probe.delete.label" | trans }}">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </td>
+            {% endif %}
         </tr>
     {% endspaceless %}
 {% endmacro %}

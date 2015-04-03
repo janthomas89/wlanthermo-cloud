@@ -7,46 +7,89 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'measurements.detail.overview' | trans }}: {{ entity.name }}</h3>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        <label class="measurements-detail-label pull-left">Start:</label> {{ entity.start | date("d.m.Y H:i") }}
-                    </p>
-                    <p>
-                        <label class="measurements-detail-label pull-left">Ende:</label>
-                        {% if entity.end is defined and entity.end %}
-                            {{ entity.end | date("d.m.Y H:i") }}
-                        {%  else %}
-                            <span class="label label-info">{{ "measurements.fields.end.empty" | trans }}</span>
-                        {%  endif %}
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Alarme</h3>
-                </div>
-                <div class="panel-body">
-                    Alarme verwalten!
-                </div>
-            </div>
-        </div>
-    </div>
+                    {% if entity.isActive() %}
+                        <div class="dropdown pull-right" style="margin-top: -6px;">
+                            <button class="btn btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                                <li>
+                                    <a href="{{ path('measurement_edit', {id: entity.id}) }}" title="{{ 'measurements.detail.menu.edit' | trans }}">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        {{ 'measurements.detail.menu.edit' | trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    {%  set form = dropdownForms.restart %}
+                                    {{ form_start(form) }}
+                                    <button type="submit" class="btn btn-link" title="{{ 'measurements.detail.menu.restart' | trans }}">
+                                        <span class="glyphicon glyphicon-refresh"></span>
+                                        {{ 'measurements.detail.menu.restart' | trans }}
+                                    </button>
+                                    {{ form_widget(form._token) }}
+                                    </form>
+                                </li>
+                                <li>
+                                    {%  set form = dropdownForms.stop %}
+                                    {{ form_start(form) }}
+                                    <button type="submit" class="btn btn-link" title="{{ 'measurements.detail.menu.stop' | trans }}" data-confirm="{{ 'measurements.detail.menu.stopConfirm' | trans }}">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        {{ 'measurements.detail.menu.stop' | trans }}
+                                    </button>
+                                    {{ form_widget(form._token) }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
 
-    <div class="row">
+                    <h3 class="panel-title">{{ entity.name }}</h3>
+                </div>
+                <div class="panel-body measurements-detail-panel-body">
+                    <p>
+                        <label class="measurements-detail-label pull-left">{{ 'measurements.detail.start' | trans }}:</label>
+                        {{ entity.start | date("d.m.Y H:i") }}
+                    </p>
+                    {% if not entity.isActive() %}
+                        <p>
+                            <label class="measurements-detail-label pull-left">{{ 'measurements.detail.end' | trans }}:</label>
+                            {% if entity.end is defined and entity.end %}
+                                {{ entity.end | date("d.m.Y H:i") }}
+                            {%  else %}
+                                <span class="label label-info">{{ "measurements.fields.end.empty" | trans }}</span>
+                            {%  endif %}
+                        </p>
+                    {% else %}
+                        <p>
+                            <label class="measurements-detail-label pull-left">{{ 'measurements.detail.deviceStatus' | trans }}:</label>
+                            <span id="device-status-online" class="label label-success{% if not snapshot.deviceStatus %} hidden{% endif %}">online</span>
+                            <span id="device-status-offline" class="label label-danger{% if snapshot.deviceStatus %} hidden{% endif %}">onffline</span>
+                        </p>
+                        <p>
+                            <label class="measurements-detail-label pull-left">{{ 'measurements.detail.lastMeasurement' | trans }}:</label>
+                            <span id="last-measurement"></span>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
         {% for probe in entity.probes %}
+            {% set index = loop.index0 + 1 %}
+            {% if index is divisible by(3) %}
+                </div>
+                <div class="row">
+            {% endif %}
+
             <div class="col-md-4" data-measurement-probe-id="{{ probe.id }}">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             {{ probe.name }}
-                            <span class="badge pull-right">{{ probe.min }} °C / {{ probe.max }}°C</span>
+                            <span id="chart-{{ probe.id }}-label" class="label label-default pull-right">{{ probe.min }} °C / {{ probe.max }}°C</span>
                         </h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body measurements-detail-panel-body">
                         <div class="chart" id="chart-{{ probe.id }}"></div>
                     </div>
                 </div>
@@ -66,7 +109,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="chart" id="chart-recent"></div>
-                    <p class="text-center">Letzte Stunde</p>
+                    <p class="text-center">Letzte 20 Minuten</p>
                 </div>
             </div>
         </div>
@@ -77,42 +120,85 @@
 {% block pageJavascripts %}
     <script type="application/javascript">
         $(function() {
-            {% for probe in entity.probes %}
-                $('#chart-{{ probe.id }}').wlanthermoGauge({
-                    label: '{{ probe.name }}',
-                    color: '{{ probe.color }}',
-                    value: 148
+            var snapshot = {{ snapshot|json_encode() | raw }};
+
+            var update = function(snapshot) {
+                $('#device-status-online').toggleClass('hidden', !snapshot.deviceStatus);
+                $('#device-status-offline').toggleClass('hidden', snapshot.deviceStatus);
+                $('#last-measurement').text(snapshot.lastMeasurementFormatted);
+
+                var current = snapshot.current;
+                for (var id in current) {
+                    var val = current[id];
+                    $('#chart-' + id).wlanthermoGauge('load', val);
+                }
+
+                var alerts = snapshot.alerts;
+                for (var id in alerts) {
+                    $('#chart-' + id + '-label').toggleClass('label-danger', alerts[id]);
+                }
+
+                fullHistory.load({
+                    columns: snapshot.fullHistory,
+                    type: 'spline',
+                    x: 'x'
                 });
+
+                last20min.load({
+                    columns: snapshot.last20min,
+                    type: 'spline',
+                    x: 'x'
+                });
+            };
+
+
+            {% for probe in entity.probes %}
+            $('#chart-{{ probe.id }}').wlanthermoGauge({
+                label: '{{ probe.name }}',
+                color: '{{ probe.color }}',
+                value: snapshot.current[{{ probe.id }}]
+            });
             {% endfor %}
 
-            var chart = c3.generate({
+            var fullHistory = c3.generate({
                 bindto: '#chart-historie',
                 data: {
-                    columns: [
-                        ['Garraum', 30, 200, 100, 400, 150, 250],
-                        ['Gargut 1', 130, 100, 140, 200, 150, 50],
-                        ['Gargut 2', 120, 110, 120, 130, 150, 90]
-                    ],
-                    type: 'spline'
+                    columns: [],
+                    type: 'spline',
+                    x: 'x'
                 },
-                tooltip: {
-
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%H:%M:%S',
+                            culling: {max: 4}
+                        }
+                    }
                 }
             });
 
 
-            var chart2 = c3.generate({
+            var last20min = c3.generate({
                 bindto: '#chart-recent',
                 data: {
-                    columns: [
-                        ['Garraum', 30, 200, 100, 400, 150, 250],
-                        ['Gargut 1', 130, 100, 140, 200, 150, 50],
-                        ['Gargut 2', 120, 110, 120, 130, 150, 90]
-                    ],
-                    type: 'spline'
+                    columns: [],
+                    type: 'spline',
+                    x: 'x'
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%H:%M:%S',
+                            culling: {max: 4}
+                        }
+                    }
                 }
             });
 
+            // ToDo Ajax ...
+            update(snapshot);
         });
     </script>
 {% endblock %}

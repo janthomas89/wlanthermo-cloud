@@ -6,17 +6,17 @@ services:
         class: AppBundle\Service\MeasurementService
         arguments: ["@doctrine.orm.entity_manager", "@device_api_service"]
 
+    measurement_deamon_service:
+        class: AppBundle\Service\MeasurementDeamonService
+        arguments: ["@doctrine.orm.entity_manager", "@buzz", "@logger"]
+
     # Just for debugging purpose
     device_api_service_mock:
         class: AppBundle\Service\DeviceAPIServiceMock
 
     device_api_service:
         class: AppBundle\Service\DeviceAPIService
-        arguments: ["@device_api_browser", "@logger"]
-
-    device_api_browser:
-        class: Buzz\Browser
-        arguments: ["@buzz.client", "@buzz.message_factory"]
+        arguments: ["@buzz", "@logger"]
 
     validator.device_connectivity_validator:
         class: AppBundle\Constraint\DeviceConnectivityConstraintValidator

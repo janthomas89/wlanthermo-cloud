@@ -5,12 +5,16 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Measurement;
 use AppBundle\Entity\MeasurementProbe;
 use AppBundle\Form\MeasurementType;
+use AppBundle\Service\DeviceAPIServiceInterface;
+use AppBundle\Service\MeasurementDeamonService;
+use AppBundle\Service\MeasurementService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Measurement controller.
@@ -44,6 +48,10 @@ class MeasurementController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            /** @var MeasurementDeamonService $deamon */
+            $deamon = $this->get('measurement_deamon_service');
+            $deamon->start($entity);
+
             return $this->redirect($this->generateUrl('measurement', array(
                 'id' => $entity->getId()
             )));
@@ -52,28 +60,6 @@ class MeasurementController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Lists all past measurements entities.
-     *
-     * @Route("/{id}", name="measurement")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AppBundle:Measurement')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Measurement entity.');
-        }
-
-        return array(
-            'entity' => $entity
         );
     }
 
@@ -101,6 +87,11 @@ class MeasurementController extends Controller
         return $form;
     }
 
+    /**
+     * Initializes the measurement with defualts.
+     *
+     * @param Measurement $measurement
+     */
     private function initMeasurement(Measurement $measurement)
     {
         $measurement->setName('Grillen ' . date('d.m.Y'));
@@ -151,25 +142,14 @@ class MeasurementController extends Controller
 
         $entity = $em->getRepository('AppBundle:Measurement')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Measurement entity.');
-        }
-
-        $originalProbes = new ArrayCollection();
-        foreach ($entity->getProbes() as $probe) {
-            $originalProbes->add($probe);
+        if (!$entity || !$entity->isActive()) {
+            throw $this->createNotFoundException('Unable to find active Measurement entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($request->isMethod('POST') && $editForm->isValid()) {
-            foreach ($originalProbes as $probe) {
-                if (false === $entity->getProbes()->contains($probe)) {
-                    $em->remove($probe);
-                }
-            }
-
             $em->persist($entity);
             $em->flush();
 
@@ -191,15 +171,129 @@ class MeasurementController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Device $entity)
+    private function createEditForm(Measurement $entity)
     {
         $form = $this->createForm(new MeasurementType(), $entity, array(
             'action' => $this->generateUrl('measurement_edit', array('id' => $entity->getId())),
             'method' => 'POST',
         ));
 
+        $form->remove('device');
+
         $form->add('submit', 'submit', array('label' => 'Speichern'));
 
         return $form;
+    }
+
+    /**
+     * Lists all past measurements entities.
+     *
+     * @Route("/{id}", name="measurement")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Measurement $entity */
+        $entity = $em->getRepository('AppBundle:Measurement')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Measurement entity.');
+        }
+
+        $restartForm = $this->createDropdownForm(
+            $this->generateUrl('measurement_restart', ['id' => $entity->getId()])
+        );
+        $stopForm = $this->createDropdownForm(
+            $this->generateUrl('measurement_stop', ['id' => $entity->getId()])
+        );
+
+        /** @var MeasurementService $measurementService */
+        $measurementService = $this->get('measurement_service');
+        $snapshot = $measurementService->getSnapshot($entity);
+
+        return [
+            'entity' => $entity,
+            'dropdownForms' => [
+                'restart' => $restartForm->createView(),
+                'stop' => $stopForm->createView(),
+            ],
+            'snapshot' => $snapshot,
+        ];
+    }
+
+    /**
+     * Generates a form for dropdown actions (e.g. stop measurement, ...)
+     *
+     * @param $url
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createDropdownForm($url)
+    {
+        return $this->createFormBuilder()
+            ->setAction($url)
+            ->setMethod('POST')
+            ->getForm();
+    }
+
+    /**
+     * Restarts the measurements deamon.
+     *
+     * @Route("/{id}/restart", name="measurement_restart")
+     * @Method("POST")
+     * @Template()
+     */
+    public function restartAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AppBundle:Measurement')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Measurement entity.');
+        }
+
+        /** @var MeasurementDeamonService $deamon */
+        $deamon = $this->get('measurement_deamon_service');
+        $deamon->restart($entity);
+
+        return $this->redirect($this->generateUrl('measurement', array(
+            'id' => $entity->getId()
+        )));
+    }
+
+    /**
+     * Stops the measurement.
+     *
+     * @Route("/{id}/stop", name="measurement_stop")
+     * @Method("POST")
+     * @Template()
+     */
+    public function stopAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Measurement $entity */
+        $entity = $em->getRepository('AppBundle:Measurement')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Measurement entity.');
+        }
+
+        $entity->setEnd(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+
+        /** @var MeasurementDeamonService $deamon */
+        $deamon = $this->get('measurement_deamon_service');
+        $deamon->stop($entity);
+
+        return $this->redirect($this->generateUrl('measurement', array(
+            'id' => $entity->getId()
+        )));
     }
 }

@@ -577,6 +577,38 @@ class MeasurementTimeSeries
     }
 
     /**
+     * Returns the time of the last recorded values of this time series.
+     *
+     * @return \DateTime
+     */
+    public function getCurrentValuesTime()
+    {
+        $last = 0;
+        for ($i = 0; $i < 60; $i++) {
+            $last = $this->get($i) ? $i : $last;
+        }
+
+        $time = clone $this->getTime();
+        $time->add(new \DateInterval('PT' . (int)$last . 'S'));
+        return $time;
+    }
+
+    /**
+     * Returns the current values.
+     *
+     * @return float
+     */
+    public function getCurrentValue()
+    {
+        $last = 0;
+        for ($i = 0; $i < 60; $i++) {
+            $last = $this->get($i) ? $i : $last;
+        }
+
+        return (float)$this->get($last);
+    }
+
+    /**
      * @param \DateTime $time
      * @param float $value
      */

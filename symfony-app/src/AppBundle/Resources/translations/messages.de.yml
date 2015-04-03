@@ -69,10 +69,21 @@ measurements:
       label: Prozess Id
   list:
     label: Historie
+  edit:
+    label: Messreihe bearbeiten
   detail:
     label: Messreihe Details
     labelShort: Details
-    overview: Übersicht
+    start: Start
+    end: Ende
+    lastMeasurement: Letzte Mess.
+    deviceStatus: Gerätestatus
+    menu:
+      edit: Messreihe bearbeiten
+      restart: Deamon neustarten
+      stop: Messreihe beenden
+      stopConfirm: Möchten Sie die Messreihe wirklich beenden? Diese Aktion kann nicht rückgängig gemacht werden.
+
   new:
     label: Neue Messreihe
   active:

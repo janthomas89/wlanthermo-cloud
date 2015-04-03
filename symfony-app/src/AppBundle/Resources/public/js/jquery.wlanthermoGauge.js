@@ -65,7 +65,7 @@
         label: 'Temperatur',
         value: 0,
         min: 0,
-        max: 300,
+        max: 200,
         units: ' °C',
         color: '#FF0000'
     };
