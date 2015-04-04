@@ -17,47 +17,49 @@
     {{ form_row(form.device, {'label': 'measurements.fields.device.label'}) }}
 {% endif %}
 
-<table class="table js-collection js-collection-measurement-probes" data-min="1" data-max="8">
-    <caption>{{ 'probes.navigation.label' | trans }}</caption>
-    <thead>
-        <tr>
-            <th>
-                {{ 'measurementProbes.fields.channel.label' | trans }}
-            </th>
-            <th>
-                {{ 'measurementProbes.fields.name.label' | trans }}
-            </th>
-            <th>
-                {{ 'measurementProbes.fields.min.label' | trans }}
-            </th>
-            <th>
-                {{ 'measurementProbes.fields.max.label' | trans }}
-            </th>
-            <th>
-                {{ 'measurementProbes.fields.color.label' | trans }}
-            </th>
-            {% if entity.id == 0 %}
-                <th></th>
-            {%  endif %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for probe in form.probes %}
-            {{ _self.collectionItemWidget(probe, entity) }}
-        {% endfor %}
-
-        {% if  form.probes | length == 0 %}
-            {% do form.probes.setRendered %}
+<div class="table-responsive">
+    <table class="table js-collection js-collection-measurement-probes" data-min="1" data-max="8">
+        <caption>{{ 'probes.navigation.label' | trans }}</caption>
+        <thead>
             <tr>
-                <td colspan="6">
-                    <div class="alert alert-info">
-                        {{ 'measurementProbes.none' | trans }}
-                    </div>
-                </td>
+                <th>
+                    {{ 'measurementProbes.fields.channel.label' | trans }}
+                </th>
+                <th>
+                    {{ 'measurementProbes.fields.name.label' | trans }}
+                </th>
+                <th>
+                    {{ 'measurementProbes.fields.min.label' | trans }}
+                </th>
+                <th>
+                    {{ 'measurementProbes.fields.max.label' | trans }}
+                </th>
+                <th>
+                    {{ 'measurementProbes.fields.color.label' | trans }}
+                </th>
+                {% if entity.id == 0 %}
+                    <th></th>
+                {%  endif %}
             </tr>
-        {% endif %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for probe in form.probes %}
+                {{ _self.collectionItemWidget(probe, entity) }}
+            {% endfor %}
+
+            {% if  form.probes | length == 0 %}
+                {% do form.probes.setRendered %}
+                <tr>
+                    <td colspan="6">
+                        <div class="alert alert-info">
+                            {{ 'measurementProbes.none' | trans }}
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
 
 <ul class="list-unstyled">
     <li>

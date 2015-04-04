@@ -4,50 +4,52 @@
 
 {% block body -%}
 
-    <table class="table table-striped table table-hover">
-        <thead>
-            <tr>
-                <th>{{ "measurements.fields.id.label" | trans }}</th>
-                <th>{{ "measurements.fields.name.label" | trans }}</th>
-                <th>{{ "measurements.fields.device.label" | trans }}</th>
-                <th>{{ "measurements.fields.start.label" | trans }}</th>
-                <th>{{ "measurements.fields.end.label" | trans }}</th>
-                <th>{{ "measurements.fields.pid.label" | trans }}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>
-                    <a href="{{ path('measurement', { 'id': entity.id }) }}" title="{{ "measurements.detail.label" | trans }}">
-                        {{ entity.id }}
-                    </a>
-                </td>
-                <td>{{ entity.name }}</td>
-                <td>
-                    <a href="{{ path('devices_edit', { 'id': entity.device.id }) }}" title="{{ "devices.edit.label" | trans }}">
-                        {{ entity.device.name }}
-                    </a>
-                </td>
-                <td>{{ entity.start | date("d.m.Y H:i") }}</td>
-                <td>
-                    {% if entity.end is defined and entity.end %}
-                        {{ entity.end | date("d.m.Y H:i") }}
-                    {%  else %}
-                        <span class="label label-info">{{ "measurements.fields.end.empty" | trans }}</span>
-                    {%  endif %}
-                </td>
-                <td>{{ entity.pid }}</td>
-                <td>
-                    <a href="{{ path('measurement', { 'id': entity.id }) }}" class="btn btn-sm btn-default pull-right" title="{{ "measurements.detail.label" | trans }}">
-                        <span class="glyphicon glyphicon-dashboard" aria-hidden="true"> {{ "measurements.detail.labelShort" | trans }}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table table-hover">
+            <thead>
+                <tr>
+                    <th>{{ "measurements.fields.id.label" | trans }}</th>
+                    <th>{{ "measurements.fields.name.label" | trans }}</th>
+                    <th>{{ "measurements.fields.device.label" | trans }}</th>
+                    <th>{{ "measurements.fields.start.label" | trans }}</th>
+                    <th>{{ "measurements.fields.end.label" | trans }}</th>
+                    <th>{{ "measurements.fields.pid.label" | trans }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        <a href="{{ path('measurement', { 'id': entity.id }) }}" title="{{ "measurements.detail.label" | trans }}">
+                            {{ entity.id }}
+                        </a>
+                    </td>
+                    <td>{{ entity.name }}</td>
+                    <td>
+                        <a href="{{ path('devices_edit', { 'id': entity.device.id }) }}" title="{{ "devices.edit.label" | trans }}">
+                            {{ entity.device.name }}
+                        </a>
+                    </td>
+                    <td>{{ entity.start | date("d.m.Y H:i") }}</td>
+                    <td>
+                        {% if entity.end is defined and entity.end %}
+                            {{ entity.end | date("d.m.Y H:i") }}
+                        {%  else %}
+                            <span class="label label-info">{{ "measurements.fields.end.empty" | trans }}</span>
+                        {%  endif %}
+                    </td>
+                    <td>{{ entity.pid }}</td>
+                    <td>
+                        <a href="{{ path('measurement', { 'id': entity.id }) }}" class="btn btn-sm btn-default pull-right" title="{{ "measurements.detail.label" | trans }}">
+                            <span class="glyphicon glyphicon-dashboard" aria-hidden="true"> {{ "measurements.detail.labelShort" | trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <ul class="list-unstyled">
         <li>

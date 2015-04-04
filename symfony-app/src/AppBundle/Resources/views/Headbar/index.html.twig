@@ -11,10 +11,10 @@
                 {% image '@AppBundle/Resources/public/img/logo-inverted.png'  %}
                 <img src="{{ asset_url }}" class="navbar-logo pull-left" alt="wlanthermoCloud"/>
                 {% endimage %}
-                {{ "brand" | trans }}
+                <span class="hidden-xs">{{ "brand" | trans }}</span>
             </a>
             <span class="navbar-brand" style="margin-left: -24px;">
-                - {{ title |default('Dashboard') }}
+                <span class="hidden-xs">-</span> {{ title |default('Dashboard') }}
             </span>
         </div>
         <div class="navbar-collapse collapse">

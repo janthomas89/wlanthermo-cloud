@@ -16,35 +16,37 @@
 {{ form_row(form.username) }}
 {{ form_row(form.password) }}
 
-<table class="table js-collection" data-prototype="{{ _self.collectionItemWidget(form.probes.vars.prototype)|e }}" data-min="1" data-max="8">
-    <caption>{{ 'probes.navigation.label' | trans }}</caption>
-    <thead>
-        <tr>
-            <th>
-                {{ 'probes.fields.channel.label' | trans }}
-            </th>
-            <th>
-                {{ 'probes.fields.type.label' | trans }}
-            </th>
-            <th>
-                {{ 'probes.fields.defaultName.label' | trans }}
-            </th>
-            <th>
-                {{ 'probes.fields.defaultColor.label' | trans }}
-            </th>
-            <th>
-                <button class="btn btn-primary pull-right js-button-new" title="{{ "probes.new.label" | trans }}">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for probe in form.probes %}
-            {{ _self.collectionItemWidget(probe) }}
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table js-collection" data-prototype="{{ _self.collectionItemWidget(form.probes.vars.prototype)|e }}" data-min="1" data-max="8">
+        <caption>{{ 'probes.navigation.label' | trans }}</caption>
+        <thead>
+            <tr>
+                <th>
+                    {{ 'probes.fields.channel.label' | trans }}
+                </th>
+                <th>
+                    {{ 'probes.fields.type.label' | trans }}
+                </th>
+                <th>
+                    {{ 'probes.fields.defaultName.label' | trans }}
+                </th>
+                <th>
+                    {{ 'probes.fields.defaultColor.label' | trans }}
+                </th>
+                <th>
+                    <button class="btn btn-primary pull-right js-button-new" title="{{ "probes.new.label" | trans }}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for probe in form.probes %}
+                {{ _self.collectionItemWidget(probe) }}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <ul class="list-unstyled">
     <li>
