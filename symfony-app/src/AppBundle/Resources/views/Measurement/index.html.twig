@@ -10,7 +10,7 @@
                     {% if entity.isActive() %}
                         <div class="dropdown pull-right" style="margin-top: -6px;">
                             <button class="btn btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                                 <li>
@@ -35,6 +35,16 @@
                                     <button type="submit" class="btn btn-link" title="{{ 'measurements.detail.menu.stop' | trans }}" data-confirm="{{ 'measurements.detail.menu.stopConfirm' | trans }}">
                                         <span class="glyphicon glyphicon-remove"></span>
                                         {{ 'measurements.detail.menu.stop' | trans }}
+                                    </button>
+                                    {{ form_widget(form._token) }}
+                                    </form>
+                                </li>
+                                <li>
+                                    {%  set form = dropdownForms.stopAndShutDown %}
+                                    {{ form_start(form) }}
+                                    <button type="submit" class="btn btn-link" title="{{ 'measurements.detail.menu.stop' | trans }}" data-confirm="{{ 'measurements.detail.menu.stopAndShutDownConfirm' | trans }}">
+                                        <span class="glyphicon glyphicon-off"></span>
+                                        {{ 'measurements.detail.menu.stopAndShutDown' | trans }}
                                     </button>
                                     {{ form_widget(form._token) }}
                                     </form>

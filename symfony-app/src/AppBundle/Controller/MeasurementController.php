@@ -209,6 +209,9 @@ class MeasurementController extends Controller
         $stopForm = $this->createDropdownForm(
             $this->generateUrl('measurement_stop', ['id' => $entity->getId()])
         );
+        $stopAndShutDownForm = $this->createDropdownForm(
+            $this->generateUrl('measurement_stop_shut_down', ['id' => $entity->getId()])
+        );
 
         /** @var MeasurementService $measurementService */
         $measurementService = $this->get('measurement_service');
@@ -219,6 +222,7 @@ class MeasurementController extends Controller
             'dropdownForms' => [
                 'restart' => $restartForm->createView(),
                 'stop' => $stopForm->createView(),
+                'stopAndShutDown' => $stopAndShutDownForm->createView(),
             ],
             'snapshot' => $snapshot,
         ];
@@ -295,5 +299,25 @@ class MeasurementController extends Controller
         return $this->redirect($this->generateUrl('measurement', array(
             'id' => $entity->getId()
         )));
+    }
+
+    /**
+     * Stops the measurement and shuts down the device.
+     *
+     * @Route("/{id}/stopAndShutDown", name="measurement_stop_shut_down")
+     * @Method("POST")
+     * @Template()
+     */
+    public function stopAndShutDownAction($id)
+    {
+        $response = $this->stopAction($id);
+
+        /* Shut down device. */
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:Measurement')->find($id);
+        $deviceAPI = $this->get('device_api_service');
+        $deviceAPI->shutdown($entity->getDevice());
+
+        return $response;
     }
 }

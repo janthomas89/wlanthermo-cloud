@@ -83,6 +83,8 @@ measurements:
       restart: Deamon neustarten
       stop: Messreihe beenden
       stopConfirm: Möchten Sie die Messreihe wirklich beenden? Diese Aktion kann nicht rückgängig gemacht werden.
+      stopAndShutDown: Gerät herunter fahren
+      stopAndShutDownConfirm: Möchten Sie das Gerät wirklich herunter fahren? Dies beendet die Messreihe und kann nicht rückgängig gemacht werden.
 
   new:
     label: Neue Messreihe
