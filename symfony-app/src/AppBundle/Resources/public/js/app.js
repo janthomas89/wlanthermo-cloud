@@ -22,12 +22,6 @@ $(function() {
 });
 
 $(function() {
-    var cloned = $('ul.nav-sidebar').clone().attr('class', 'nav navbar-nav visible-xs');
-    $('#navbar').prepend(cloned);
-
-});
-
-$(function() {
     $('table.js-collection').each(function() {
         var $table = $(this);
         var $tbody = $table.find('tbody');

@@ -1,4 +1,4 @@
-<ul class="nav nav-sidebar">
+<ul class="nav navbar-nav navbar-right">
     {% if active_measurements | length > 0  %}
         <li style="padding: 10px 15px;">
             <span class="text-muted">{{ 'measurements.active.label' | trans }}</span>
@@ -29,4 +29,10 @@
         </li>
         #}
     {%  endif %}
+    <li><hr></li>
+    <li>
+        <a href="{{ path('logout') }}">
+            <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Abmelden
+        </a>
+    </li>
 </ul>
