@@ -211,8 +211,9 @@ class MeasurementService
     {
         $axis = ['x'];
         $last20min = [$axis];
-        $nowPT20M = new \DateTime();
-        $nowPT20M->modify('-20 minutes');
+
+        $threshold = $measurement->isActive() ? new \DateTime() : $measurement->getEnd();
+        $threshold->modify('-20 minutes');
 
         /** @var MeasurementProbe $probe */
         foreach ($measurement->getProbes() as $probe) {
@@ -224,7 +225,7 @@ class MeasurementService
                 $axis[] = $timeSeries->getTime()->getTimestamp() * 1000;
                 $tmpLast20min[] = $timeSeries->getAvg();
 
-                if ($timeSeries->getTime() < $nowPT20M) {
+                if ($timeSeries->getTime() < $threshold) {
                     break;
                 }
             }
