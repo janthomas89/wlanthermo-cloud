@@ -138,8 +138,8 @@ class MeasurementService
         $result['deviceStatus'] = $this->getDeviceStatus($measurement);
 
         $lastMeasurement = $this->timeSeriesRepo->getLastMeasurement($measurement);
-        $result['lastMeasurement'] = $lastMeasurement->getTimestamp();
-        $result['lastMeasurementFormatted'] = $lastMeasurement->format('d.m.Y H:i:s');
+        $result['lastMeasurement'] = $lastMeasurement ? $lastMeasurement->getTimestamp() : 0;
+        $result['lastMeasurementFormatted'] = $lastMeasurement ? $lastMeasurement->format('d.m.Y H:i:s') : '';
 
         $current = $this->getCurrentValues($measurement);
         $result['current'] = $current;
