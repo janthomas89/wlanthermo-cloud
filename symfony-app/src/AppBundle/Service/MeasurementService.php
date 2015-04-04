@@ -212,7 +212,7 @@ class MeasurementService
         $axis = ['x'];
         $last20min = [$axis];
 
-        $threshold = $measurement->isActive() ? new \DateTime() : $measurement->getEnd();
+        $threshold = $measurement->isActive() ? new \DateTime() : clone $measurement->getEnd();
         $threshold->modify('-20 minutes');
 
         /** @var MeasurementProbe $probe */
@@ -250,6 +250,8 @@ class MeasurementService
         $axis = ['x'];
         $result = [$axis];
 
+        $duration = $measurement->getDurationInMinutes();
+
         /** @var MeasurementProbe $probe */
         foreach ($measurement->getProbes() as $probe) {
             $probeHistory = $history[$probe->getId()];
@@ -259,9 +261,7 @@ class MeasurementService
             foreach($probeHistory as $timeSeries) {
                 $time = $timeSeries->getTime();
 
-                // ToDo calculate left out values dynamically (based on overall duration)
-
-                if (0 === ($time->format('i') % 10)) {
+                if ($this->shouldSkip($duration, $time)) {
                     $axis[] = $time->getTimestamp() * 1000;
                     $tmpResult[] = $timeSeries->getAvg();
                 }
@@ -274,4 +274,17 @@ class MeasurementService
 
         return $result;
     }
-} 
+
+    /**
+     * Decides wether the values should be skipped or not.
+     *
+     * @param int $duration Duration in minutes
+     * @param \DateTime $time
+     * @return bool
+     */
+    private function shouldSkip($duration, \DateTime $time)
+    {
+        $modulus = max(1, min(30, ceil($duration / 40)));
+        return 0 === ($time->format('i') % $modulus);
+    }
+}

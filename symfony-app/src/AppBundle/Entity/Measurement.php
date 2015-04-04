@@ -185,6 +185,19 @@ class Measurement
     }
 
     /**
+     * Calculates the measurements duration in minutes.
+     *
+     * @return int
+     */
+    public function getDurationInMinutes()
+    {
+        $end = $this->isActive() ? new \DateTime() : $this->getEnd();
+        $start = $this->getStart();
+
+        return (int)ceil(($end->getTimestamp() - $start->getTimestamp()) / 60);
+    }
+
+    /**
      * Set pid
      *
      * @param integer $pid
