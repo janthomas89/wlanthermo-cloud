@@ -9,12 +9,14 @@ use AppBundle\Service\DeviceAPIServiceInterface;
 use AppBundle\Service\MeasurementDeamonService;
 use AppBundle\Service\MeasurementService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Measurement controller.
@@ -186,7 +188,32 @@ class MeasurementController extends Controller
     }
 
     /**
-     * Lists all past measurements entities.
+     * Details of one measurement.
+     *
+     * @Route("/snapshot/{id}", name="measurement_snapshot")
+     * @Method("GET")
+     */
+    public function snapshotAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Measurement $entity */
+        $entity = $em->getRepository('AppBundle:Measurement')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Measurement entity.');
+        }
+
+        /** @var MeasurementService $measurementService */
+        $measurementService = $this->get('measurement_service');
+        $snapshot = $measurementService->getSnapshot($entity);
+
+        $response = new JsonResponse($snapshot);
+        return $response;
+    }
+
+    /**
+     * Details of one measurement.
      *
      * @Route("/{id}", name="measurement")
      * @Method("GET")

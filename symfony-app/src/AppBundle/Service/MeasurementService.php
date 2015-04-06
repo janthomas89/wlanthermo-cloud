@@ -152,6 +152,8 @@ class MeasurementService
 
         $result['fullHistory'] = $this->aggregateFullHistory($measurement, $fullHistory);
 
+        $result['active'] = $measurement->isActive();
+
         return $result;
     }
 

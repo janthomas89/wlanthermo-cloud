@@ -54,7 +54,7 @@
                     {% endif %}
 
                     <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                        <span id="info-panel-icon" class="glyphicon glyphicon-info-sign"></span>
                         {{ entity.name }}
                     </h3>
                 </div>
@@ -139,6 +139,20 @@
         $(function() {
             var snapshot = {{ snapshot|json_encode() | raw }};
 
+            var queuePolling = function() {
+                setTimeout(function() {
+                    loading(true);
+                    $.getJSON('{{ path('measurement_snapshot', {id: entity.id}) }}', update);
+                }, 5000);
+            };
+
+            var loading = function(toggle) {
+                var icon = $('#info-panel-icon');
+                icon.toggleClass('glyphicon-refresh', toggle);
+                icon.toggleClass('glyphicon-refresh-animate', toggle);
+                icon.toggleClass('glyphicon-info-sign', !toggle);
+            };
+
             var update = function(snapshot) {
                 $('#device-status-online').toggleClass('hidden', !snapshot.deviceStatus);
                 $('#device-status-offline').toggleClass('hidden', snapshot.deviceStatus);
@@ -166,15 +180,19 @@
                     type: 'spline',
                     x: 'x'
                 });
+
+                loading(false);
+
+                snapshot.active && queuePolling();
             };
 
 
             {% for probe in entity.probes %}
-            $('#chart-{{ probe.id }}').wlanthermoGauge({
-                label: '{{ probe.name }}',
-                color: '{{ probe.color }}',
-                value: snapshot.current[{{ probe.id }}]
-            });
+                $('#chart-{{ probe.id }}').wlanthermoGauge({
+                    label: '{{ probe.name }}',
+                    color: '{{ probe.color }}',
+                    value: snapshot.current[{{ probe.id }}]
+                });
             {% endfor %}
 
             var fullHistory = c3.generate({
@@ -195,7 +213,6 @@
                 }
             });
 
-
             var last20min = c3.generate({
                 bindto: '#chart-recent',
                 data: {
@@ -214,7 +231,6 @@
                 }
             });
 
-            // ToDo Ajax ...
             update(snapshot);
         });
     </script>
