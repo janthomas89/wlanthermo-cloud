@@ -4,10 +4,8 @@ parameters:
     database_host:     127.0.0.1
     database_port:     ~
     database_name:     symfony
-    database_user:     root
-    database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
+    database_user:     "%database.user%"
+    database_password: "%database.password%"
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -20,5 +18,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     # Password for the admin and guest account
-    admin_password:    admin
-    guest_password:    guest
+    admin_password: "%admin.password%"
+    guest_password: "%guest.password%"
