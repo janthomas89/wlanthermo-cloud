@@ -36,11 +36,31 @@ class MeasurementRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $entities = $em->getRepository('AppBundle:Measurement')->findBy(
+        $entities = $this->findBy(
             array('end' => null),
             array('id'=>'DESC')
         );
 
         return $entities;
+    }
+
+    /**
+     * Decides wether the given device already is in use or not.
+     *
+     * @param Device $device
+     * @return bool
+     */
+    public function inUse(Device $device)
+    {
+        $id = $device->getId();
+
+        /** @var Measurement $measurement */
+        foreach ($this->getActive() as $measurement) {
+            if ($id == $measurement->getDevice()->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

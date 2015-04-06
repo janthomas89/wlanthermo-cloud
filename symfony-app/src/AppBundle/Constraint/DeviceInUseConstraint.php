@@ -6,17 +6,17 @@ namespace AppBundle\Constraint;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class DeviceConnectivityConstraint
+ * Class DeviceInUseConstraint
  * @package AppBundle\Validator\Constraint
  * @Annotation
  */
-class DeviceConnectivityConstraint extends Constraint
+class DeviceInUseConstraint extends Constraint
 {
-    public $message = 'No connection to the device API could not be established. Please check the URL and the connectivity.';
+    public $message = 'Device is already in use.';
 
     public function validatedBy()
     {
-        return 'device_connectivity_validator';
+        return 'device_in_use_validator';
     }
 
     public function getTargets()

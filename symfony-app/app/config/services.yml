@@ -30,3 +30,8 @@ services:
             tags:
                 - { name: validator.constraint_validator, alias: device_authentication_validator }
 
+    validator.device_in_use_validator:
+                class: AppBundle\Constraint\DeviceInUseConstraintValidator
+                arguments: ["@doctrine.orm.entity_manager"]
+                tags:
+                    - { name: validator.constraint_validator, alias: device_in_use_validator }

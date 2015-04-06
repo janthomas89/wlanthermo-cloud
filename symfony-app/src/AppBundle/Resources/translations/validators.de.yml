@@ -29,6 +29,7 @@ measurements:
     notBlank: Bitte geben Sie einen Namen an.
   device:
     notBlank: Bitte geben Sie ein Gerät an.
+    inUse: Das von Ihnen gewählte Gerät wird bereits in einer anderen Messreihe verwendet. Bitte beenden Sie diese Messreihe, bevor Sie eine neue mit dem selben Gerät starten.
   probes:
       min: Bitte geben Sie mindestens einen Temperaturfühler an.
       max: Bitte geben Sie maximal acht Temperaturfühler an.
