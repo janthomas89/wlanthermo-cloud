@@ -8,7 +8,12 @@ $(function() {
             if (res && $elm.is('a')) {
                 window.location = $elm.attr('href');
             } else if (res) {
-                $elm.parents('form').first().trigger('submit');
+                var $form = $elm.parents('form').first();
+                var $hidden = $('<input type="hidden" />')
+                    .attr('name', $elm.attr('name'))
+                    .val($elm.val());
+                $form.append($hidden);
+                $form.trigger('submit');
             }
         });
     });

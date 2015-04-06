@@ -24,12 +24,20 @@ devices:
       label: Passwort
     probes:
       label: Temperaturfühler
+    status:
+      label: Status
   list:
       label: Geräte verwalten
   edit:
     label: Geräteeinstellungen ändern
   delete:
       label: Gerät löschen
+  restart:
+    label: Gerät neu starten
+    confirm: Möchten Sie das Gerät wirklich neu starten? Dies kann einige Minuten dauern.
+  shutDown:
+      label: Gerät herunter fahren
+      confirm: Möchten Sie das Gerät wirklich herunter fahren?
   new:
     label: Gerät hinzufügen
 

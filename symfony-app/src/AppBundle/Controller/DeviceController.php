@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Probe;
+use AppBundle\Service\DeviceAPIService;
 use AppBundle\Service\DeviceAPIServiceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,9 @@ class DeviceController extends Controller
 
         return array(
             'entities' => $entities,
-            'delete_forms' => $this->createDeleteFormviews($entities),
+            'delete_forms' => $this->createDeleteFormViews($entities),
+            'shut_down_forms' => $this->createShutDownFormViews($entities),
+            'status' => $this->getDeviceStatus($entities),
         );
     }
 
@@ -253,12 +256,30 @@ class DeviceController extends Controller
     }
 
     /**
+     * Creates a form to shut down a Device.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createShutDownForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('device_shut_down', array('id' => $id)))
+            ->setMethod('POST')
+            ->add('restart')
+            ->add('shutDown')
+            ->getForm()
+            ;
+    }
+
+    /**
      * Creatres delete form views for the given entities.
      *
      * @param array[Device] $entities
      * @return array[\Symfony\Component\Form\FormView]
      */
-    private function createDeleteformViews(array $entities)
+    private function createDeleteFormViews(array $entities)
     {
         $deleteFormViews = array();
 
@@ -269,5 +290,84 @@ class DeviceController extends Controller
         }
 
         return $deleteFormViews;
+    }
+
+    /**
+     * Creates shut down form views for the given entities.
+     *
+     * @param array[Device] $entities
+     * @return array[\Symfony\Component\Form\FormView]
+     */
+    private function createShutDownFormViews(array $entities)
+    {
+        $formViews = array();
+
+        /** @var Device $device */
+        foreach ($entities as $device) {
+            $form = $this->createShutDownForm($device->getId());
+            $formViews[$device->getId()] = $form->createView();
+        }
+
+        return $formViews;
+    }
+
+    /**
+     * Returns the status for the given devices.
+     *
+     * @param array[Device] $entities
+     * @return array[bool]
+     */
+    private function getDeviceStatus(array $entities)
+    {
+        $status = [];
+
+        /** @var DeviceAPIServiceInterface $service */
+        $service = $this->get('device_api_service');
+
+        /** @var Device $device */
+        foreach ($entities as $device) {
+            $status[$device->getId()] = $service->checkConnectivity($device)
+                && $service->checkAuthentication($device);
+        }
+
+        return $status;
+    }
+
+    /**
+     * Stops the measurement and shuts down the device.
+     *
+     * @Route("/{id}/shutDown", name="device_shut_down")
+     * @Method("POST")
+     * @Template()
+     */
+    public function shutDownAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('AppBundle:Device')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Device entity.');
+        }
+
+        $redirectResp = $this->redirect($this->generateUrl('devices'));
+
+        /** @var DeviceAPIService $deviceAPI */
+        $deviceAPI = $this->get('device_api_service');
+
+        if (!$deviceAPI->checkConnectivity($entity)
+            || !$deviceAPI->checkAuthentication($entity)
+        ) {
+            return $redirectResp;
+        }
+
+        /** @var Request $request */
+        $request = $this->get('request');
+        if ($request->request->get('form[restart]', false, true)) {
+            $deviceAPI->restart($entity);
+        } else if ($request->request->get('form[shutDown]', false, true)) {
+            $deviceAPI->shutdown($entity);
+        }
+
+        return $redirectResp;
     }
 }

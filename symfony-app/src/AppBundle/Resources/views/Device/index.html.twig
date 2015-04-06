@@ -12,6 +12,7 @@
                     <th>{{ "devices.fields.name.label" | trans }}</th>
                     <th class="hidden-xs">{{ "devices.fields.url.label" | trans }}</th>
                     <th class="hidden-xs">{{ "devices.fields.probes.label" | trans }}</th>
+                    <th class="hidden-xs">{{ "devices.fields.status.label" | trans }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -22,21 +23,39 @@
                     <td>{{ entity.name }}</td>
                     <td class="hidden-xs">{{ entity.url }}</td>
                     <td class="hidden-xs">{{ entity.probes | length }}</td>
-                    <td></td>
+                    <td class="hidden-xs">
+                        {% set form = shut_down_forms[entity.id] %}
+                        {% set status = status[entity.id] %}
+                        {{ form_start(form) }}
+                        <div class="btn-group">
+                            {% if status %}
+                                <button type="submit" name="form[restart]" value="1" class="btn btn-default btn-s" title="{{ "devices.restart.label" | trans }}" data-confirm="{{ 'devices.restart.confirm' | trans }}">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </button>
+                                <button type="submit" name="form[shutDown]" value="1" class="btn btn-default btn-s" title="{{ "devices.shutDown.label" | trans }}" data-confirm="{{ 'devices.shutDown.confirm' | trans }}">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                </button>
+                            {% endif %}
+                            <span class="btn {% if status %}btn-success{% else %}btn-danger{% endif %}">
+                                {% if status %}online{% else %}offline{% endif %}
+                            </span>
+                        </div>
+                        {{ form_widget(form._token) }}
+                        </form>
+                    </td>
                     <td>
                         {% set form = delete_forms[entity.id] %}
                         {{ form_start(form) }}
                             <div class="btn-group pull-right">
                                 <a href="{{ path('devices_edit', { 'id': entity.id }) }}" class="btn btn-default btn-s" title="{{ "devices.edit.label" | trans }}">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-edit"></span>
                                 </a>
                                 <button type="submit" class="btn btn-default btn-s" title="{{ "devices.delete.label" | trans }}" data-confirm="{{ "delete.confirm" | trans }}">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </button>
                             </div>
                         {{ form_widget(form._token) }}
                         </form>
-
                     </td>
                 </tr>
             {% endfor %}
