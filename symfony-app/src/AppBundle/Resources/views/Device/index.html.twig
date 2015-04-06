@@ -10,8 +10,8 @@
                 <tr>
                     <th>{{ "devices.fields.id.label" | trans }}</th>
                     <th>{{ "devices.fields.name.label" | trans }}</th>
-                    <th>{{ "devices.fields.url.label" | trans }}</th>
-                    <th>{{ "devices.fields.probes.label" | trans }}</th>
+                    <th class="hidden-xs">{{ "devices.fields.url.label" | trans }}</th>
+                    <th class="hidden-xs">{{ "devices.fields.probes.label" | trans }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -20,26 +20,23 @@
                 <tr>
                     <td>{{ entity.id }}</td>
                     <td>{{ entity.name }}</td>
-                    <td>{{ entity.url }}</td>
-                    <td>{{ entity.probes | length }}</td>
+                    <td class="hidden-xs">{{ entity.url }}</td>
+                    <td class="hidden-xs">{{ entity.probes | length }}</td>
                     <td></td>
                     <td>
-                        <ul class="list-unstyled grid-actions">
-                            <li>
-                                {% set form = delete_forms[entity.id] %}
-                                {{ form_start(form) }}
-                                <button type="submit" class="btn btn-default btn-s pull-right" title="{{ "devices.delete.label" | trans }}" data-confirm="{{ "delete.confirm" | trans }}">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </button>
-                                {{ form_widget(form._token) }}
-                                </form>
-                            </li>
-                            <li>
-                                <a href="{{ path('devices_edit', { 'id': entity.id }) }}" class="btn btn-default btn-s pull-right" title="{{ "devices.edit.label" | trans }}">
+                        {% set form = delete_forms[entity.id] %}
+                        {{ form_start(form) }}
+                            <div class="btn-group pull-right">
+                                <a href="{{ path('devices_edit', { 'id': entity.id }) }}" class="btn btn-default btn-s" title="{{ "devices.edit.label" | trans }}">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 </a>
-                            </li>
-                        </ul>
+                                <button type="submit" class="btn btn-default btn-s" title="{{ "devices.delete.label" | trans }}" data-confirm="{{ "delete.confirm" | trans }}">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        {{ form_widget(form._token) }}
+                        </form>
+
                     </td>
                 </tr>
             {% endfor %}

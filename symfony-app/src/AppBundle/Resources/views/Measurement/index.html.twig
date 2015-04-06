@@ -53,7 +53,10 @@
                         </div>
                     {% endif %}
 
-                    <h3 class="panel-title">{{ entity.name }}</h3>
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        {{ entity.name }}
+                    </h3>
                 </div>
                 <div class="panel-body measurements-detail-panel-body">
                     <p>
@@ -95,6 +98,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
+                            <span class="glyphicon glyphicon-dashboard"></span>
                             {{ probe.name }}
                             <span id="chart-{{ probe.id }}-label" class="label label-default pull-right">{{ probe.min }} °C / {{ probe.max }}°C</span>
                         </h3>
@@ -109,7 +113,10 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Historie</h3>
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-equalizer"></span>
+                Historie
+            </h3>
         </div>
         <div class="panel-body">
             <div class="row">

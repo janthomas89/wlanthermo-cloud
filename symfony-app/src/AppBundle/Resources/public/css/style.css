@@ -131,12 +131,17 @@ body.login {
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
-/*
- * Grid
- */
-ul.grid-actions li .btn {
-    margin-left: 10px;
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:focus,
+.navbar-inverse .navbar-nav>.active>a:hover {
+    background-color: #778DB9;
+}
+.navbar-inverse .navbar-toggle:focus,
+.navbar-inverse .navbar-toggle:hover {
+    background-color: #778DB9;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: #fff;
 }
 
 /*

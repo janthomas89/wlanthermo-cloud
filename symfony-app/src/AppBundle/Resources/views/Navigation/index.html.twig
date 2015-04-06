@@ -1,10 +1,11 @@
 <ul class="nav navbar-nav navbar-right">
+    {% set activeSet = false %}
     {% if active_measurements | length > 0  %}
         <li style="padding: 10px 15px;">
             <span class="text-muted">{{ 'measurements.active.label' | trans }}</span>
         </li>
         {% for item in active_measurements %}
-            <li{% if route == "measurement" and item.id == id %} class="active"{% endif %}>
+            <li{% if route == "measurement" and item.id == id %}{% set activeSet = true %} class="active"{% endif %}>
                 <a href="{{ path('measurement', {id: item.id}) }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"> {{ item.name }}</a>
             </li>
         {%  endfor %}
@@ -16,18 +17,13 @@
     <li>
         <a href="{{ path('measurement_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
     </li>
-    <li{% if "history" in route %} class="active"{% endif %}>
+    <li{% if "history" in route or not activeSet and route == "measurement" %} class="active"{% endif %}>
         <a href="{{ path('history') }}"><span class="glyphicon glyphicon-stats" aria-hidden="true"> Historie <span class="badge">{{ num_measurements }}</span></a>
     </li>
     {%  if is_granted('ROLE_ADMIN') %}
         <li{% if "devices" in route %} class="active"{% endif %}>
             <a href="{{ path('devices') }}"><span class="glyphicon glyphicon-hdd" aria-hidden="true"> {{ "devices.navigation.label" | trans }} <span class="badge">{{ num_devices }}</span></a>
         </li>
-        {#
-        <li>
-            <a href=""><span class="glyphicon glyphicon-cog" aria-hidden="true"> Einstellungen</a>
-        </li>
-        #}
     {%  endif %}
     <li><hr></li>
     <li>
