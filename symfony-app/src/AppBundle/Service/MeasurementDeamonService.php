@@ -73,7 +73,7 @@ class MeasurementDeamonService
     {
         $result = $this->deamonCall($measurement, 'kill');
 
-        if (!isset($result['status']) || 200 === $result['status']) {
+        if (!isset($result['status']) || 200 !== $result['status']) {
             $this->logger->error('Deamon could not be stopped for measurement ' . $measurement->getId());
             return false;
         }
@@ -93,8 +93,8 @@ class MeasurementDeamonService
      */
     public function restart(Measurement $measurement)
     {
-        return $this->stop($measurement)
-            && $this->start($measurement);
+        $this->stop($measurement);
+        return $this->start($measurement);
     }
 
     /**

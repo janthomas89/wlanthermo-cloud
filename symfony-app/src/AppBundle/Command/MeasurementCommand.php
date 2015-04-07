@@ -76,8 +76,6 @@ class MeasurementCommand extends AbstractInfiniteCommand
     {
         /* Refresh the measurement every 5 ticks. */
         if ($this->ticks % 5 == 4) {
-            throw new \Exception('Exception for triggering command restart!');
-
             $output->writeln('refreshing measurement entity');
             $this->refreshMeasurement();
         }

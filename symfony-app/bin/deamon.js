@@ -34,6 +34,17 @@ var server = http.createServer(function (req, resp) {
             status: res,
             msg: 'killing process for measurement ' + params.measurementId
         });
+    } else if ('/list' === parsedUrl.pathname) {
+        tmpProcesses = {};
+        for (id in processes) {
+            tmpProcesses[id] = processes[id].pid;
+        }
+
+        jsonResponse(resp, 200, {
+            status: 200,
+            msg: 'List all processes measurementId => pid',
+            processes: tmpProcesses
+        });
     } else {
         jsonResponse(resp, 404, {
             msg: 'Not found. Try /spawn?measurementId=123 or /kill?measurementId=123'
