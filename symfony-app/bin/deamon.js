@@ -57,9 +57,6 @@ function spawn(measurementId) {
         util.log('[ERR pid ' + php.pid + ', measurementId ' + measurementId + ']: ' + data);
     });
     php.on('exit', function (code) {
-
-        // ToDo restart if it fails!
-
         util.log('[EXIT pid ' + php.pid + ', measurementId ' + measurementId + ']: code ' + code);
     });
 
