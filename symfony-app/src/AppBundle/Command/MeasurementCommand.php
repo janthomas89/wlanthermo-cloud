@@ -3,7 +3,9 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Measurement;
+use AppBundle\Entity\Notification;
 use AppBundle\Service\MeasurementService;
+use AppBundle\Service\NotificationServiceInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,6 +23,9 @@ class MeasurementCommand extends AbstractInfiniteCommand
 
     /** @var MeasurementService */
     protected $service;
+
+    /** @var \DateTime */
+    protected $lastExceptionTime;
 
     /**
      * Configures the command.
@@ -83,9 +88,12 @@ class MeasurementCommand extends AbstractInfiniteCommand
 
         /* Executes one measurement tick */
         $output->writeln('Execute measurement');
-        $this->service->execute($this->measurement);
-
-        // ToDo Error handling => Device not available? ...
+        try {
+            $this->service->execute($this->measurement);
+        } catch(\Exception $e) {
+            $output->writeln('Exception catched: ' . $e->getMessage());
+            $this->handleException($e);
+        }
     }
 
     /**
@@ -109,5 +117,30 @@ class MeasurementCommand extends AbstractInfiniteCommand
             $em = $this->getDoctrine()->getManager();
             $em->refresh($this->measurement);
         }
+    }
+
+    /**
+     * Handles a exception.
+     *
+     * @param \Exception $e
+     */
+    protected function handleException(\Exception $e)
+    {
+        $threshold = new \DateTime();
+        $threshold->modify('-1 minutes');
+        if ($this->lastExceptionTime && $threshold <= $this->lastExceptionTime) {
+            return;
+        }
+
+        $notification = new Notification(
+            'Error in measurement command: ' . $e->getMessage(),
+            $e->getMessage() . "\n\n" . $e->getTraceAsString()
+        );
+
+        /** @var NotificationServiceInterface $service */
+        $service = $this->getContainer()->get('notification_service');
+        $service->systemAlert($notification);
+
+        $this->lastExceptionTime = new \DateTime();
     }
 } 

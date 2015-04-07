@@ -2,22 +2,37 @@ parameters:
 #    parameter_name: value
 
 services:
+
+    # Measurement service
     measurement_service:
         class: AppBundle\Service\MeasurementService
         arguments: ["@doctrine.orm.entity_manager", "@device_api_service"]
 
+    # Measuremenr daemen service
     measurement_deamon_service:
         class: AppBundle\Service\MeasurementDeamonService
         arguments: ["@doctrine.orm.entity_manager", "@buzz", "@logger"]
 
-    # Just for debugging purpose
-    device_api_service_mock:
-        class: AppBundle\Service\DeviceAPIServiceMock
-
+    # Device API
     device_api_service:
         class: AppBundle\Service\DeviceAPIService
+        # Just for debugging purpose
+        # class: AppBundle\Service\DeviceAPIServiceMock
         arguments: ["@buzz", "@logger"]
 
+    # Notifications
+    notification_service:
+        class: AppBundle\Service\NotificationServiceComposite
+        calls:
+            - [add, ["@notification_service_mail"]]
+
+    notification_service_mail:
+        class: AppBundle\Service\NotificationServiceMail
+        arguments: ["@mailer", "%notifications_mail_sender%", "%notifications_mail_receiver%"]
+
+
+
+    # Custom validator services
     validator.device_connectivity_validator:
         class: AppBundle\Constraint\DeviceConnectivityConstraintValidator
         arguments: ["@device_api_service"]

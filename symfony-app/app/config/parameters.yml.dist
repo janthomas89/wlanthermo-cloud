@@ -23,3 +23,7 @@ parameters:
     # Password for the admin and guest account
     admin_password: "%admin.password%"
     guest_password: "%guest.password%"
+
+    # Mail notifications
+    notifications_mail_sender: sender@example.com
+    notifications_mail_receiver: receiver@example.com
