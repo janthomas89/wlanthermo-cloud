@@ -1,0 +1,30 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          wlanthermo-daemon
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop wlanthermo-daemon. place at /etc/init.d/wlanthermo-daemon
+### END INIT INFO
+
+daemonPath=/var/www/sites/www.wlanthermo-cloud.de/bin/daemon.js
+logPath=/var/www/sites/www.wlanthermo-cloud.de/app/logs/daemon.log
+
+case "$1" in
+  start)
+  forever --killSignal=SIGINT -o $logPath -e $logPath start $daemonPath
+  echo "wlanthermo-daemon started"
+  ;;
+stop)
+  forever stop $daemonPath
+  echo "wlanthermo-daemon stopped"
+  ;;
+*)
+  echo "Usage: /etc/init.d/wlanthermo-daemon {start|stop}"
+  exit 1
+  ;;
+esac
+
+exit 0

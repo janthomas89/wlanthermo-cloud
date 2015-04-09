@@ -88,7 +88,7 @@ measurements:
     deviceStatus: Gerätestatus
     menu:
       edit: Messreihe bearbeiten
-      restart: Deamon neustarten
+      restart: Daemon neustarten
       stop: Messreihe beenden
       stopConfirm: Möchten Sie die Messreihe wirklich beenden? Diese Aktion kann nicht rückgängig gemacht werden.
       stopAndShutDown: Gerät herunter fahren

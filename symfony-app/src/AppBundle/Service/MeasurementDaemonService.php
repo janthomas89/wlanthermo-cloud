@@ -9,15 +9,15 @@ use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class MeasurementDeamonService
- * Service class for interacting with the measurement deamon.
+ * Class MeasurementDaemonService
+ * Service class for interacting with the measurement daemon.
  *
  * @package AppBundle\Service
  */
-class MeasurementDeamonService
+class MeasurementDaemonService
 {
-    /** URL for the measurement deamon */
-    const DEAMON_URL = 'http://localhost:1025';
+    /** URL for the measurement daemon */
+    const DAEMON_URL = 'http://localhost:1025';
 
     /** @var EntityManager */
     protected $em;
@@ -42,17 +42,17 @@ class MeasurementDeamonService
     }
 
     /**
-     * Starts the measurement deamon for the given measurement.
+     * Starts the measurement daemon for the given measurement.
      *
      * @param Measurement $measurement
      * @return boolean
      */
     public function start(Measurement $measurement)
     {
-        $result = $this->deamonCall($measurement, 'spawn');
+        $result = $this->daemonCall($measurement, 'spawn');
 
         if (!isset($result['pid'])) {
-            $this->logger->error('Deamon could not be started for measurement ' . $measurement->getId());
+            $this->logger->error('Daemon could not be started for measurement ' . $measurement->getId());
             return false;
         }
 
@@ -71,10 +71,10 @@ class MeasurementDeamonService
      */
     public function stop(Measurement $measurement)
     {
-        $result = $this->deamonCall($measurement, 'kill');
+        $result = $this->daemonCall($measurement, 'kill');
 
         if (!isset($result['status']) || 200 !== $result['status']) {
-            $this->logger->error('Deamon could not be stopped for measurement ' . $measurement->getId());
+            $this->logger->error('Daemon could not be stopped for measurement ' . $measurement->getId());
             return false;
         }
 
@@ -86,7 +86,7 @@ class MeasurementDeamonService
     }
 
     /**
-     * Restarts the measurement deamon for the given measurement.
+     * Restarts the measurement daemon for the given measurement.
      *
      * @param Measurement $measurement
      * @return boolean
@@ -98,17 +98,17 @@ class MeasurementDeamonService
     }
 
     /**
-     * Issues a deamon call for the given Measurement.
+     * Issues a daemon call for the given Measurement.
      *
      * @param Measurement $measurement
      * @param $action
      * @return mixed
      */
-    protected function deamonCall(Measurement $measurement, $action)
+    protected function daemonCall(Measurement $measurement, $action)
     {
         $action = '/' . $action . '?measurementId=' . (int)$measurement->getId();
 
-        $request = new Request('GET', $action, self::DEAMON_URL);
+        $request = new Request('GET', $action, self::DAEMON_URL);
 
         $this->logger->debug(var_export($request, true));
 

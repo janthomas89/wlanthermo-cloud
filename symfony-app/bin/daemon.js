@@ -7,7 +7,7 @@ var cp = require('child_process');
 var fs = require('fs');
 
 // @see http://labs.telasocial.com/nodejs-forever-daemon/
-// forever -o app/logs/nodejs-deamon.log -e app/logs/nodejs-deamon.log bin/deamon.js
+// forever -o app/logs/nodejs-daemon.log -e app/logs/nodejs-daemon.log bin/daemon.js
 
 /* Hashmap for running sub processes */
 var processes = {};
@@ -52,7 +52,7 @@ var server = http.createServer(function (req, resp) {
     }
 });
 server.listen(port, 'localhost');
-console.log('wlanthermo deamon server now listens on port ' + port);
+console.log('wlanthermo daemon server now listens on port ' + port);
 
 /* Span process */
 function spawn(measurementId) {
@@ -102,7 +102,7 @@ var jsonResponse = function(resp, status, obj) {
 
 /* Clean shutdown */
 var onExit = function () {
-    processes && util.log('wlanthermo deamon server shuts down');
+    processes && util.log('wlanthermo daemon server shuts down');
 
     for (var key in processes) {
         if (processes.hasOwnProperty(key)) {

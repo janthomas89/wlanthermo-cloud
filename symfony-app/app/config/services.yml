@@ -9,8 +9,8 @@ services:
         arguments: ["@doctrine.orm.entity_manager", "@device_api_service"]
 
     # Measuremenr daemen service
-    measurement_deamon_service:
-        class: AppBundle\Service\MeasurementDeamonService
+    measurement_daemon_service:
+        class: AppBundle\Service\MeasurementDaemonService
         arguments: ["@doctrine.orm.entity_manager", "@buzz", "@logger"]
 
     # Device API

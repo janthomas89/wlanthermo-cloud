@@ -17,7 +17,7 @@
 /symfony-app/bin/*
 !symfony-app/bin/console
 !symfony-app/bin/symfony_requirements
-!symfony-app/bin/deamon.js
+!symfony-app/bin/daemon.js
 /symfony-app/vendor/
 
 # Assets and user uploads

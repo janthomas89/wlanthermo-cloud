@@ -7,7 +7,7 @@ use AppBundle\Entity\MeasurementProbe;
 use AppBundle\Entity\Probe;
 use AppBundle\Form\MeasurementType;
 use AppBundle\Service\DeviceAPIServiceInterface;
-use AppBundle\Service\MeasurementDeamonService;
+use AppBundle\Service\MeasurementDaemonService;
 use AppBundle\Service\MeasurementService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -51,9 +51,9 @@ class MeasurementController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            /** @var MeasurementDeamonService $deamon */
-            $deamon = $this->get('measurement_deamon_service');
-            $deamon->start($entity);
+            /** @var MeasurementDaemonService $daemon */
+            $daemon = $this->get('measurement_daemon_service');
+            $daemon->start($entity);
 
             return $this->redirect($this->generateUrl('measurement', array(
                 'id' => $entity->getId()
@@ -277,7 +277,7 @@ class MeasurementController extends Controller
     }
 
     /**
-     * Restarts the measurements deamon.
+     * Restarts the measurements daemon.
      *
      * @Route("/{id}/restart", name="measurement_restart")
      * @Method("POST")
@@ -293,9 +293,9 @@ class MeasurementController extends Controller
             throw $this->createNotFoundException('Unable to find Measurement entity.');
         }
 
-        /** @var MeasurementDeamonService $deamon */
-        $deamon = $this->get('measurement_deamon_service');
-        $deamon->restart($entity);
+        /** @var MeasurementDaemonService $daemon */
+        $daemon = $this->get('measurement_daemon_service');
+        $daemon->restart($entity);
 
         return $this->redirect($this->generateUrl('measurement', array(
             'id' => $entity->getId()
@@ -326,9 +326,9 @@ class MeasurementController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        /** @var MeasurementDeamonService $deamon */
-        $deamon = $this->get('measurement_deamon_service');
-        $deamon->stop($entity);
+        /** @var MeasurementDaemonService $daemon */
+        $daemon = $this->get('measurement_daemon_service');
+        $daemon->stop($entity);
 
         return $this->redirect($this->generateUrl('measurement', array(
             'id' => $entity->getId()
