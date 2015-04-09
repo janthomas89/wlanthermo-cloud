@@ -48,15 +48,18 @@ class MeasurementRepository extends EntityRepository
      * Decides wether the given device already is in use or not.
      *
      * @param Device $device
+     * @param Measurement $measurement
      * @return bool
      */
-    public function inUse(Device $device)
+    public function inUse(Device $device, Measurement $measurement = null)
     {
         $id = $device->getId();
 
-        /** @var Measurement $measurement */
-        foreach ($this->getActive() as $measurement) {
-            if ($id == $measurement->getDevice()->getId()) {
+        /** @var Measurement $tmpMeasurement */
+        foreach ($this->getActive() as $tmpMeasurement) {
+            if ($id === $tmpMeasurement->getDevice()->getId()
+                && (!$measurement || $measurement->getId() !== $tmpMeasurement->getId())
+            ) {
                 return true;
             }
         }

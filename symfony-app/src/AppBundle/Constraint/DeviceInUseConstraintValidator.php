@@ -44,7 +44,7 @@ class DeviceInUseConstraintValidator extends ConstraintValidator
         $measurement = $value;
         $device = $measurement->getDevice();
 
-        if ($this->measurementRepo->inUse($device)) {
+        if ($this->measurementRepo->inUse($device, $measurement)) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation();
