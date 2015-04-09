@@ -67,7 +67,10 @@ class MeasurementService
                 }
 
                 $timeSeries = $this->getTimeSeries($measurementProbe, $date);
-                $timeSeries->setMeasurementValue($date, $value);
+
+                if ($value != MeasurementTimeSeriesRepository::NOT_A_TEMPERATURE) {
+                    $timeSeries->setMeasurementValue($date, $value);
+                }
 
                 $this->em->persist($timeSeries);
                 $this->em->flush();
