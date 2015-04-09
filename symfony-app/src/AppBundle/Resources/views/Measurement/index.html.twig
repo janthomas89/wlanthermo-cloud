@@ -202,6 +202,9 @@
                     type: 'spline',
                     x: 'x'
                 },
+                color: {
+                    pattern: {{ colorPattern|json_encode() | raw }}
+                },
                 axis: {
                     x: {
                         type: 'timeseries',
@@ -219,6 +222,9 @@
                     columns: [],
                     type: 'spline',
                     x: 'x'
+                },
+                color: {
+                    pattern: {{ colorPattern|json_encode() | raw }}
                 },
                 axis: {
                     x: {

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Measurement;
 use AppBundle\Entity\MeasurementProbe;
+use AppBundle\Entity\Probe;
 use AppBundle\Form\MeasurementType;
 use AppBundle\Service\DeviceAPIServiceInterface;
 use AppBundle\Service\MeasurementDeamonService;
@@ -244,8 +245,14 @@ class MeasurementController extends Controller
         $measurementService = $this->get('measurement_service');
         $snapshot = $measurementService->getSnapshot($entity);
 
+        /* Map Color pattern */
+        $colorPattern = array_map(function(MeasurementProbe $probe) {
+            return $probe->getColor();
+        }, $entity->getProbes()->toArray());
+
         return [
             'entity' => $entity,
+            'colorPattern' => $colorPattern,
             'dropdownForms' => [
                 'restart' => $restartForm->createView(),
                 'stop' => $stopForm->createView(),

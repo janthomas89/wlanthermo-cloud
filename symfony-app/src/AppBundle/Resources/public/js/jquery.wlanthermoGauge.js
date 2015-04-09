@@ -25,7 +25,9 @@
                         max: settings.max,
                         units: settings.units
                     },
-                    color: settings.color,
+                    color: {
+                        pattern: [settings.color]
+                    },
                     size: {
                         height: 110
                     }
