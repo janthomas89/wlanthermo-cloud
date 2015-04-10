@@ -86,7 +86,9 @@ class MeasurementController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Speichern'));
+        $form->add('submit', 'submit', [
+            'label' => $this->get('translator')->trans('save.label')
+        ]);
 
         return $form;
     }
@@ -98,7 +100,8 @@ class MeasurementController extends Controller
      */
     private function initMeasurement(Measurement $measurement)
     {
-        $measurement->setName('Grillen ' . date('d.m.Y'));
+        $default = $this->get('translator')->trans('measurements.fields.name.default');
+        $measurement->setName($default . date('d.m.Y'));
 
         /** @var Request $request */
         $request = $this->get('request');
@@ -178,14 +181,16 @@ class MeasurementController extends Controller
      */
     private function createEditForm(Measurement $entity)
     {
-        $form = $this->createForm(new MeasurementType(), $entity, array(
-            'action' => $this->generateUrl('measurement_edit', array('id' => $entity->getId())),
+        $form = $this->createForm(new MeasurementType(), $entity, [
+            'action' => $this->generateUrl('measurement_edit', ['id' => $entity->getId()]),
             'method' => 'POST',
-        ));
+        ]);
 
         $form->remove('device');
 
-        $form->add('submit', 'submit', array('label' => 'Speichern'));
+        $form->add('submit', 'submit', [
+            'label' => $this->get('translator')->trans('save.label')
+        ]);
 
         return $form;
     }

@@ -22,7 +22,7 @@
 
     <form action="{{ path("login_check") }}" method="post" class="form-signin{% if error %} has-error{% endif %}">
         {% image '@AppBundle/Resources/public/img/logo-inverted.png'  %}
-            <img src="{{ asset_url }}" width="170" class="pull-right" alt="Wlanthermo | Cloud"/>
+            <img src="{{ asset_url }}" width="170" class="pull-right" alt="wlanthermoCloud"/>
         {% endimage %}
 
         <h1 class="form-signin-heading text-center">{{ "brand" | trans }}</h1>
@@ -31,15 +31,15 @@
             <div class="alert alert-danger" role="alert">{{ error.message|trans }}</div>
         {% endif %}
 
-        <label for="inputEmail" class="sr-only">Benutzername</label>
-        <input type="text" name="_username" id="inputUsername" class="form-control" placeholder="Benutzername" value="{{ lastUsername }}" required autofocus>
+        <label for="inputEmail" class="sr-only">{{ 'login.fields.username.label' | trans }}</label>
+        <input type="text" name="_username" id="inputUsername" class="form-control" placeholder="{{ 'login.fields.username.label' | trans }}" value="{{ lastUsername }}" required autofocus>
 
-        <label for="inputPassword" class="sr-only">Passwort</label>
-        <input type="password" name="_password" id="inputPassword" class="form-control" placeholder="Passwort" required>
+        <label for="inputPassword" class="sr-only">{{ 'login.fields.password.label' | trans }}</label>
+        <input type="password" name="_password" id="inputPassword" class="form-control" placeholder="{{ 'login.fields.password.label' | trans }}" required>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button class="btn btn-lg btn-primary pull-right" type="submit">Anmelden</button>
+        <button class="btn btn-lg btn-primary pull-right" type="submit">{{ 'login.submit.label' | trans }}</button>
     </form>
 </div>
 

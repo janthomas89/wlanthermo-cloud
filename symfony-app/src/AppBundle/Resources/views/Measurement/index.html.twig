@@ -115,18 +115,18 @@
         <div class="panel-heading">
             <h3 class="panel-title">
                 <span class="glyphicon glyphicon-equalizer"></span>
-                Historie
+                {{ 'measurements.detail.history.label' | trans }}
             </h3>
         </div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-8">
                     <div class="chart" id="chart-historie"></div>
-                    <p class="text-center">Übersicht</p>
+                    <p class="text-center">{{ 'measurements.detail.history.overview' | trans }}</p>
                 </div>
                 <div class="col-md-4">
                     <div class="chart" id="chart-recent"></div>
-                    <p class="text-center">Letzten 20 Minuten</p>
+                    <p class="text-center">{{ 'measurements.detail.history.l20m' | trans }}</p>
                 </div>
             </div>
         </div>

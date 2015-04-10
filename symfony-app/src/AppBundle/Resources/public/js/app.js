@@ -1,4 +1,6 @@
 $(function() {
+    bootbox.setDefaults({locale: 'de'});
+
     $('body').on('click', '[data-confirm]', function(e) {
         e.preventDefault();
 

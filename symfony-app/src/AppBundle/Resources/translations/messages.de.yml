@@ -8,6 +8,18 @@ delete:
   label: Löschen
   confirm: Möchten Sie den Datensatz wirklich löschen?
 
+save:
+  label: Speichern
+
+login:
+  fields:
+    username:
+      label: Benutzername
+    password:
+      label: Passwort
+  submit:
+    label: Anmelden
+
 devices:
   navigation:
     label: Geräte
@@ -66,6 +78,7 @@ measurements:
       label: Id
     name:
       label: Name
+      default: Grillen
     device:
       label: Gerät
     start:
@@ -93,7 +106,10 @@ measurements:
       stopConfirm: Möchten Sie die Messreihe wirklich beenden? Diese Aktion kann nicht rückgängig gemacht werden.
       stopAndShutDown: Gerät herunter fahren
       stopAndShutDownConfirm: Möchten Sie das Gerät wirklich herunter fahren? Dies beendet die Messreihe und kann nicht rückgängig gemacht werden.
-
+    history:
+      label: Historie
+      overview: Übersicht
+      l20m: Letzten 20 Minuten
   new:
     label: Neue Messreihe
   active:

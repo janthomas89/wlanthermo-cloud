@@ -37,6 +37,25 @@ body {
     color: #f0f0f0;
 }
 
+.navbar-inverse span.navbar-brand {
+    margin-left: -24px;
+    width: calc(100% - 120px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+@media (min-width: 768px) {
+    .navbar-inverse span.navbar-brand {
+        width: calc(100% - 260px);
+    }
+}
+
+/*
+ * Dialog
+ */
+.modal-dialog {
+    margin-top: 120px;
+}
 
 /*
  * Main content
