@@ -19,13 +19,13 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class MeasurementCommand extends AbstractInfiniteCommand
 {
     /** @var Measurement */
-    protected $measurement;
+    private $measurement;
 
     /** @var MeasurementService */
-    protected $service;
+    private $service;
 
     /** @var \DateTime */
-    protected $lastExceptionTime;
+    private $lastExceptionTime;
 
     /**
      * Configures the command.
@@ -102,7 +102,7 @@ class MeasurementCommand extends AbstractInfiniteCommand
      * @param int $id
      * @return Measurement|null
      */
-    protected function getMeasurement($id)
+    private function getMeasurement($id)
     {
         $em = $this->getDoctrine()->getManager();
         return $em->getRepository('AppBundle:Measurement')->find($id);
@@ -111,7 +111,7 @@ class MeasurementCommand extends AbstractInfiniteCommand
     /**
      * Refreshes the measurement such that inactivity can be detected.
      */
-    protected function refreshMeasurement()
+    private function refreshMeasurement()
     {
         if ($this->measurement) {
             $em = $this->getDoctrine()->getManager();
@@ -124,7 +124,7 @@ class MeasurementCommand extends AbstractInfiniteCommand
      *
      * @param \Exception $e
      */
-    protected function handleException(\Exception $e)
+    private function handleException(\Exception $e)
     {
         $threshold = new \DateTime();
         $threshold->modify('-1 minutes');

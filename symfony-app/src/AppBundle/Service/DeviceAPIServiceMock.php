@@ -13,7 +13,7 @@ use AppBundle\Entity\TimeBoundArray;
  */
 class DeviceAPIServiceMock implements DeviceAPIServiceInterface
 {
-    protected $lastValues = array();
+    private $lastValues = array();
 
     /**
      * @param Device $device

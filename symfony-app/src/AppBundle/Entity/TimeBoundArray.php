@@ -10,10 +10,10 @@ namespace AppBundle\Entity;
 class TimeBoundArray
 {
     /** @var \DateTime */
-    protected $time;
+    private $time;
 
     /** @var array */
-    protected $values = [];
+    private $values = [];
 
     /**
      * Instantiates the snapshot for the current time.

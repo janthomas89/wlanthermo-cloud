@@ -24,16 +24,16 @@ class MeasurementService
     const RC = 18;
 
     /** @var EntityManager */
-    protected $em;
+    private $em;
 
     /** @var MeasurementTimeSeriesRepository */
-    protected $timeSeriesRepo;
+    private $timeSeriesRepo;
 
     /** @var DeviceAPIServiceInterface */
-    protected $deviceService;
+    private $deviceService;
 
     /** @var array */
-    protected $lowPassFilters = [];
+    private $lowPassFilters = [];
 
     /**
      * Instantiates the service.
@@ -95,7 +95,7 @@ class MeasurementService
      * @param Device $device
      * @return mixed
      */
-    protected function queryValues(Device $device)
+    private function queryValues(Device $device)
     {
         return $this->deviceService->queryValues($device);
     }
@@ -108,7 +108,7 @@ class MeasurementService
      * @param Probe $probe
      * @return float
      */
-    protected function applyLowPassFilter($value, \DateTime $time, Probe $probe)
+    private function applyLowPassFilter($value, \DateTime $time, Probe $probe)
     {
         $filter = $this->getLowPassFilter($probe);
         return $filter->apply($value, $time);
@@ -120,7 +120,7 @@ class MeasurementService
      * @param Probe $probe
      * @return LowPassFilter
      */
-    protected function getLowPassFilter(Probe $probe)
+    private function getLowPassFilter(Probe $probe)
     {
         $key = $probe->getId();
 
@@ -138,7 +138,7 @@ class MeasurementService
      * @param Probe $probe
      * @return MeasurementProbe|null
      */
-    protected function getMeasurementProbe(Measurement $measurement, Probe $probe)
+    private function getMeasurementProbe(Measurement $measurement, Probe $probe)
     {
         /** @var MeasurementProbe $tmpProbe */
         foreach ($measurement->getProbes() as $tmpProbe) {
@@ -157,7 +157,7 @@ class MeasurementService
      * @param \DateTime $date
      * @return MeasurementTimeSeries
      */
-    protected function getTimeSeries(MeasurementProbe $measurementProbe, \DateTime $date)
+    private function getTimeSeries(MeasurementProbe $measurementProbe, \DateTime $date)
     {
         $series = $this->timeSeriesRepo->getTimeSeries($measurementProbe, $date);
 

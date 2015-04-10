@@ -14,13 +14,13 @@ use Psr\Log\LoggerInterface;
 class DeviceAPIService implements DeviceAPIServiceInterface
 {
     /** @var Browser */
-    protected $api;
+    private $api;
 
     /** @var LoggerInterface */
-    protected $logger;
+    private $logger;
 
     /** @var \DateTime */
-    protected $lastValue;
+    private $lastValue;
 
     /**
      * Instantiates the device api.
@@ -158,7 +158,7 @@ class DeviceAPIService implements DeviceAPIServiceInterface
      * @param array $post
      * @return array
      */
-    protected function apiCall(Device $device, array $params = [], array $post = [])
+    private function apiCall(Device $device, array $params = [], array $post = [])
     {
         $method = count($post) > 0 ? Request::METHOD_POST : Request::METHOD_GET;
 

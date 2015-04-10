@@ -15,7 +15,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class DeviceConnectivityConstraintValidator extends ConstraintValidator
 {
     /** @var DeviceAPIServiceInterface */
-    protected $deviceService;
+    private $deviceService;
 
     /**
      * Instantiates the service.

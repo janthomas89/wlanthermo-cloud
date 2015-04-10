@@ -713,7 +713,7 @@ class MeasurementTimeSeries
      * @param array $range
      * @return float|null
      */
-    protected function calcAvgGeneric(array $range)
+    private function calcAvgGeneric(array $range)
     {
         $t = 0;
         $c = 0;

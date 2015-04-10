@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class DeviceInUseConstraintValidator extends ConstraintValidator
 {
     /** @var MeasurementRepository */
-    protected $measurementRepo;
+    private $measurementRepo;
 
     /**
      * Instantiates the service.

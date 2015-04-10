@@ -20,13 +20,13 @@ class MeasurementDaemonService
     const DAEMON_URL = 'http://localhost:1025';
 
     /** @var EntityManager */
-    protected $em;
+    private $em;
 
     /** @var Browser */
-    protected $browser;
+    private $browser;
 
     /** @var LoggerInterface */
-    protected $logger;
+    private $logger;
 
     /**
      * Instantiates the device api.
@@ -104,7 +104,7 @@ class MeasurementDaemonService
      * @param $action
      * @return mixed
      */
-    protected function daemonCall(Measurement $measurement, $action)
+    private function daemonCall(Measurement $measurement, $action)
     {
         $action = '/' . $action . '?measurementId=' . (int)$measurement->getId();
 

@@ -59,7 +59,7 @@ class MeasurementTimeSeriesRepository extends EntityRepository
      * @param \DateTime $date
      * @return \DateTime
      */
-    protected function truncateSeconds(\DateTime $date)
+    private function truncateSeconds(\DateTime $date)
     {
         $ts = $date->getTimestamp() - ($date->getTimestamp() % 60);
 
