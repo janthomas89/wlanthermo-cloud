@@ -56,6 +56,8 @@ console.log('wlanthermo daemon server now listens on port ' + port);
 
 /* Span process */
 function spawn(measurementId) {
+    measurementId = parseInt(measurementId, 10);
+
     if (processes[measurementId]) {
         kill(measurementId);
     }
