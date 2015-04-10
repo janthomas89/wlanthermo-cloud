@@ -113,7 +113,7 @@ class MeasurementTimeSeriesRepository extends EntityRepository
             );
 
             $current[$probe->getId()] = $timeSeries ?
-                $timeSeries->getCurrentValue() : self::NOT_A_TEMPERATURE;
+                $timeSeries->getCurrentValue() : '';
         }
 
         return $current;
