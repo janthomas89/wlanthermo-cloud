@@ -33,6 +33,7 @@ class MeasurementController extends Controller
      * @Route("/new/{silent}", defaults={"silent" = false}, name="measurement_new")
      * @Method({"GET","POST"})
      * @Template("AppBundle:Measurement:new.html.twig")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function newAction(Request $request)
     {
@@ -137,6 +138,7 @@ class MeasurementController extends Controller
      * @Route("/{id}/edit", name="measurement_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction($id)
     {
@@ -282,6 +284,7 @@ class MeasurementController extends Controller
      * @Route("/{id}/restart", name="measurement_restart")
      * @Method("POST")
      * @Template()
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function restartAction($id)
     {
@@ -308,6 +311,7 @@ class MeasurementController extends Controller
      * @Route("/{id}/stop", name="measurement_stop")
      * @Method("POST")
      * @Template()
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function stopAction($id)
     {
@@ -341,6 +345,7 @@ class MeasurementController extends Controller
      * @Route("/{id}/stopAndShutDown", name="measurement_stop_shut_down")
      * @Method("POST")
      * @Template()
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function stopAndShutDownAction($id)
     {

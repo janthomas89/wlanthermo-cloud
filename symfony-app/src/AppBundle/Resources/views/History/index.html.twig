@@ -26,9 +26,13 @@
                     </td>
                     <td>{{ entity.name }}</td>
                     <td class="hidden-xs">
-                        <a href="{{ path('devices_edit', { 'id': entity.device.id }) }}" title="{{ "devices.edit.label" | trans }}">
+                        {%  if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('devices_edit', { 'id': entity.device.id }) }}" title="{{ "devices.edit.label" | trans }}">
+                                {{ entity.device.name }}
+                            </a>
+                        {% else %}
                             {{ entity.device.name }}
-                        </a>
+                        {% endif %}
                     </td>
                     <td class="hidden-xs">{{ entity.start | date("d.m.Y H:i") }}</td>
                     <td class="hidden-xs">
@@ -49,11 +53,13 @@
         </table>
     </div>
 
-    <ul class="list-unstyled">
-        <li>
-            <a href="{{ path('measurement_new') }}" class="btn btn-primary pull-right">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{ "measurements.new.label" | trans }}
-            </a>
-        </li>
-    </ul>
+    {%  if is_granted('ROLE_ADMIN') %}
+        <ul class="list-unstyled">
+            <li>
+                <a href="{{ path('measurement_new') }}" class="btn btn-primary pull-right">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{ "measurements.new.label" | trans }}
+                </a>
+            </li>
+        </ul>
+    {% endif %}
     {% endblock %}

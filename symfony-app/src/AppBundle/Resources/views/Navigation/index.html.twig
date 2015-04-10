@@ -14,9 +14,11 @@
         </li>
     {% endif %}
 
-    <li>
-        <a href="{{ path('measurement_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
-    </li>
+    {%  if is_granted('ROLE_ADMIN') %}
+        <li>
+            <a href="{{ path('measurement_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"> Neue Messreihe</a>
+        </li>
+    {% endif %}
     <li{% if "history" in route or not activeSet and route == "measurement" %} class="active"{% endif %}>
         <a href="{{ path('history') }}"><span class="glyphicon glyphicon-stats" aria-hidden="true"> Historie <span class="badge">{{ num_measurements }}</span></a>
     </li>
