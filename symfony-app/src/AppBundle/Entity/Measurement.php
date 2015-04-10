@@ -37,7 +37,7 @@ class Measurement
      * @var Device
      *
      * @ORM\ManyToOne(targetEntity="Device")
-     * @ORM\JoinColumn(name="deviceId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="deviceId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @Assert\NotBlank(message="measurements.device.notBlank")
      */
     private $device;

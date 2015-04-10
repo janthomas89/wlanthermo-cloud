@@ -10,6 +10,7 @@ use AppBundle\Entity\MeasurementTimeSeries;
 use AppBundle\Entity\MeasurementTimeSeriesRepository;
 use AppBundle\Entity\Probe;
 use AppBundle\Entity\TimeBoundArray;
+use AppBundle\Util\LowPassFilter;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -19,6 +20,9 @@ use Doctrine\ORM\EntityManager;
  */
 class MeasurementService
 {
+    /** @const int Time constant for the low pass filter */
+    const RC = 18;
+
     /** @var EntityManager */
     protected $em;
 
@@ -27,6 +31,9 @@ class MeasurementService
 
     /** @var DeviceAPIServiceInterface */
     protected $deviceService;
+
+    /** @var array */
+    protected $lowPassFilters = [];
 
     /**
      * Instantiates the service.
@@ -68,8 +75,11 @@ class MeasurementService
 
                 $timeSeries = $this->getTimeSeries($measurementProbe, $date);
 
-                if ($value != MeasurementTimeSeriesRepository::NOT_A_TEMPERATURE) {
-                    $timeSeries->setMeasurementValue($date, $value);
+                if ($value != MeasurementTimeSeriesRepository::NOT_A_TEMPERATURE
+                    && !$timeSeries->hasMeasurementValue($date)
+                ) {
+                    $filtered = $this->applyLowPassFilter($value, $date, $probe);
+                    $timeSeries->setMeasurementValue($date, $filtered);
                 }
 
                 $this->em->persist($timeSeries);
@@ -88,6 +98,37 @@ class MeasurementService
     protected function queryValues(Device $device)
     {
         return $this->deviceService->queryValues($device);
+    }
+
+    /**
+     * Applies a low pass filter for the given value, date and probe.
+     *
+     * @param float $value
+     * @param \DateTime $time
+     * @param Probe $probe
+     * @return float
+     */
+    protected function applyLowPassFilter($value, \DateTime $time, Probe $probe)
+    {
+        $filter = $this->getLowPassFilter($probe);
+        return $filter->apply($value, $time);
+    }
+
+    /**
+     * Returns a low pass filter for the given probe.
+     *
+     * @param Probe $probe
+     * @return LowPassFilter
+     */
+    protected function getLowPassFilter(Probe $probe)
+    {
+        $key = $probe->getId();
+
+        if (!isset($this->lowPassFilters[$key])) {
+            $this->lowPassFilters[$key] = new LowPassFilter(self::RC);
+        }
+
+        return $this->lowPassFilters[$key];
     }
 
     /**

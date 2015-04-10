@@ -624,6 +624,21 @@ class MeasurementTimeSeries
     }
 
     /**
+     * Returns true if a values for the given time already exists.
+     *
+     * @param \DateTime $time
+     * @return bool
+     */
+    public function hasMeasurementValue(\DateTime $time)
+    {
+        /* Set value */
+        $i = $time->getTimestamp() % 60;
+        $fct = 'getS' . $i;
+
+        return !!$this->$fct();
+    }
+
+    /**
      * Calculates the statistics of the timeseries (min, max, avg, ...).
      */
     public function calcStats()

@@ -38,7 +38,7 @@ class MeasurementProbe
      * @var Probe
      *
      * @ORM\ManyToOne(targetEntity="Probe")
-     * @ORM\JoinColumn(name="probeId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="probeId", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * @Assert\NotBlank(message="measurementProbes.probe.notBlank")
      */
     private $probe;
