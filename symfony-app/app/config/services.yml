@@ -22,6 +22,11 @@ services:
         class: AppBundle\Service\MeasurementDaemonService
         arguments: ["@doctrine.orm.entity_manager", "@buzz", "@logger"]
 
+    # Health check
+    health_check_service:
+        class: AppBundle\Service\HealthCheckService
+        arguments: ["@notification_service", "@doctrine.orm.entity_manager", "@measurement_daemon_service",  "@device_api_service"]
+
     # Device API
     device_api_service:
         class: AppBundle\Service\DeviceAPIService

@@ -11,6 +11,12 @@ use Buzz\Message\Request;
 use Buzz\Exception\ExceptionInterface as BuzzException;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class DeviceAPIService
+ * Service for managing
+ *
+ * @package AppBundle\Service
+ */
 class DeviceAPIService implements DeviceAPIServiceInterface
 {
     /** @var Browser */

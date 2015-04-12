@@ -101,7 +101,7 @@ class MeasurementController extends Controller
     private function initMeasurement(Measurement $measurement)
     {
         $default = $this->get('translator')->trans('measurements.fields.name.default');
-        $measurement->setName($default . date('d.m.Y'));
+        $measurement->setName($default . ' ' . date('d.m.Y'));
 
         /** @var Request $request */
         $request = $this->get('request');

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service;
 use AppBundle\Entity\Device;
+use AppBundle\Entity\Measurement;
 
 /**
  * Interface DeviceServiceInterface
