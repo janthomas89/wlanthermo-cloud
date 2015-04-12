@@ -33,6 +33,8 @@
         {% block body %}{% endblock %}
     </div>
 
+    {% include 'AppBundle::loading-modal.html.twig' %}
+
     {# Javascripts #}
     {% block javascripts %}
         {% javascripts

@@ -43,14 +43,22 @@
     </form>
 </div>
 
+{% include 'AppBundle::loading-modal.html.twig' %}
+
 {# Javascripts #}
 {% block javascripts %}
     {% javascripts
-        '@AppBundle/Resources/public/js/jquery-1.11.2.min.js'
-        '@AppBundle/Resources/public/js/bootstrap.min.js'
+    '@AppBundle/Resources/public/js/jquery-1.11.2.min.js'
+    '@AppBundle/Resources/public/js/bootstrap.min.js'
+    '@AppBundle/Resources/public/js/bootbox.min.js'
+    '@AppBundle/Resources/public/js/d3.min.js'
+    '@AppBundle/Resources/public/js/c3.min.js'
+    '@AppBundle/Resources/public/js/jquery.wlanthermoGauge.js'
+    '@AppBundle/Resources/public/js/app.js'
     %}
-        <script src="{{ asset_url }}"></script>
+    <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
+{% block pageJavascripts %}{% endblock %}
 </body>
 </html>

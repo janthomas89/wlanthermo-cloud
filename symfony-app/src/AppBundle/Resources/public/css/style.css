@@ -58,6 +58,17 @@ body {
 }
 
 /*
+ * Loading animation
+ */
+.loading-modal .modal-content .progress {
+    margin: 15px;
+}
+.loading-modal .modal-content .progress-bar {
+    background-color: #1d2d44;
+}
+
+
+/*
  * Main content
  */
 .main {

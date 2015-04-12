@@ -36,8 +36,6 @@ $(function() {
         var min = $table.data('min') ? $table.data('min') : 0;
         var max = $table.data('max') ? $table.data('max') : 999;
 
-        console.log(min, max);
-
         var update = function() {
             var c = count();
             $buttonNew.attr('disabled', c >= max);
@@ -93,4 +91,19 @@ $(function(){
         $select.after($hidden);
         $select.replaceWith('<span class="badge">' + $select.find('option:selected').text() + '</span>');
     })
+});
+
+$(function() {
+    var $loading = $('#loading-modal');
+
+    var show = function() {
+        $loading.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    };
+
+    $(window).bind('beforeunload', function() {
+        show();
+    });
 });
