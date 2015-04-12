@@ -75,13 +75,6 @@ class LowPassFilter
             $alpha = $dt / ($this->rc + $dt);
 
             $filtered = round($this->lastValue + $alpha * ($value - $this->lastValue), 2);
-
-            var_dump([
-                'dt' => $dt,
-                'alpha' => $alpha,
-                'orig' => $value,
-                'filtered' => $filtered,
-            ]);
         }
 
         $this->lastTime = $time;

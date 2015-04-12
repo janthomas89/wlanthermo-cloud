@@ -594,7 +594,7 @@ class MeasurementTimeSeries
     }
 
     /**
-     * Returns the current values.
+     * Returns the current value.
      *
      * @return float
      */

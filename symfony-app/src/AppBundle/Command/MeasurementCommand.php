@@ -3,6 +3,7 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Measurement;
+use AppBundle\Entity\MeasurementProbe;
 use AppBundle\Entity\Notification;
 use AppBundle\Service\MeasurementService;
 use AppBundle\Service\NotificationServiceInterface;
@@ -113,6 +114,11 @@ class MeasurementCommand extends AbstractInfiniteCommand
         if ($this->measurement) {
             $em = $this->getDoctrine()->getManager();
             $em->refresh($this->measurement);
+
+            /** @var MeasurementProbe $probe */
+            foreach ($this->measurement->getProbes() as $probe) {
+                $em->refresh($probe);
+            }
         }
     }
 

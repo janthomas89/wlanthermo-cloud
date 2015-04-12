@@ -15,7 +15,7 @@ services:
     # Measurement service
     measurement_service:
         class: AppBundle\Service\MeasurementService
-        arguments: ["@doctrine.orm.entity_manager", "@device_api_service"]
+        arguments: ["@doctrine.orm.entity_manager", "@device_api_service", "@notification_service"]
 
     # Measuremenr daemen service
     measurement_daemon_service:

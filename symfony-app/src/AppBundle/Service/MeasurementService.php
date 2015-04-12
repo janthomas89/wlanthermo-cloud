@@ -8,6 +8,7 @@ use AppBundle\Entity\Measurement;
 use AppBundle\Entity\MeasurementProbe;
 use AppBundle\Entity\MeasurementTimeSeries;
 use AppBundle\Entity\MeasurementTimeSeriesRepository;
+use AppBundle\Entity\Notification;
 use AppBundle\Entity\Probe;
 use AppBundle\Entity\TimeBoundArray;
 use AppBundle\Util\LowPassFilter;
@@ -32,6 +33,9 @@ class MeasurementService
     /** @var DeviceAPIServiceInterface */
     private $deviceService;
 
+    /** @var NotificationServiceInterface */
+    private $notificationService;
+
     /** @var array */
     private $lowPassFilters = [];
 
@@ -39,12 +43,18 @@ class MeasurementService
      * Instantiates the service.
      *
      * @param EntityManager $em
+     * @param DeviceAPIServiceInterface $deviceService
+     * @param NotificationServiceInterface $notificationService
      */
-    public function __construct(EntityManager $em, DeviceAPIServiceInterface $deviceService)
-    {
+    public function __construct(
+        EntityManager $em,
+        DeviceAPIServiceInterface $deviceService,
+        NotificationServiceInterface $notificationService
+    ) {
         $this->em = $em;
         $this->timeSeriesRepo = $em->getRepository('AppBundle:MeasurementTimeSeries');
         $this->deviceService = $deviceService;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -80,6 +90,8 @@ class MeasurementService
                 ) {
                     $filtered = $this->applyLowPassFilter($value, $date, $probe);
                     $timeSeries->setMeasurementValue($date, $filtered);
+
+                    $this->handleAlerts($timeSeries);
                 }
 
                 $this->em->persist($timeSeries);
@@ -166,6 +178,37 @@ class MeasurementService
         }
 
         return $series;
+    }
+
+    /**
+     * Dispatches the temperature alerts, if the temperature
+     * is out of bounds.
+     *
+     * @param MeasurementTimeSeries $timeSeries
+     */
+    private function handleAlerts(MeasurementTimeSeries $timeSeries)
+    {
+        $probe = $timeSeries->getMeasurementProbe();
+        $measurement = $probe->getMeasurement();
+
+        $currentValue = $timeSeries->getCurrentValue();
+
+        if ($currentValue > $probe->getMin() && $probe->getMax() > $currentValue) {
+            return;
+        }
+
+        $notification = new Notification();
+        $notification->setSubject($measurement->getName() . ' | ' . $probe->getName() . ': ' . $currentValue . '°C');
+        $notification->setMsg(
+            $measurement->getName() . "\n\n"
+            . $probe->getName() . ': ' . $currentValue . "°C\n"
+            . 'Min: ' . $probe->getMin() . "°C\n"
+            . 'Max: ' . $probe->getMax() . "°C\n"
+        );
+        $notification->setIdentifier('temperature_alert_' . $probe->getId() . '_' . $probe->getMin() . '_' . $probe->getMax());
+        $notification->setThrottleFor(new \DateInterval('PT300S'));
+
+        $this->notificationService->temperatureAlert($notification);
     }
 
     /**
