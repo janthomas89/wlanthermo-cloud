@@ -53,13 +53,27 @@
         </table>
     </div>
 
-    {%  if is_granted('ROLE_ADMIN') %}
-        <ul class="list-unstyled">
-            <li>
-                <a href="{{ path('measurement_new') }}" class="btn btn-primary pull-right">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"> {{ "measurements.new.label" | trans }}
-                </a>
-            </li>
-        </ul>
+    {% if pages > 1 %}
+        <nav>
+            <ul class="pager">
+                {% if page > 1 %}
+                    <li class="previous">
+                        <a href="{{ path('history', {page: page - 1}) }}">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            {{ 'pager.newer' | trans }}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if page < pages %}
+                    <li class="next">
+                        <a href="{{ path('history', {page: page + 1}) }}">
+                            {{ 'pager.older' | trans }}
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
     {% endif %}
+
     {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\MeasurementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,20 +21,29 @@ class HistoryController extends Controller
     /**
      * Lists all past measurements entities.
      *
-     * @Route("/", name="history")
+     * @Route("/{page}", defaults={"page" = 1}, name="history", requirements={
+     *     "page": "\d+|"
+     * })
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($page)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Measurement')->findBy(
-            array(),
-            array('id'=>'DESC')
-        );
+        /** @var MeasurementRepository $repo */
+        $repo = $em->getRepository('AppBundle:Measurement');
+
+        $entities = $repo->history($page);
+        $pages = ceil(count($entities) / $repo->getLimit());
+
+        if ($page > 1 && count($entities->getIterator()) == 0) {
+            throw $this->createNotFoundException();
+        }
 
         return array(
+            'page' => $page,
+            'pages' => $pages,
             'entities' => $entities
         );
     }

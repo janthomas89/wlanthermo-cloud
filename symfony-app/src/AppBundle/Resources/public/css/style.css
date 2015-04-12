@@ -67,6 +67,12 @@ body {
     background-color: #1d2d44;
 }
 
+/*
+ * Pager
+ */
+ul.pager {
+    margin: 0;
+}
 
 /*
  * Main content

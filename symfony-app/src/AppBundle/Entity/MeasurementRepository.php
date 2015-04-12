@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * MeasurementRepository
@@ -12,6 +13,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class MeasurementRepository extends EntityRepository
 {
+    const LIMIT = 10;
+
     /**
      * Count all Measurements.
      *
@@ -65,5 +68,36 @@ class MeasurementRepository extends EntityRepository
         }
 
         return false;
+    }
+
+    /**
+     * Returns one page of the measurement history.
+     *
+     * @param $page
+     * @return Paginator
+     */
+    public function history($page)
+    {
+        $page = $page ? $page : 1;
+        $offset = ($page - 1) * self::LIMIT;
+
+        $dql = "SELECT m FROM AppBundle\\Entity\\Measurement m ORDER BY m.id DESC";
+        $query = $this->getEntityManager()->createQuery($dql)
+            ->setFirstResult($offset)
+            ->setMaxResults(self::LIMIT);
+
+        $paginator = new Paginator($query);
+
+        return $paginator;
+    }
+
+    /**
+     * Returns the limit for the pager.
+     *
+     * @return int
+     */
+    public function getLimit()
+    {
+        return self::LIMIT;
     }
 }

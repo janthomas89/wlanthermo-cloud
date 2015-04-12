@@ -11,6 +11,10 @@ delete:
 save:
   label: Speichern
 
+pager:
+  older: älter
+  newer: neuer
+
 login:
   fields:
     username:
