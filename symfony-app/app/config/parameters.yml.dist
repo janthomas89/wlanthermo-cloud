@@ -27,3 +27,7 @@ parameters:
     # Mail notifications
     notifications_mail_sender: sender@example.com
     notifications_mail_receiver: receiver@example.com
+
+    # Memcached
+    memcached_host: localhost
+    memcached_port: 11211

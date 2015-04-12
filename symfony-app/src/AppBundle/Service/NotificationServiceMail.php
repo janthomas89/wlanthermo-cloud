@@ -70,7 +70,7 @@ class NotificationServiceMail implements NotificationServiceInterface
     {
         $message = $this->mailer->createMessage()
             ->setSubject($notification->getSubject())
-            ->setFrom($this->sender)
+            ->setFrom([$this->sender => 'wlanthermoCloud'])
             ->setTo($this->receiver)
             ->setBody($notification->getMsg(), 'text/plain')
         ;

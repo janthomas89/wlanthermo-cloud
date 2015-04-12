@@ -2,6 +2,15 @@ parameters:
 #    parameter_name: value
 
 services:
+    # Memcached
+    memcached:
+        class: Memcached
+        calls:
+            - [ addServer, ["%memcached_host%", "%memcached_port%"] ]
+    memcached_cache:
+        class: Doctrine\Common\Cache\MemcachedCache
+        calls:
+            - [ setMemcached, [@memcached] ]
 
     # Measurement service
     measurement_service:
@@ -22,6 +31,10 @@ services:
 
     # Notifications
     notification_service:
+        class: AppBundle\Service\NotificationServiceThrottle
+        arguments: ["@notification_service_composite", "@memcached_cache"]
+
+    notification_service_composite:
         class: AppBundle\Service\NotificationServiceComposite
         calls:
             - [add, ["@notification_service_mail"]]
@@ -29,7 +42,6 @@ services:
     notification_service_mail:
         class: AppBundle\Service\NotificationServiceMail
         arguments: ["@mailer", "%notifications_mail_sender%", "%notifications_mail_receiver%"]
-
 
 
     # Custom validator services

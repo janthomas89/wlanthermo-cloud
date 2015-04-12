@@ -24,9 +24,6 @@ class MeasurementCommand extends AbstractInfiniteCommand
     /** @var MeasurementService */
     private $service;
 
-    /** @var \DateTime */
-    private $lastExceptionTime;
-
     /**
      * Configures the command.
      */
@@ -126,21 +123,14 @@ class MeasurementCommand extends AbstractInfiniteCommand
      */
     private function handleException(\Exception $e)
     {
-        $threshold = new \DateTime();
-        $threshold->modify('-1 minutes');
-        if ($this->lastExceptionTime && $threshold <= $this->lastExceptionTime) {
-            return;
-        }
-
-        $notification = new Notification(
-            'Error in measurement command: ' . $e->getMessage(),
-            $e->getMessage() . "\n\n" . $e->getTraceAsString()
-        );
+        $notification = new Notification();
+        $notification->setSubject('Error in measurement command: ' . $e->getMessage());
+        $notification->setMsg($e->getMessage() . "\n\n" . $e->getTraceAsString());
+        $notification->setIdentifier($e->getMessage());
+        $notification->setThrottleFor(new \DateInterval('PT60S'));
 
         /** @var NotificationServiceInterface $service */
         $service = $this->getContainer()->get('notification_service');
         $service->systemAlert($notification);
-
-        $this->lastExceptionTime = new \DateTime();
     }
 } 
