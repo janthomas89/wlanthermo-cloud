@@ -75,9 +75,15 @@ class NotificationServiceMail implements NotificationServiceInterface
             ->setBody($notification->getMsg(), 'text/plain')
         ;
 
-        $res = $this->mailer->send($message);
+        try {
+            $res = $this->mailer->send($message);
 
-        if (!$res) {
+            if (!$res) {
+                $msg = 'Notification could not be sent via swiftmailer';
+                throw new NotificationTransportException($msg);
+            }
+
+        } catch(\Swift_TransportException $e) {
             $msg = 'Notification could not be sent via swiftmailer';
             throw new NotificationTransportException($msg);
         }

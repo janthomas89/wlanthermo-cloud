@@ -3,6 +3,8 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Notification;
+use AppBundle\Exception\NotificationTransportException;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class NotificationServiceComposite
@@ -10,8 +12,21 @@ use AppBundle\Entity\Notification;
  */
 class NotificationServiceComposite implements NotificationServiceInterface
 {
+    /** @var LoggerInterface */
+    private $logger;
+
     /** @var array  */
     private $services = [];
+
+    /**
+     * Instantiates the notification composite service.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     /**
      * Adds a notification service to the composite service.
@@ -47,7 +62,12 @@ class NotificationServiceComposite implements NotificationServiceInterface
     {
         /** @var NotificationServiceInterface $service */
         foreach ($this->services as $service) {
-            $service->temperatureAlert($notification);
+            try {
+                $service->temperatureAlert($notification);
+            } catch (NotificationTransportException $e) {
+                $this->logger->error($e->getMessage());
+                $this->logger->error($e->getTraceAsString());
+            }
         }
     }
 
@@ -61,7 +81,12 @@ class NotificationServiceComposite implements NotificationServiceInterface
     {
         /** @var NotificationServiceInterface $service */
         foreach ($this->services as $service) {
-            $service->systemAlert($notification);
+            try {
+                $service->systemAlert($notification);
+            } catch (NotificationTransportException $e) {
+                $this->logger->error($e->getMessage());
+                $this->logger->error($e->getTraceAsString());
+            }
         }
     }
 }

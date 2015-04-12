@@ -41,6 +41,7 @@ services:
 
     notification_service_composite:
         class: AppBundle\Service\NotificationServiceComposite
+        arguments: ["@logger"]
         calls:
             - [add, ["@notification_service_mail"]]
 
