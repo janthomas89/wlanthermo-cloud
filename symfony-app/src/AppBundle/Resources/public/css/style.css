@@ -136,6 +136,12 @@ body.login {
     border-top-right-radius: 0;
 }
 
+.center-verlically {
+    position: relative;
+    top: 40%;
+    transform: translateY(-40%);
+}
+
 /*
  * Hamburger Navbar
  */

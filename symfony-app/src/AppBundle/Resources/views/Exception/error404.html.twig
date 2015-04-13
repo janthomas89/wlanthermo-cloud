@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+
+    {% set title = "error.404.title" | trans %}
+
+    <title>{{ title }} | {{ "brand" | trans }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    {# CSS #}
+    {% block stylesheets %}
+        {% stylesheets '@AppBundle/Resources/public/css/*' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/png" href="{{ asset('apple-touch-icon.png') }}" />
+</head>
+<body class="login">
+
+    {# Navigation #}
+    {% if app.user %}.
+        {{ render(controller('AppBundle:Headbar:index', {
+            route: app.request.attributes.get('_route'),
+            id: app.request.attributes.get('id'),
+            title: title
+        })) }}
+    {% endif %}
+
+    <div class="container center-verlically">
+        <div class="form-signin">
+            {% image '@AppBundle/Resources/public/img/logo-inverted.png'  %}
+            <img src="{{ asset_url }}" width="170" class="pull-right" alt="wlanthermoCloud"/>
+            {% endimage %}
+
+            <h1 class="form-signin-heading text-center">{{ "brand" | trans }}</h1>
+            <p class="form-signin-heading text-center">{{ "error.404.msg" | trans }}</p>
+        </div>
+    </div>
+
+    {% include 'AppBundle::loading-modal.html.twig' %}
+
+    {# Javascripts #}
+    {% block javascripts %}
+        {% javascripts
+        '@AppBundle/Resources/public/js/jquery-1.11.2.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js'
+        '@AppBundle/Resources/public/js/bootbox.min.js'
+        '@AppBundle/Resources/public/js/d3.min.js'
+        '@AppBundle/Resources/public/js/c3.min.js'
+        '@AppBundle/Resources/public/js/jquery.wlanthermoGauge.js'
+        '@AppBundle/Resources/public/js/app.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+    {% block pageJavascripts %}{% endblock %}
+</body>
+</html>

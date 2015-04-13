@@ -1,5 +1,5 @@
 parameters:
-#    parameter_name: value
+    twig.controller.exception.class: AppBundle\Controller\ExceptionController
 
 services:
     # Memcached
