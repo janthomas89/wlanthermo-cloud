@@ -18,12 +18,12 @@ class ExceptionController extends BaseExceptionController
 {
     public function findTemplate(Request $request, $format, $code, $showException)
     {
-        if ($code != 404) {
-            return parent::findTemplate($request, $format, $code, $showException);
+        if (404 === $code) {
+            return new TemplateReference('AppBundle', 'Exception', 'error404', 'html', 'twig');
+        } else if (500) {
+            return new TemplateReference('AppBundle', 'Exception', 'error500', 'html', 'twig');
         }
 
-
-
-        return new TemplateReference('AppBundle', 'Exception', 'error404', 'html', 'twig');
+        return parent::findTemplate($request, $format, $code, $showException);
     }
 }

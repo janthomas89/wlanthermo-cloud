@@ -48,6 +48,10 @@ body {
     .navbar-inverse span.navbar-brand {
         width: calc(100% - 260px);
     }
+
+    .navbar-inverse .navbar-brand {
+        padding-right: 5px;
+    }
 }
 
 /*

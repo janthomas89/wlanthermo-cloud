@@ -19,8 +19,12 @@ error:
   404:
     title: Fehler 404 - Seite nicht gefunden
     msg: Fehler 404 - Die von Ihnen angeforderte Seite konnte nicht gefunden werden.
+  500:
+    title: Fehler 500 - Unerwarteter Serverfehler
+    msg: Fehler 500 - Unerwarteter Serverfehler
 
 login:
+  title: Anmelden
   fields:
     username:
       label: Benutzername
