@@ -1,0 +1,12 @@
+{
+    "name": "wlanthermoCloud",
+    "short_name": "wlanthermoCloud",
+    "icons": [{
+        "src": "/apple-touch-icon.png",
+        "sizes": "192x192"
+    }],
+    "start_url": "/",
+    "display": "standalone",
+    "gcm_sender_id": "43793578815",
+    "gcm_user_visible_only": true
+}

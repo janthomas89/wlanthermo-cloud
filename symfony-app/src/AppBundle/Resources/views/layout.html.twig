@@ -18,6 +18,8 @@
         {% endstylesheets %}
     {% endblock %}
     <link rel="icon" type="image/png" href="{{ asset('apple-touch-icon.png') }}" />
+
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
 
@@ -44,6 +46,7 @@
             '@AppBundle/Resources/public/js/d3.min.js'
             '@AppBundle/Resources/public/js/c3.min.js'
             '@AppBundle/Resources/public/js/jquery.wlanthermoGauge.js'
+            '@AppBundle/Resources/public/js/push.js'
             '@AppBundle/Resources/public/js/app.js'
         %}
             <script src="{{ asset_url }}"></script>

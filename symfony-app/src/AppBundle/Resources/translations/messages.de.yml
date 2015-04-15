@@ -115,6 +115,8 @@ measurements:
     menu:
       edit: Messreihe bearbeiten
       restart: Daemon neustarten
+      pushEnable: Push-Benachrichtigungen aktivieren
+      pushDisable: Push-Benachrichtigungen deaktivieren
       stop: Messreihe beenden
       stopConfirm: Möchten Sie die Messreihe wirklich beenden? Diese Aktion kann nicht rückgängig gemacht werden.
       stopAndShutDown: Gerät herunter fahren

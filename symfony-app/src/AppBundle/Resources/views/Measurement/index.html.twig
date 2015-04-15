@@ -3,6 +3,7 @@
 {% block title %}{{ entity.name }}{% endblock %}
 
 {% block body %}
+
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -12,7 +13,7 @@
                             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                            <ul class="dropdown-menu" role="menu">
                                 <li>
                                     <a href="{{ path('measurement_edit', {id: entity.id}) }}" title="{{ 'measurements.detail.menu.edit' | trans }}">
                                         <span class="glyphicon glyphicon-pencil"></span>
@@ -28,6 +29,12 @@
                                     </button>
                                     {{ form_widget(form._token) }}
                                     </form>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link js-push-button" disabled data-label-enable="{{ 'measurements.detail.menu.pushEnable' | trans }}" data-label-disable="{{ 'measurements.detail.menu.pushDisable' | trans }}">
+                                        <span class="glyphicon glyphicon-comment"></span>
+                                        <span class="js-label">{{ 'measurements.detail.menu.pushEnable' | trans }}</span>
+                                    </button>
                                 </li>
                                 <li>
                                     {%  set form = dropdownForms.stop %}
