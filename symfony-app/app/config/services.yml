@@ -34,6 +34,11 @@ services:
         # class: AppBundle\Service\DeviceAPIServiceMock
         arguments: ["@buzz", "@logger"]
 
+    # GCM Service
+    gcm_service:
+      class: AppBundle\Service\GoogleCloudMessagingService
+      arguments: ["%gcm_api_key%", "@buzz", "@logger"]
+
     # Notifications
     notification_service:
         class: AppBundle\Service\NotificationServiceThrottle
@@ -43,11 +48,18 @@ services:
         class: AppBundle\Service\NotificationServiceComposite
         arguments: ["@logger"]
         calls:
-            - [add, ["@notification_service_mail"]]
+            #- [add, ["@notification_service_mail"]]
+            - [add, ["@notification_service_gcm"]]
 
     notification_service_mail:
         class: AppBundle\Service\NotificationServiceMail
         arguments: ["@mailer", "%notifications_mail_sender%", "%notifications_mail_receiver%"]
+
+    notification_service_gcm:
+        class: AppBundle\Service\NotificationServiceGCM
+        arguments: ["@doctrine.orm.entity_manager", "@gcm_service"]
+
+
 
 
     # Custom validator services

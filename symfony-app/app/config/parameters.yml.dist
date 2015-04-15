@@ -31,3 +31,6 @@ parameters:
     # Memcached
     memcached_host: localhost
     memcached_port: 11211
+
+    # GCM
+    gcm_api_key: ...

@@ -91,7 +91,7 @@ class MeasurementService
                     $filtered = $this->applyLowPassFilter($value, $date, $probe);
                     $timeSeries->setMeasurementValue($date, $filtered);
 
-                    $this->handleAlerts($timeSeries);
+                    $this->handleAlerts($timeSeries, $measurementProbe);
                 }
 
                 $this->em->persist($timeSeries);

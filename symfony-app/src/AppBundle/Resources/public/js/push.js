@@ -8,8 +8,9 @@
      * Send subscription to server
      */
     var sendSubscriptionToServer = function(subscription) {
-        log('TODO: Implement sendSubscriptionToServer()');
-        log(subscription);
+        $.post('/gcm/subscribe', {
+            registrationId: subscription.subscriptionId
+        });
     };
 
     /*
@@ -26,11 +27,9 @@
                 return;
             }
 
-            var subscriptionId = pushSubscription.subscriptionId;
-
-            // TODO: Make a request to your server to remove
-            // the subscriptionId from your data store so you
-            // don't attempt to send them push messages anymore
+            $.post('/gcm/unsubscribe', {
+                registrationId: pushSubscription.subscriptionId
+            });
 
             pushSubscription.unsubscribe().then(function(successful) {
                 $('.js-push-button').attr('disabled', false);
@@ -114,7 +113,8 @@
     };
 
     $(function() {
-        $('.js-push-button').bind('click', function() {
+        $('.js-push-button').bind('click', function(e) {
+            e.preventDefault();
             (isPushEnabled ? unsubscribe : subscribe)();
         });
 
