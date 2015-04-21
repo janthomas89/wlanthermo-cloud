@@ -119,7 +119,7 @@
         });
 
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/js/push-service-worker.js').then(initState);
+            navigator.serviceWorker.register('/js/push-service-worker.js', {scope: '/*'}).then(initState);
         } else {
             log('Service workers are not supported in this browser.');
         }

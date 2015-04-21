@@ -33,6 +33,13 @@ class GCMSubscription
     private $registrationId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="payload", type="text", nullable=true)
+     */
+    private $payload;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -56,5 +63,49 @@ class GCMSubscription
     public function setRegistrationId($registrationId)
     {
         $this->registrationId = $registrationId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @param string $payload
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
+    }
+
+    /**
+     * Returns the unserialized payload.
+     *
+     * @return array
+     */
+    public function getNotifications($reset = false)
+    {
+        $payload = unserialize($this->payload);
+
+        if ($reset) {
+            $this->payload = '';
+        }
+
+        return is_array($payload) ? $payload : [];
+    }
+
+    /**
+     * Adds a notification to the payload.
+     *
+     * @param Notification $notification
+     */
+    public function addNotification(Notification $notification)
+    {
+        $payload = $this->getNotifications();
+        $payload[] = $notification;
+        $this->payload = serialize($payload);
     }
 }

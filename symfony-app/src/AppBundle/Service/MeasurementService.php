@@ -200,13 +200,12 @@ class MeasurementService
         $notification = new Notification();
         $notification->setSubject($measurement->getName() . ' | ' . $probe->getName() . ': ' . $currentValue . '°C');
         $notification->setMsg(
-            $measurement->getName() . "\n\n"
-            . $probe->getName() . ': ' . $currentValue . "°C\n"
+            $probe->getName() . ': ' . $currentValue . "°C\n"
             . 'Min: ' . $probe->getMin() . "°C\n"
             . 'Max: ' . $probe->getMax() . "°C\n"
         );
         $notification->setIdentifier('temperature_alert_' . $probe->getId() . '_' . $probe->getMin() . '_' . $probe->getMax());
-        $notification->setThrottleFor(new \DateInterval('PT300S'));
+        $notification->setThrottleFor(new \DateInterval('PT180S'));
 
         $this->notificationService->temperatureAlert($notification);
     }

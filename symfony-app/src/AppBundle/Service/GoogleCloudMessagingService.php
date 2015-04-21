@@ -47,7 +47,7 @@ class GoogleCloudMessagingService
      * @param array $payload
      * @return array
      */
-    public function send(GCMSubscription $subscription, array $payload)
+    public function send(GCMSubscription $subscription, array $payload = [])
     {
         $request = new Request('POST', '', self::API_ENDPOINT);
         $request->setHeaders([

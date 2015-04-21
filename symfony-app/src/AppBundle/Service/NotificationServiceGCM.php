@@ -72,13 +72,34 @@ class NotificationServiceGCM implements NotificationServiceInterface
 
         /** @var GCMSubscription $subscription */
         foreach ($repo->findAll() as $subscription) {
-            $this->gcmService->send($subscription, [
-                'subject' => $notification->getSubject(),
-                'msg' => mb_substr($notification->getMsg(), 0, 1024), // truncate to not run into the 4kb limit of GCM
-            ]);
+            $subscription->addNotification($notification);
+            $this->em->persist($subscription);
+            $this->em->flush();
 
-            // ToDo: Failures auswerten
+            $result = $this->gcmService->send($subscription);
 
+            $this->handleGcmResult($result, $subscription);
+        }
+    }
+
+    /**
+     * Handles the result of the GCM request.
+     *
+     * @param array $result
+     * @param GCMSubscription $subscription
+     */
+    private function handleGcmResult(array $result, GCMSubscription $subscription)
+    {
+        if (!isset($result['results'])) {
+            return;
+        }
+
+        /* If we have a invalid subscription, unsubscribe! */
+        foreach ($result['results'] as $tmpResult) {
+            if (isset($tmpResult['error']) && 'InvalidRegistration' === $tmpResult['error']) {
+                $this->em->remove($subscription);
+                $this->em->flush();
+            }
         }
     }
 }
