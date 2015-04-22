@@ -78,6 +78,13 @@ class NotificationServiceMail implements NotificationServiceInterface
         try {
             $res = $this->mailer->send($message);
 
+            /* Close SMTP connection, so we do not run into
+             * timeout problems, when running this as a daemon.
+             * Swiftmailer will automatically reconnect before
+             * sending the next mail.
+             */
+            $this->mailer->getTransport()->stop();
+
             if (!$res) {
                 $msg = 'Notification could not be sent via swiftmailer';
                 throw new NotificationTransportException($msg);
