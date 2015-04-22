@@ -93,7 +93,9 @@ class MeasurementCommand extends AbstractInfiniteCommand
             $this->service->execute($this->measurement);
         } catch (DeviceAPIException $e) {
             $output->writeln('Exception catched: ' . $e->getMessage());
-            $this->handleDeviceAPIException($e);
+            if (!$this->handleDeviceAPIException($e)) {
+                $output->writeln('Exception alert skipped');
+            }
         } catch(\Exception $e) {
             $output->writeln('Exception catched: ' . $e->getMessage());
             $this->handleException($e);
@@ -151,16 +153,22 @@ class MeasurementCommand extends AbstractInfiniteCommand
      * the last exception arose within the last 10 seconds.
      *
      * @param DeviceAPIException $e
+     * @return bool
      */
     private function handleDeviceAPIException(DeviceAPIException $e)
     {
+        $handled = false;
+
         $threshold = new \DateTime();
         $threshold->sub(new \DateInterval('PT30S'));
 
         if ($this->lastDeviceException && $threshold < $this->lastDeviceException) {
             $this->handleException($e);
+            $handled = true;
         }
 
         $this->lastDeviceException = new \DateTime();
+
+        return $handled;
     }
 }
