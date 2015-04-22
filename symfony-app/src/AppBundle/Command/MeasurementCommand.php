@@ -7,10 +7,10 @@ use AppBundle\Entity\MeasurementProbe;
 use AppBundle\Entity\Notification;
 use AppBundle\Service\MeasurementService;
 use AppBundle\Service\NotificationServiceInterface;
+use Buzz\Exception\RequestException as DeviceAPIException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class MeasurementCommand
@@ -24,6 +24,9 @@ class MeasurementCommand extends AbstractInfiniteCommand
 
     /** @var MeasurementService */
     private $service;
+
+    /** @var \DateTime */
+    private $lastDeviceException;
 
     /**
      * Configures the command.
@@ -88,6 +91,9 @@ class MeasurementCommand extends AbstractInfiniteCommand
         $output->writeln('Execute measurement');
         try {
             $this->service->execute($this->measurement);
+        } catch (DeviceAPIException $e) {
+            $output->writeln('Exception catched: ' . $e->getMessage());
+            $this->handleDeviceAPIException($e);
         } catch(\Exception $e) {
             $output->writeln('Exception catched: ' . $e->getMessage());
             $this->handleException($e);
@@ -139,4 +145,22 @@ class MeasurementCommand extends AbstractInfiniteCommand
         $service = $this->getContainer()->get('notification_service');
         $service->systemAlert($notification);
     }
-} 
+
+    /**
+     * Handles a DeviceAPIException. Alerts are only created, if
+     * the last exception arose within the last 10 seconds.
+     *
+     * @param DeviceAPIException $e
+     */
+    private function handleDeviceAPIException(DeviceAPIException $e)
+    {
+        $threshold = new \DateTime();
+        $threshold->sub(new \DateInterval('PT30S'));
+
+        if ($this->lastDeviceException && $threshold < $this->lastDeviceException) {
+            $this->handleException($e);
+        }
+
+        $this->lastDeviceException = new \DateTime();
+    }
+}

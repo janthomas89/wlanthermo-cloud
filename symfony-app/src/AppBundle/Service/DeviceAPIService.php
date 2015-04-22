@@ -188,8 +188,6 @@ class DeviceAPIService implements DeviceAPIServiceInterface
 
         $response = $this->api->send($request);
 
-        //@ToDo Error handling status 500? ...
-
         $this->logger->debug(var_export($response, true));
 
         return json_decode(
