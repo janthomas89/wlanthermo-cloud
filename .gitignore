@@ -15,9 +15,9 @@
 /symfony-app/app/bootstrap.php.cache
 /symfony-app/var/bootstrap.php.cache
 /symfony-app/bin/*
-!symfony-app/bin/console
-!symfony-app/bin/symfony_requirements
 !symfony-app/bin/daemon.js
+!symfony-app/bin/post-deploy
+!symfony-app/bin/post-deploy-fileperm
 /symfony-app/vendor/
 
 # Assets and user uploads

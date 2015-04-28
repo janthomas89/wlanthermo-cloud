@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+
+$user = 'root';
+$group = 'www-data';
+$permissions = [
+    #   Path                User     Group      Dir     File
+    [   '/bin',             $user,   $group,    0700,   0700],
+    [   '/app/console',     $user,   $group,    0700,   0700],
+
+    [   '/app/cache',       $user,   $group,    0770,   0660],
+    [   '/app/logs',        $user,   $group,    0770,   0660],
+
+    [   '/',                $user,   $group,    0750,   0640],
+];
+$rootDir = dirname(dirname(__FILE__));
+
+
+########################################################
+#             Implementation starts here               #
+########################################################
+
+echo "\n\n";
+echo "Setting file permissions for path: " . $rootDir;
+echo "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+echo "\nPermission map:\n";
+printf("%-25s%-10s%-10s%-5s%-5s\n", "Path", "User", "Group", "Dir", "File");
+foreach ($permissions as $p) {
+    printf("%-25s%-10s%-10s%-5o%-5o\n", $p[0], $p[1], $p[2], $p[3], $p[4]);
+}
+
+/**
+ * Set the file permissions recursivly starting at the $rootDir.
+ */
+$iterator = new \RecursiveIteratorIterator(
+    new \RecursiveDirectoryIterator($rootDir)
+);
+
+foreach($iterator as $item) {
+    $path = rtrim((string)$item, '.');
+    setPermissionsForPath($path);
+}
+
+/**
+ * Sets the file permissions for a given path.
+ * 
+ * @param string $path
+ */
+function setPermissionsForPath($path) {
+    global $permissions, $rootDir;
+    
+    foreach ($permissions as $p) {
+        list($pattern, $user, $group, $dirMod, $fileMod) = $p;
+
+        $tmpPatter = preg_quote($rootDir . $pattern);
+        if (preg_match('~^' . $tmpPatter . '~', $path)) {
+            $mod = is_dir($path) ? $dirMod : $fileMod;
+
+            chmod($path, $mod);
+            chown($path, $user);
+            chgrp($path, $group);
+            break;
+        }
+    }
+}

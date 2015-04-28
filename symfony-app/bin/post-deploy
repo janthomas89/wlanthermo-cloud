@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+BASEPATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+cd $BASEPATH
+cd ../
+
+# Create directories
+mkdir -p web/images
+mkdir -p web/css
+mkdir -p web/js
+
+# Set file permissions
+chmod +x bin/*
+php bin/post-deploy-fileperm
+
+# Check the projects dependencies
+php app/check.php
+
+# Clear cache and dump assets
+php app/console cache:clear --env=prod --no-debug
+php app/console assetic:dump --env=prod --no-debug
+
+# Update database schema
+php app/console doctrine:schema:update --force
