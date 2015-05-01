@@ -8,7 +8,7 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {% if entity.isActive() %}
+                    {% if is_granted('ROLE_ADMIN') and entity.isActive() %}
                         <div class="dropdown pull-right" style="margin-top: -8px;">
                             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-chevron-down"></span>
