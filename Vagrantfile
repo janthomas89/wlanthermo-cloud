@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   # Configure Provisioning
-  config.vm.provision :shell, path: "bin/bootstrap.sh"
+  config.vm.provision :shell, path: "bin/vagrant-bootstrap.sh"
   config.vm.provision :chef_solo do |chef|
     chef.roles_path     = "./chef/roles"
     chef.cookbooks_path = ["./chef/site-cookbooks", "./chef/cookbooks"]
