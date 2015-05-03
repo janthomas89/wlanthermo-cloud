@@ -4,10 +4,9 @@
 BASEPATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 ERRORSTRING="[Error] Make shure to call deploy script like ./deploy.sh live [push]"
 
-# Live environtmenr
-LIVE_SSH_USER="root"
-LIVE_SSH_HOST="217.160.126.183"
-LIVE_SSH_DEPLOY_DIR="/var/www/sites/wlanthermo.janthomas-software.de"
+# Include configuration file
+source $BASEPATH/deploy.conf
+
 
 echo "[start] deploy script"
 

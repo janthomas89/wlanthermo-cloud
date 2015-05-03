@@ -1,0 +1,4 @@
+# Live environtment
+LIVE_SSH_USER="root"
+LIVE_SSH_HOST="0.0.0.0"
+LIVE_SSH_DEPLOY_DIR="/var/www/sites/your-wlanthermo-vhost"

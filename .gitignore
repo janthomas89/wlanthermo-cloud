@@ -10,6 +10,8 @@
 # Parameters
 /symfony-app/app/config/parameters.yml
 /symfony-app/app/config/parameters.ini
+/bin/deploy.conf
+
 
 # Managed by Composer
 /symfony-app/app/bootstrap.php.cache
