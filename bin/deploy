@@ -20,12 +20,12 @@ then
 	if [[ -z $2 ]]
 	then
 		echo "[start] rsync dry-run"
-		rsync --dry-run -avp -r --delete --progress --exclude-from=$BASEPATH/deploy-rsync.excl -e ssh $BASEPATH/../symfony-app/ $LIVE_SSH_USER@$LIVE_SSH_HOST:$LIVE_SSH_DEPLOY_DIR
+		rsync --dry-run -apr --info=progress2 --delete --exclude-from=$BASEPATH/deploy-rsync.excl -e ssh $BASEPATH/../symfony-app/ $LIVE_SSH_USER@$LIVE_SSH_HOST:$LIVE_SSH_DEPLOY_DIR
 		echo "[done] rsync dry-run"
 	elif [ $2 == "push" ]
 	then
 		echo "[start] rsync deployment"
-		rsync -avp -r --delete --progress --exclude-from=$BASEPATH/deploy-rsync.excl -e ssh $BASEPATH/../symfony-app/ $LIVE_SSH_USER@$LIVE_SSH_HOST:$LIVE_SSH_DEPLOY_DIR
+		rsync -apr --info=progress2 --delete --exclude-from=$BASEPATH/deploy-rsync.excl -e ssh $BASEPATH/../symfony-app/ $LIVE_SSH_USER@$LIVE_SSH_HOST:$LIVE_SSH_DEPLOY_DIR
 		echo "[done] rsync deployment"
 
 		# Call postdeployment.sh via SSH
