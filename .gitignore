@@ -1,5 +1,6 @@
 # Vagrant metadata
 /.vagrant
+/.idea
 
 # Cache and logs (Symfony2)
 /symfony-app/app/cache/*
