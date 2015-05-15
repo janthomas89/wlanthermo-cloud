@@ -58,3 +58,9 @@
 [submodule "chef/cookbooks/php"]
 	path = chef/cookbooks/php
 	url = https://github.com/priestjim/chef-php.git
+[submodule "chef/cookbooks/smf"]
+	path = chef/cookbooks/smf
+	url = https://github.com/livinginthepast/smf.git
+[submodule "chef/cookbooks/rbac"]
+	path = chef/cookbooks/rbac
+	url = https://github.com/livinginthepast/rbac.git
