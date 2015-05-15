@@ -18,8 +18,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Define VM box
-  config.vm.box = "chef/debian-7.4-i386"
-  config.vm.box_url = "https://vagrantcloud.com/chef/boxes/debian-7.4-i386/versions/1.0.0/providers/virtualbox.box"
+  config.vm.box = "chef/debian-7.8"
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
