@@ -52,7 +52,7 @@
 [submodule "chef/cookbooks/phpmyadmin"]
 	path = chef/cookbooks/phpmyadmin
 	url = https://github.com/priestjim/chef-phpmyadmin.git
-[submodule "php"]
+[submodule "chef/cookbooks/php"]
 	path = chef/cookbooks/php
 	url = https://github.com/priestjim/chef-php.git
 [submodule "chef/cookbooks/smf"]
@@ -61,6 +61,6 @@
 [submodule "chef/cookbooks/rbac"]
 	path = chef/cookbooks/rbac
 	url = https://github.com/livinginthepast/rbac.git
-[submodule "chef/cookbooks/php"]
-	path = chef/cookbooks/php
-	url = https://github.com/priestjim/chef-php.git
+[submodule "chef/cookbooks/packagecloud-cookbook"]
+	path = chef/cookbooks/packagecloud-cookbook
+	url = https://github.com/computology/packagecloud-cookbook.git

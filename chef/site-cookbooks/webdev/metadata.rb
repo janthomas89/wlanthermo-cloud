@@ -10,6 +10,7 @@ depends "apt"
 depends "apache2"
 depends "php"
 depends "phpmyadmin"
+depends "mysql"
 
 %w{ debian ubuntu }.each do |os|
   supports os

@@ -7,8 +7,6 @@ run_list(
     "recipe[apache2]",
     "recipe[apache2::mod_php5]",
     "recipe[apache2::mod_ssl]",
-    "recipe[mysql::client]",
-    "recipe[mysql::server]",
     "recipe[php]",
     "recipe[php::module_mysql]",
     "recipe[php::module_sqlite3]",
