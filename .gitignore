@@ -21,6 +21,7 @@
 !symfony-app/bin/daemon.js
 !symfony-app/bin/post-deploy
 !symfony-app/bin/post-deploy-fileperm
+!symfony-app/bin/wlanthermo-daemon
 /symfony-app/vendor/
 
 # Assets and user uploads
