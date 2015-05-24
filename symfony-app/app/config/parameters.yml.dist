@@ -14,6 +14,8 @@ parameters:
     mailer_auth_mode:  ~
     mailer_encryption: ~
     mailer_port:       ~
+    mailer_sender_address: sender@example.com
+
 
     locale:            en
 
