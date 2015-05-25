@@ -23,20 +23,19 @@ Take a look at the vagrant and chef configuration for more details.
 ------------
 ```
 # First clone or Download this repository and setup the vagrant machine
+git clone git@github.com:janthomas89/wlanthermo-cloud.git
 vagrant up
 vagrant ssh
 ```
 
 ```
 # Install dependencies
-su www-data
 cd /var/www/sites/www.wlanthermo-cloud.de
 composer install
 ```
 
 ```
 # Bootstrap the database
-su www-data
 php app/console doctrine:schema:update --force
 ```
 
@@ -49,11 +48,13 @@ sudo /etc/init.d/wlanthermo-daemon start
 
 ```
 # Install the healthcheck cronjob
-crontab -e -u www-data
+sudo crontab -e -u www-data
 
 # Add the folling lines to crontab
-# * * * * * php /var/www/sites//var/www/sites/www.wlanthermo-cloud.de/app/console app:healthcheck
+# * * * * * /usr/bin/php /var/www/sites/www.wlanthermo-cloud.de/app/console app:healthcheck
 ```
+
+Now you should be able to call ```http://127.0.0.1:8080/app_dev.php``` in your local browser and see the wlanthermoCloud login screen.
 
 
 3.) Google Cloud Messaging Notifications (GCM)
