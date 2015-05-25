@@ -10,6 +10,9 @@ mkdir -p web/images
 mkdir -p web/css
 mkdir -p web/js
 
+# Install composer dependencies
+composer install
+
 # Set file permissions
 chmod +x bin/*
 php bin/post-deploy-fileperm
