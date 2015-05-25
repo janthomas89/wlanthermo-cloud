@@ -33,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   # Configure synced folders
-  config.vm.synced_folder "./symfony-app" , "/var/www/sites/" + vhost_name + "/", type: "rsync", rsync__exclude: ".git,app/cache,app/log,vendor", owner: "www-data", group: "vagrant"
+  config.vm.synced_folder "./symfony-app" , "/var/www/sites/" + vhost_name + "/", type: "rsync", rsync__exclude: [".git/","app/cache/","app/logs/","vendor/","app/bootstrap.php.cache"], owner: "www-data", group: "vagrant"
 
 
   # Configure Provisioning
