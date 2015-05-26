@@ -3,14 +3,6 @@ wlanthermo-cloud
 
 Alternative Web Frontend for the Wlanthermo project <http://wlanthermo.com>.
 
-0.) Screenshots
-------------
-![Login](/screenshots/login.jpg?raw=true =450x)
-![Devices](/screenshots/devices.jpg?raw=true =450x)
-![History](/screenshots/history.jpg?raw=true =450x)
-![Measurement](/screenshots/measurement.jpg?raw=true =450x)
-![Responsive](/screenshots/responsive.jpg?raw=true =450x)
-
 
 1.) Dependencies
 ------------
@@ -73,3 +65,12 @@ The app uses GCM for temperature notofications (see Symfony service "gcm_service
 4.) Deployment
 ------------
 For live deployment you can use the provided deployment script (bin/deploy). It uses rsync over ssh. Copy bin/deploy.conf.dist to bin/deploy.conf and provide a valid ssh configuration for your live system. After deployment "bin/post-deploy" is called on the live system to ensure correct file permissions (see bin/post-deploy-fileperm for configuration), deploy assets and clear caches.
+
+
+5.) Screenshots
+------------
+![Login](/screenshots/login.jpg?raw=true =450x)
+![Devices](/screenshots/devices.jpg?raw=true =450x)
+![History](/screenshots/history.jpg?raw=true =450x)
+![Measurement](/screenshots/measurement.jpg?raw=true =450x)
+![Responsive](/screenshots/responsive.jpg?raw=true =450x)
