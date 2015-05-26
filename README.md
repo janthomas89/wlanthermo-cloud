@@ -3,6 +3,14 @@ wlanthermo-cloud
 
 Alternative Web Frontend for the Wlanthermo project <http://wlanthermo.com>.
 
+0.) Screenshots
+------------
+![Login](/screenshots/login.jpg?raw=true =450x)
+![Devices](/screenshots/devices.jpg?raw=true =450x)
+![History](/screenshots/history.jpg?raw=true =450x)
+![Measurement](/screenshots/measurement.jpg?raw=true =450x)
+![Responsive](/screenshots/responsive.jpg?raw=true =450x)
+
 
 1.) Dependencies
 ------------
