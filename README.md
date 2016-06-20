@@ -51,10 +51,10 @@ sudo /etc/init.d/wlanthermo-daemon start
 sudo crontab -e -u www-data
 
 # Add the folling lines to crontab
-# * * * * * /usr/bin/php /var/www/sites/www.wlanthermo-cloud.de/app/console app:healthcheck
+* * * * * /usr/bin/php /var/www/sites/www.wlanthermo-cloud.de/app/console app:healthcheck
 ```
 
-Now you should be able to call ```http://127.0.0.1:8080/app_dev.php``` in your local browser and see the wlanthermoCloud login screen.
+Now you should be able to call ```http://127.0.0.1:8080/app.php``` in your local browser and see the wlanthermoCloud login screen.
 
 
 3.) Google Cloud Messaging Notifications (GCM)

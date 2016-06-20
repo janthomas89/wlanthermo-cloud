@@ -27,6 +27,10 @@
 # Assets and user uploads
 /symfony-app/web/bundles/
 /symfony-app/web/uploads/
+/symfony-app/web/images/
+/symfony-app/web/css/
+/symfony-app/web/js/
+!/symfony-app/web/js/push-service-worker.js
 
 # PHPUnit
 /symfony-app/app/phpunit.xml

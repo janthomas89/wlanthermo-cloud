@@ -92,7 +92,7 @@ class NotificationServiceMail implements NotificationServiceInterface
 
         } catch(\Swift_TransportException $e) {
             $msg = 'Notification could not be sent via swiftmailer';
-            throw new NotificationTransportException($msg);
+            throw new NotificationTransportException($msg, $e->getCode(), $e);
         }
     }
 }
