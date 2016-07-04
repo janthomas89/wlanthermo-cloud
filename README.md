@@ -49,7 +49,7 @@ sudo crontab -e -u www-data
 * * * * * /usr/bin/php /var/www/sites/www.wlanthermo-cloud.de/app/console app:healthcheck
 ```
 
-Now you should be able to call ```http://127.0.0.1:8080/app.php``` in your local browser and see the wlanthermoCloud login screen.
+Now you should be able to call ```http://127.0.0.1:8080``` in your local browser and see the wlanthermoCloud login screen. After you have logged in, you are able to add your device (e.g. http://192.168.0.123/api) and start your first measurement.
 
 
 3.) Google Cloud Messaging Notifications (GCM)
