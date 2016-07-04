@@ -26,3 +26,7 @@ php app/console assetic:dump --env=prod --no-debug
 
 # Update database schema
 php app/console doctrine:schema:update --force
+
+# Set file permissions again, since we have deployed the assets
+# Not ideal to do this twice, but it works!
+php bin/post-deploy-fileperm
