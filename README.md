@@ -29,14 +29,9 @@ vagrant ssh
 ```
 
 ```
-# Install dependencies
+# Install dependencies, fix file permissions and bootstrap the database
 cd /var/www/sites/www.wlanthermo-cloud.de
-composer install
-```
-
-```
-# Bootstrap the database
-php app/console doctrine:schema:update --force
+sudo bin/post-deploy
 ```
 
 ```

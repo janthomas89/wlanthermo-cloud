@@ -8,7 +8,7 @@ vhost_password    = "root"
 mysql_db_name     = "wlanthermo"
 mysql_db_skeleton = ""
 apt_packages      = %w{ screen curl subversion nodejs }
-php_packages      = %w{ php5-memcached php5-xdebug }
+php_packages      = %w{ memcached php5-memcached php5-xdebug }
 
 
 # Vagrantfile API/syntax version
