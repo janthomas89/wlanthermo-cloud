@@ -23,7 +23,7 @@ Take a look at the vagrant and chef configuration for more details.
 ------------
 ```
 # First clone or Download this repository and setup the vagrant machine
-git clone git@github.com:janthomas89/wlanthermo-cloud.git
+git clone --recursive git@github.com:janthomas89/wlanthermo-cloud.git
 vagrant up
 vagrant ssh
 ```
