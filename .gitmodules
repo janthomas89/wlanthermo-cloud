@@ -62,5 +62,5 @@
 	path = chef/cookbooks/rbac
 	url = https://github.com/livinginthepast/rbac.git
 [submodule "chef/cookbooks/packagecloud-cookbook"]
-	path = chef/cookbooks/packagecloud-cookbook
+	path = chef/cookbooks/packagecloud
 	url = https://github.com/computology/packagecloud-cookbook.git
