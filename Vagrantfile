@@ -18,7 +18,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Define VM box
-  config.vm.box = "bento/debian-7.8"
+  config.vm.box = "bento/debian-8.4"
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
