@@ -89,7 +89,7 @@
             return;
         }
 
-        serviceWorkerRegistration.pushManager.getSubscription().then(function(subscription) {
+        serviceWorkerRegistration.pushManager.getSubscription({userVisibleOnly: true}).then(function(subscription) {
             $('.js-push-button').attr('disabled', false);
 
             if (!subscription) {
