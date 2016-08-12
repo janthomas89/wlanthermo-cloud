@@ -8,7 +8,7 @@ vhost_password    = "root"
 mysql_db_name     = "wlanthermo"
 mysql_db_skeleton = ""
 apt_packages      = %w{ screen curl subversion nodejs }
-php_packages      = %w{ php5-memcached php5-xdebug }
+php_packages      = %w{ memcached php5-memcached php5-xdebug }
 
 
 # Vagrantfile API/syntax version
@@ -18,7 +18,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Define VM box
-  config.vm.box = "chef/debian-7.8"
+  config.vm.box = "bento/debian-8.4"
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]

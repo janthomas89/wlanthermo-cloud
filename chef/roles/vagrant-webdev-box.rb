@@ -13,7 +13,6 @@ run_list(
     "recipe[php::module_gd]",
     "recipe[php::module_fpdf]",
     "recipe[php::module_curl]",
-    "recipe[memcached]",
     "recipe[webdev::apt_packages]",
     "recipe[webdev::vhost]",
     "recipe[webdev::php]",

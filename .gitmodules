@@ -43,9 +43,6 @@
 [submodule "chef/cookbooks/yum-epel"]
 	path = chef/cookbooks/yum-epel
 	url = https://github.com/opscode-cookbooks/yum-epel.git
-[submodule "chef/cookbooks/memcached"]
-	path = chef/cookbooks/memcached
-	url = https://github.com/opscode-cookbooks/memcached.git
 [submodule "chef/cookbooks/runit"]
 	path = chef/cookbooks/runit
 	url = https://github.com/opscode-cookbooks/runit.git
@@ -62,5 +59,5 @@
 	path = chef/cookbooks/rbac
 	url = https://github.com/livinginthepast/rbac.git
 [submodule "chef/cookbooks/packagecloud-cookbook"]
-	path = chef/cookbooks/packagecloud-cookbook
+	path = chef/cookbooks/packagecloud
 	url = https://github.com/computology/packagecloud-cookbook.git
