@@ -132,7 +132,7 @@ class HealthCheckService
         $result = true;
 
         $threshold = new \DateTime();
-        $threshold->sub(new \DateInterval('PT30S'));
+        $threshold->sub(new \DateInterval('PT60S'));
 
         /** @var MeasurementRepository $repo */
         $repo = $this->em->getRepository('AppBundle:Measurement');
@@ -148,7 +148,7 @@ class HealthCheckService
             $this->check(
                 $tmpResult,
                 'No recent measurement values for measurement ' . $measurement->getId(),
-                'No measurement values received within the last 30 seconds for measurement ' . $measurement->getId() . '. Last value received: '. ($time ? $time->format('d.m.Y H:i:s') : '')
+                'No measurement values received within the last 60 seconds for measurement ' . $measurement->getId() . '. Last value received: '. ($time ? $time->format('d.m.Y H:i:s') : '')
             );
 
             $result = $result && $tmpResult;
